@@ -1,0 +1,37 @@
+title: Python Security
+copyright: '2021, Ezequiel Leonardo Castaño'
+author: Ezequiel Leonardo Castaño
+
+execute:
+  execute_notebooks: "force"
+
+html:
+  use_edit_page_button : true
+  use_repository_button: true
+  baseurl              : https://elc.github.com/python-security
+
+repository:
+  url: https://github.com/ELC/python-security
+  branch: source
+
+launch_buttons:
+  binderhub_url: "https://mybinder.org"
+  colab_url    : "https://colab.research.google.com"
+  thebe        : true
+
+latex:
+  latex_documents:
+    targetname: book.tex
+
+parse:
+  myst_enable_extensions:
+    - html_image
+    - dollarmath
+
+
+bibtex_bibfiles:
+  - bibliography.bib
+
+sphinx:
+  config:
+    bibtex_reference_style: author_year

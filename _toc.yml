@@ -1,0 +1,12 @@
+format: jb-book
+
+root: chapters/00_how_to_use
+
+options:
+  numbered: 3
+
+parts:
+- caption: Markdown Cheat Sheet
+  chapters:
+    - file: chapters/01_markdown
+    - file: chapters/02_jupyter

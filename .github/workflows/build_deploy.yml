@@ -1,0 +1,37 @@
+name: Deploy to Github Pages
+
+
+on:
+  push:
+    branches: source
+
+  workflow_dispatch:
+  repository_dispatch:
+
+
+jobs:
+  deploy-book:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Set up Python 3.8
+      uses: actions/setup-python@v2
+      with:
+        python-version: 3.8
+
+    - name: Install dependencies
+      run: |
+        pip install wheel
+        pip install jupyter-book
+
+    - name: Build the book
+      run: jb build .
+
+    - name: Deploy to Github Pages
+      uses: peaceiris/actions-gh-pages@v3.6.1
+      with:
+        publish_branch: master
+        full_commit_message: ${{ github.event.head_commit.message }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        publish_dir: _build/html
