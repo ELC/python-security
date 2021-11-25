@@ -1,0 +1,720 @@
+
+<!DOCTYPE html>
+
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Symmetric Encryption &#8212; Python Security</title>
+    
+  <link href="../_static/css/theme.css" rel="stylesheet">
+  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+
+    
+  <link rel="stylesheet"
+    href="../_static/vendor/fontawesome/5.13.0/css/all.min.css">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-solid-900.woff2">
+  <link rel="preload" as="font" type="font/woff2" crossorigin
+    href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
+
+    
+      
+
+    
+    <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/justify.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    
+  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+
+    <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/togglebutton.js"></script>
+    <script src="../_static/clipboard.min.js"></script>
+    <script src="../_static/copybutton.js"></script>
+    <script src="../_static/analytics.js"></script>
+    <script src="../_static/analytics_gtag.js"></script>
+    <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
+    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
+    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
+    <script>
+        const thebe_selector = ".thebe,.cell"
+        const thebe_selector_input = "pre,.cell_input div.highlight"
+        const thebe_selector_output = ".output,.cell_output"
+    </script>
+    <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <link rel="canonical" href="https://elc.github.com/python-security/chapters/06_Symmetric_Encryption.html" />
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="docsearch:language" content="None">
+    
+
+    <!-- Google Analytics -->
+    
+  </head>
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+    
+    <div class="container-fluid" id="banner"></div>
+
+    
+
+    <div class="container-xl">
+      <div class="row">
+          
+<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
+    
+        <div class="navbar-brand-box">
+    <a class="navbar-brand text-wrap" href="../index.html">
+      
+      
+      
+      <h1 class="site-logo" id="site-title">Python Security</h1>
+      
+    </a>
+</div><form class="bd-search d-flex align-items-center" action="../search.html" method="get">
+  <i class="icon fas fa-search"></i>
+  <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
+</form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
+    <div class="bd-toc-item active">
+        <ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="00_how_to_use.html">
+   How to use this book
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Markdown Cheat Sheet
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_markdown.html">
+   Markdown based Notebook
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="02_jupyter.html">
+   Jupyter Based Content
+  </a>
+ </li>
+</ul>
+
+    </div>
+</nav> <!-- To handle the deprecated key -->
+
+<div class="navbar_extra_footer">
+  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
+</div>
+
+</div>
+
+
+          
+
+
+          
+<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
+    
+    <div class="topbar container-xl fixed-top">
+    <div class="topbar-contents row">
+        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
+        <div class="col pl-md-4 topbar-main">
+            
+            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
+                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
+                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
+                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
+                <i class="fas fa-bars"></i>
+                <i class="fas fa-arrow-left"></i>
+                <i class="fas fa-arrow-up"></i>
+            </button>
+            
+            
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
+            class="fas fa-download"></i></button>
+
+    <div class="dropdown-buttons">
+        <!-- ipynb file if we had a myst markdown file -->
+        
+        <!-- Download raw file -->
+        <a class="dropdown-buttons" href="../_sources/chapters/06_Symmetric_Encryption.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
+                data-placement="left">.ipynb</button></a>
+        <!-- Download PDF via print -->
+        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
+            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
+    </div>
+</div>
+
+            <!-- Source interaction buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
+    <div class="dropdown-buttons sourcebuttons">
+        <a class="repository-button"
+            href="https://github.com/ELC/python-security"><button type="button" class="btn btn-secondary topbarbtn"
+                data-toggle="tooltip" data-placement="left" title="Source repository"><i
+                    class="fab fa-github"></i>repository</button></a>
+        
+        <a class="edit-button" href="https://github.com/ELC/python-security/edit/source/chapters/06_Symmetric_Encryption.ipynb"><button
+                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
+                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
+    </div>
+</div>
+
+            <!-- Full screen (wrap in <a> to have style consistency -->
+
+<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
+        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
+        title="Fullscreen mode"><i
+            class="fas fa-expand"></i></button></a>
+
+            <!-- Launch buttons -->
+
+<div class="dropdown-buttons-trigger">
+    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
+        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
+    <div class="dropdown-buttons">
+        
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/06_Symmetric_Encryption.ipynb"><button type="button"
+                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
+                data-placement="left"><img class="binder-button-logo"
+                    src="../_static/images/logo_binder.svg"
+                    alt="Interact on binder">Binder</button></a>
+        
+        
+        
+        <a class="colab-button" href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/06_Symmetric_Encryption.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
+                    src="../_static/images/logo_colab.png"
+                    alt="Interact on Colab">Colab</button></a>
+        
+        <button type="button" class="btn btn-secondary topbarbtn"
+            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
+                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
+        
+    </div>
+</div>
+
+        </div>
+
+        <!-- Table of contents -->
+        <div class="d-none d-md-block col-md-2 bd-toc show">
+            
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encryption-encoding">
+   Encryption != Encoding
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#authenticated-vs-non-authenticated-symmetric-encryption">
+   Authenticated vs Non-Authenticated Symmetric Encryption
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-cryptography-library">
+   The Cryptography Library
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#symmetric-encryption-without-authentication">
+   Symmetric Encryption without Authentication
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encrypting">
+     Encrypting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decrypting">
+     Decrypting
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#wrong-key">
+       Wrong Key
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#right-key">
+       Right Key
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#symmetric-encryption-with-authentication">
+   Symmetric Encryption with Authentication
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Encrypting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Decrypting
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Wrong Key
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Right Key
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#the-fernet-method">
+   The Fernet Method
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id5">
+     Encrypting
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     Decrypting
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       Wrong Key
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       Right Key
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+</ul>
+
+            </nav>
+        </div>
+    </div>
+</div>
+    <div id="main-content" class="row">
+        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
+        
+              <div>
+                
+  <div class="tex2jax_ignore mathjax_ignore section" id="symmetric-encryption">
+<h1>Symmetric Encryption<a class="headerlink" href="#symmetric-encryption" title="Permalink to this headline">¶</a></h1>
+<p>Encryption is the process of transforming a message, usually called cyphered message, in such a way that only the intended parties can reverse it. The process of reversing encryption is called decryption. This implies that, as opposed to hashes, encryption is <strong>reversible</strong>.</p>
+<p>There are two main types of encryption, symmetric and asymmetric, this chapter will cover symmetric encryption.</p>
+<p>In symmetric encryption, the message to be sent is encrypted using a single <strong>secret</strong> password, also called key. Anyone with that secret key and decrypt the message and see the original content.</p>
+<p>This type of encryption is fast, reliable and extremely secure, however it has a major disadvantages, the <strong>secret</strong> key must be shared between the intended parties and the whole encryption procedure will be as secure as the security used for that key exchange. That is why usually other mechanisms such as asymmetric encryption are used only for the key-exchange.</p>
+<div class="section" id="encryption-encoding">
+<h2>Encryption != Encoding<a class="headerlink" href="#encryption-encoding" title="Permalink to this headline">¶</a></h2>
+<p>Some times this terms are confused, <strong>encryption</strong> as mentioned is reversible but only by the intended parties whereas <strong>encoding</strong> is simply a way to transform a message in a <strong>non-secure</strong> way, mainly as means of compression or to transform a message into a more suitable format.</p>
+<p>One of the most common encodings used is Base64, which can be used to send binary files (PDFs, images, etc.) as plain text in HTTP Requests. Working with Base64 is a topic outside of this guide, however some introductory material is provided in <a class="reference internal" href="92_Base64.html"><span class="doc std std-doc">one of the appendixes</span></a>.</p>
+</div>
+<div class="section" id="authenticated-vs-non-authenticated-symmetric-encryption">
+<h2>Authenticated vs Non-Authenticated Symmetric Encryption<a class="headerlink" href="#authenticated-vs-non-authenticated-symmetric-encryption" title="Permalink to this headline">¶</a></h2>
+<p>A futher categorization of symmetric encryption algorithms is between those with authentication features and those without. Both provide a way to securely transmit a meesage, however, <a class="reference external" href="https://en.wikipedia.org/wiki/Authenticated_encryption">authenticated Encryption</a> also allows, among other things, to verify whether the ciphered message has been modified.</p>
+<p>Modifying the ciphered message in a non-authenticated scheme will produce a nonsensical output whereas in authenticated encryption it will throw an error.</p>
+</div>
+<div class="section" id="the-cryptography-library">
+<h2>The Cryptography Library<a class="headerlink" href="#the-cryptography-library" title="Permalink to this headline">¶</a></h2>
+<p>Python does not include any symmetric encryption features in its standard library, therefore, to use it one should install a third party tool. It is of great importance that the library to be used has some characteristics to ensure real security:</p>
+<ul class="simple">
+<li><p>It should be built only on the standard library, this will ensure full compatibility and avoid dependency-related problems.</p></li>
+<li><p>It should be open source, that way the code could be review and everyone knows exactly how it works.</p></li>
+<li><p>It should be time-proved, new libraries tend to have bugs or poor implementations, libraries with some time online are usually prefered.</p></li>
+<li><p>It should be used by trustworthy users, if it is an industry standard it means many companies and individuals trust it.</p></li>
+</ul>
+<p>The Python Cryptographic Authority, or pyca for short, is a non-official group of users who developed cryptographic libraries for this very purpose. It supports symmetric (authenticated and non-authenticated) and asymmetric encryption.</p>
+<p>The most common and used is homonomous to the group name: <code class="docutils literal notranslate"><span class="pre">cryptography</span></code></p>
+<p>It can be install via <code class="docutils literal notranslate"><span class="pre">pip</span></code> with:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">cryptography</span>
+</pre></div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">secrets</span>
+<span class="kn">import</span> <span class="nn">cryptography</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2220</span><span class="o">/</span><span class="mf">521767359.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">secrets</span>
+<span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">cryptography</span>
+
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;cryptography&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="symmetric-encryption-without-authentication">
+<h2>Symmetric Encryption without Authentication<a class="headerlink" href="#symmetric-encryption-without-authentication" title="Permalink to this headline">¶</a></h2>
+<p>One of the most popular algorithms used is the <a class="reference external" href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">Advanced Encryption Standard (AES)</a>. It works in combination with a <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">Mode of Operation</a>, this modes change the way in which the cyphered message is generated.</p>
+<p>Depending on the mode, the result could be authenticated or non-authenticated. The available (in the cryptography module) modes for non-authenticated encryption are <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_block_chaining_(CBC)">CBC</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_feedback_(CFB)">CFB</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Output_feedback_(OFB)">OFB</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)">CTR</a>. For more information see <a class="reference external" href="https://www.highgo.ca/2019/08/08/the-difference-in-five-modes-in-the-aes-encryption-algorithm/">this resource</a>.</p>
+<p>Usually the name of the algorithm is called <strong>AES-MODE</strong> in this chapter for non-authenticated encryption <strong>AES-CTR</strong> will be used.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.ciphers</span> <span class="kn">import</span> <span class="n">Cipher</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">modes</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="encrypting">
+<h3>Encrypting<a class="headerlink" href="#encrypting" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<span class="n">initialization_vector</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="n">mode</span> <span class="o">=</span> <span class="n">modes</span><span class="o">.</span><span class="n">CTR</span><span class="p">(</span><span class="n">initialization_vector</span><span class="p">)</span>
+
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+<span class="n">encryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encryptor</span><span class="p">()</span>
+
+<span class="n">message_encrypted</span> <span class="o">=</span> <span class="n">encryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">message</span><span class="p">)</span> <span class="o">+</span> <span class="n">encryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Secret Key: </span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Public Initialization Vector: </span><span class="si">{</span><span class="n">initialization_vector</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encrypted Message: </span><span class="si">{</span><span class="n">message_encrypted</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 180a18bf5ddaa7a99cb3a3ad2af9dd503337edc83e73fea0a55199c75fb6d0a7
+Public Initialization Vector: cbb9d4c066dbc5b70d2a7e9b13c65dc6
+Encrypted Message: 82fa2c8071ac17a52dc360d9
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="decrypting">
+<h3>Decrypting<a class="headerlink" href="#decrypting" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="wrong-key">
+<h4>Wrong Key<a class="headerlink" href="#wrong-key" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess_password</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="n">algorithm</span> <span class="o">=</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">guess_password</span><span class="p">)</span>
+<span class="n">mode</span> <span class="o">=</span> <span class="n">modes</span><span class="o">.</span><span class="n">CTR</span><span class="p">(</span><span class="n">initialization_vector</span><span class="p">)</span>
+
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+<span class="n">decryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decryptor</span><span class="p">()</span>
+<span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">message_encrypted</span><span class="p">)</span> <span class="o">+</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decrypted Message: </span><span class="si">{</span><span class="n">message_decrypted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Decrypted Message: b&#39;\xe4\x1e\xff\xab\x91|\x08Z\x16\xb0\x95[&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="right-key">
+<h4>Right Key<a class="headerlink" href="#right-key" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">algorithm</span> <span class="o">=</span> <span class="n">algorithms</span><span class="o">.</span><span class="n">AES</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+<span class="n">mode</span> <span class="o">=</span> <span class="n">modes</span><span class="o">.</span><span class="n">CTR</span><span class="p">(</span><span class="n">initialization_vector</span><span class="p">)</span>
+
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">Cipher</span><span class="p">(</span><span class="n">algorithm</span><span class="p">,</span> <span class="n">mode</span><span class="p">)</span>
+
+<span class="n">decryptor</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decryptor</span><span class="p">()</span>
+<span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">message_encrypted</span><span class="p">)</span> <span class="o">+</span> <span class="n">decryptor</span><span class="o">.</span><span class="n">finalize</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decrypted Message: </span><span class="si">{</span><span class="n">message_decrypted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Decrypted Message: b&#39;Hello World!&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="symmetric-encryption-with-authentication">
+<h2>Symmetric Encryption with Authentication<a class="headerlink" href="#symmetric-encryption-with-authentication" title="Permalink to this headline">¶</a></h2>
+<p>The same AES algorithm can be combined with modes that results in a authenticated encryption. Such modes are <a class="reference external" href="https://en.wikipedia.org/wiki/Galois/Counter_Mode">GCM</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/OCB_mode">OCB3</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/CCM_mode">CCM</a>.</p>
+<p>Even though they provide more features that the non-authenticated modes, they are sensitive to nonce re-use, having known vulnerabilities if the same nonce is used twice. There is a new generation of modes called <strong>Synthetic Initialization Vector (SIV)</strong> which mitigates this risks, producing modes like <a class="reference external" href="https://en.wikipedia.org/wiki/AES-GCM-SIV">AES-GCM-SIV</a> and so on, this new generation has no time-proved implementation neither in Python nor in other programming language at the time of this writting.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.ciphers.aead</span> <span class="kn">import</span> <span class="n">AESGCM</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>Encrypting<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span> <span class="c1"># 16, 24, or 32</span>
+<span class="n">nonce</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">24</span><span class="p">)</span>
+
+<span class="n">ciphered_message</span> <span class="o">=</span> <span class="n">AESGCM</span><span class="p">(</span><span class="n">key</span><span class="p">)</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">nonce</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+
+<span class="n">encrypted_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">nonce</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">ciphered_message</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Secret Key: </span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Public Nonce: </span><span class="si">{</span><span class="n">nonce</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encrypted Message: </span><span class="si">{</span><span class="n">encrypted_message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 5cd69cefbf136ae3378c63770019195e81b3d49074ab5e342118f1240dda4bed
+Public Nonce: c600518eb23b8c18964d8444235e8c758084bc87f559b84b
+Encrypted Message: c600518eb23b8c18964d8444235e8c758084bc87f559b84b:1f7d86f768eec09ec746702996ffdd24d005e39e40337bfa1104c148
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h3>Decrypting<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">nonce</span><span class="p">,</span> <span class="n">message</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">decrypted_message</span> <span class="o">=</span> <span class="n">AESGCM</span><span class="p">(</span><span class="n">password</span><span class="p">)</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">nonce</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="kc">None</span><span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Decrypted Message: </span><span class="si">{</span><span class="n">message_decrypted</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">except</span> <span class="n">cryptography</span><span class="o">.</span><span class="n">exceptions</span><span class="o">.</span><span class="n">InvalidTag</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Verification Failed - Either the message has been altered or the nonce or key are incorrect&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4>Wrong Key<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess_password</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s2">&quot;1329f363a87306c33952a7cbfc0ebf8105126764d1c72c511031a5b028110cf9&quot;</span><span class="p">)</span>
+
+<span class="n">nonce</span><span class="p">,</span> <span class="n">ciphered_message</span> <span class="o">=</span> <span class="n">encrypted_message</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+<span class="n">nonce_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">nonce</span><span class="p">)</span>
+<span class="n">ciphered_message_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">ciphered_message</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">verify</span><span class="p">(</span><span class="n">guess_password</span><span class="p">,</span> <span class="n">nonce_bytes</span><span class="p">,</span> <span class="n">ciphered_message_bytes</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Verification Failed - Either the message has been altered or the nonce or key are incorrect
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4>Right Key<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">nonce</span><span class="p">,</span> <span class="n">ciphered_message</span> <span class="o">=</span> <span class="n">encrypted_message</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+<span class="n">nonce_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">nonce</span><span class="p">)</span>
+<span class="n">ciphered_message_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">ciphered_message</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">verify</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">nonce_bytes</span><span class="p">,</span> <span class="n">ciphered_message_bytes</span><span class="p">))</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Decrypted Message: b&#39;Hello World!&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="the-fernet-method">
+<h2>The Fernet Method<a class="headerlink" href="#the-fernet-method" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://github.com/fernet/spec/blob/master/Spec.md">Fernet</a> method is an opinionated way of using AES and HMAC (see next chapter) to provide authenticated encryption. It is meant for easy use but it requires that the recipient also has a library compatible with it to effectively use it.</p>
+<p>It is not nearly as commonly used as the other methods described in this chapter but it is much more practical for simple use cases.</p>
+<p>At the time of this writing there are implementations for:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/fernet/fernet-go">Go (official)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/fernet/fernet-rb">Ruby (official)</a></p></li>
+<li><p><a class="reference external" href="https://github.com/fernet/fernet-erl">Erlang (official)</a></p></li>
+<li><p><a class="reference external" href="https://cryptography.io/en/latest/fernet/">Python</a> (i.e. using cryptography)</p></li>
+<li><p><a class="reference external" href="https://www.npmjs.com/package/fernet">Javascript (Node)</a>.</p></li>
+</ul>
+<p>This method also allows the usage of <strong>passwords (human-readable)</strong> instead of random bytes as keys, see <a class="reference external" href="https://cryptography.io/en/latest/fernet/#using-passwords-with-fernet">this example</a> for more information.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.fernet</span> <span class="kn">import</span> <span class="n">Fernet</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h3>Encrypting<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
+
+<span class="n">key</span> <span class="o">=</span> <span class="n">Fernet</span><span class="o">.</span><span class="n">generate_key</span><span class="p">()</span>
+
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">Fernet</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="n">message_encrypted</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Secret Key: </span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encrypted Message: </span><span class="si">{</span><span class="n">message_encrypted</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 466c77366967662d793738577747416d706c50727872787034674e5547754e6c726a4135456e584f4154673d
+Encrypted Message: 67414141414142686d384955396d3075646c3055423662675f4e795751303979736b67584b677168582d6f55685f43395a5a4837373649483365666478464c334d70773155722d436836344632783557746d752d68744676466a62574765566e62673d3d
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id6">
+<h3>Decrypting<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id7">
+<h4>Wrong Key<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess_password</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="s2">&quot;785754746c6136366d4f467431395543336c46444c71692d3249792d5a365374386665566f64726f4639303d&quot;</span><span class="p">)</span>
+
+<span class="n">cipher</span> <span class="o">=</span> <span class="n">Fernet</span><span class="p">(</span><span class="n">guess_password</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">message_encrypted</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encrypted Message: </span><span class="si">{</span><span class="n">message_decrypted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">cryptography</span><span class="o">.</span><span class="n">fernet</span><span class="o">.</span><span class="n">InvalidToken</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Token Invalid&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Token Invalid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h4>Right Key<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">cipher</span> <span class="o">=</span> <span class="n">Fernet</span><span class="p">(</span><span class="n">key</span><span class="p">)</span>
+
+<span class="k">try</span><span class="p">:</span>
+    <span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">cipher</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span><span class="n">message_encrypted</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encrypted Message: </span><span class="si">{</span><span class="n">message_decrypted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="k">except</span> <span class="n">cryptography</span><span class="o">.</span><span class="n">fernet</span><span class="o">.</span><span class="n">InvalidToken</span><span class="p">:</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Token Invalid&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Message: b&#39;Hello World!&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+
+    <script type="text/x-thebe-config">
+    {
+        requestKernel: true,
+        binderOptions: {
+            repo: "ELC/python-security",
+            ref: "source",
+        },
+        codeMirrorConfig: {
+            theme: "abcdef",
+            mode: "python"
+        },
+        kernelOptions: {
+            kernelName: "python3",
+            path: "./chapters"
+        },
+        predefinedOutput: true
+    }
+    </script>
+    <script>kernelName = 'python3'</script>
+
+              </div>
+              
+        
+            <!-- Previous / next buttons -->
+<div class='prev-next-area'>
+</div>
+        
+        </div>
+    </div>
+    <footer class="footer">
+    <div class="container">
+      <p>
+        
+          By Ezequiel Leonardo Castaño<br/>
+        
+            &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
+      </p>
+    </div>
+  </footer>
+</main>
+
+
+      </div>
+    </div>
+  
+  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+
+  </body>
+</html>
