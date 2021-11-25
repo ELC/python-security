@@ -1,12 +1,30 @@
 format: jb-book
 
-root: chapters/00_how_to_use
+root: chapters/00_Fundamentals
 
 options:
   numbered: 3
 
 parts:
-- caption: Markdown Cheat Sheet
-  chapters:
-    - file: chapters/01_markdown
-    - file: chapters/02_jupyter
+  - caption: Hashes
+    chapters:
+      - file: chapters/01_Hash_Introduction
+      - file: chapters/02_Salt
+      - file: chapters/03_Pepper
+      - file: chapters/04_Checksum
+      - file: chapters/05_HMAC
+
+  - caption: Encryption
+    chapters:
+      - file: chapters/06_Symmetric_Encryption
+      - file: chapters/07_Asymmetric_Encryption
+
+  - caption: Applications
+    chapters:
+      - file: chapters/08_JSON_Web_Token
+
+  - caption: Appendices
+    chapters:
+      - file: chapters/91_Bytes
+      - file: chapters/92_Base64
+      - file: chapters/93_URLSafe
