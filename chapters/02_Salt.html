@@ -55,6 +55,8 @@
     <link rel="canonical" href="https://elc.github.com/python-security/chapters/02_Salt.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Pepper" href="03_Pepper.html" />
+    <link rel="prev" title="Introduction to Hash Functions" href="01_Hash_Introduction.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -88,25 +90,79 @@
     <div class="bd-toc-item active">
         <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="00_how_to_use.html">
-   How to use this book
+  <a class="reference internal" href="00_Fundamentals.html">
+   Introduction to Security
   </a>
  </li>
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
-  Markdown Cheat Sheet
+  Hashes
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="01_Hash_Introduction.html">
+   Introduction to Hash Functions
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   Salt
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="03_Pepper.html">
+   Pepper
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="04_Checksum.html">
+   Checksum
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="05_HMAC.html">
+   HMAC
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Encryption
  </span>
 </p>
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
-  <a class="reference internal" href="01_markdown.html">
-   Markdown based Notebook
+  <a class="reference internal" href="06_Symmetric_Encryption.html">
+   Symmetric Encryption
   </a>
  </li>
  <li class="toctree-l1">
-  <a class="reference internal" href="02_jupyter.html">
-   Jupyter Based Content
+  <a class="reference internal" href="07_Asymmetric_Encryption.html">
+   Asymmetric Encryption
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Appendices
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="91_Bytes.html">
+   Appendix: The Bytes Data Type
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="92_Base64.html">
+   Appendix: Base64 encoding
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="93_URLSafe.html">
+   Appendix: URLSafe
   </a>
  </li>
 </ul>
@@ -321,8 +377,8 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Original: b&#39;Hello World!&#39;
-     Hashed: ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0f391ccc03671440056f2a53f3ab189db27a50f0b0b58d5f01c7ead47ab6256828f626b58cfe7c781fe
-Salt+Hashed: 2614af2b7f1b5c3586e3:ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0f391ccc03671440056f2a53f3ab189db27a50f0b0b58d5f01c7ead47ab6256828f626b58cfe7c781fe
+     Hashed: 6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895c4272aea90cbc9f2234b9c4c65c5def922c80af19301d7a1f11113d55970dbec5faa3c571de5fa5f36
+Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895c4272aea90cbc9f2234b9c4c65c5def922c80af19301d7a1f11113d55970dbec5faa3c571de5fa5f36
 </pre></div>
 </div>
 </div>
@@ -347,7 +403,7 @@ Salt+Hashed: 2614af2b7f1b5c3586e3:ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n+r+pSalt+Hashed: 64$8$1$d6b9a699daa1ab30cf60$6ca8a5a82d1142aaaf7dbf7bafdb7625dc29b2efb4f866855bd307b5a92d6dd94053372a777ebfedf8dbcc4b10f9e59b4a48c88959835b3cc2eedd61af15c4b8
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n+r+pSalt+Hashed: 64$8$1$8429188b57377b10f312$0253e96a03d33274d587d9e9be25247664bec0bd048816c39c38ea08feba1cea22278ca361c1a88cf9e347af11017a1e00790cc9ccf2b43487341fa503622234
 </pre></div>
 </div>
 </div>
@@ -380,7 +436,7 @@ Salt+Hashed: 2614af2b7f1b5c3586e3:ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: d66a679634b35d3cebdd:c8c63e59
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 697b5470ff41da016c99:7363edcc
 </pre></div>
 </div>
 </div>
@@ -398,7 +454,7 @@ Salt+Hashed: 2614af2b7f1b5c3586e3:ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 78de8d37c929edb14f40:2dc21c871e4debcf10a275d2274cfb82
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 354869bac9e277424d9b:4f21159cd435d9a250fe809c9ca7abfe
 </pre></div>
 </div>
 </div>
@@ -416,7 +472,7 @@ Salt+Hashed: 2614af2b7f1b5c3586e3:ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 3517dec0beeec7bac9f1:79154040f0dfb241c59101831a94ea4aa92cb25a6e25d52c832dab04cff0c1e41e6f648f971d4dedf60f84d9921ce5a154ccb93b38bb283cadc74c07ee54f05d
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: f272a75ae509611a829f:da86b86475a716085290323c9491f66e16177b3e041840fcb1c45722f248964a2c03d085c1de3e807f398d6cae5024f0f23cf404fbe3de9f6fb266c6ea3dcd5f
 </pre></div>
 </div>
 </div>
@@ -468,7 +524,7 @@ Salt+Hashed: 2614af2b7f1b5c3586e3:ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>271 µs ± 3.41 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>252 µs ± 3.91 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </pre></div>
 </div>
 </div>
@@ -483,7 +539,7 @@ Salt+Hashed: 2614af2b7f1b5c3586e3:ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15 ms ± 2.32 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>14.1 ms ± 76.9 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
@@ -498,7 +554,7 @@ Salt+Hashed: 2614af2b7f1b5c3586e3:ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>62.1 ms ± 254 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56.8 ms ± 428 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre></div>
 </div>
 </div>
@@ -646,7 +702,21 @@ Salt+Hashed: 2614af2b7f1b5c3586e3:ce3efb49c2b645143c82e1b806b5be0991e0dbfefb8bc0
               
         
             <!-- Previous / next buttons -->
-<div class='prev-next-area'>
+<div class='prev-next-area'> 
+    <a class='left-prev' id="prev-link" href="01_Hash_Introduction.html" title="previous page">
+        <i class="fas fa-angle-left"></i>
+        <div class="prev-next-info">
+            <p class="prev-next-subtitle">previous</p>
+            <p class="prev-next-title">Introduction to Hash Functions</p>
+        </div>
+    </a>
+    <a class='right-next' id="next-link" href="03_Pepper.html" title="next page">
+    <div class="prev-next-info">
+        <p class="prev-next-subtitle">next</p>
+        <p class="prev-next-title">Pepper</p>
+    </div>
+    <i class="fas fa-angle-right"></i>
+    </a>
 </div>
         
         </div>
