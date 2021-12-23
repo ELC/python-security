@@ -41,8 +41,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/analytics.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
+    <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -305,6 +305,11 @@
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -389,7 +394,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;9074cef6ce53fd1fc55701c33b69d1da96223c82d74a401888c9dbe19f25fdb8:29b6a286b9fba4b31a12368f65272175a13726359c31ccc6a622607f9c6f78da2a1cb4bc38e7020d689c01d4a3eea009da3057811b2da27bc94f9ee11d083d90&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;5adde88fa33aa4bdd7fe06134502c276698a472ddb80a616de4aabbb750fbb75:eacb5540133e8e88a98a7f4ee7ccfb25ed807140e3eafa77c5c4c7cd2358878e5482efb7553de275a4d10117258a09e720314423e6d30f947c1ad3b0357cd145&#39;}
 </pre></div>
 </div>
 </div>
@@ -460,7 +465,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;02084e21020c6e6baffeddb66711db865c06bd9368f31d9dd82be7af2114254f:5533e6f518a330733bd483584eea874e685c9c4bf3414acabd11ea2b1712837b6db239dc9c6e065b87c754c3f121959416b01c9c2f02876f6d3e571ea7504f1c&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;70b1fc62ce459fed1961a42abbcd36970732012b5e362a8f96afe5eca126db76:4bdc270bb35e4bc02c25461009196d816e95da68aa42b0a2b72c6ecd43a08f0601b13f1ddfb677ed86eff0f99492458ade9922e1360b0a51b8f84e8889700dd2&#39;}
 </pre></div>
 </div>
 </div>
@@ -499,7 +504,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>262 µs ± 1.94 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>223 µs ± 1.34 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </pre></div>
 </div>
 </div>
@@ -550,7 +555,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;b6c911e88c14afb2945ad068a484c0355c57dce07d00028259c81e77cf596a52:4cec781d083d2e3c4f2851ce54fad46b0c696703f2177dea7c41dfa11eb5f68a345c1cbdbb2eeaa339a9374e93d64055d56d2b0705b915a5be9dfa750927d978&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;58f8dc2d5f88b0868c6da7c4fff543e4b3864106100c6f4946a2ea9b3f3091ed:ce94d9bce0ff63bbfab3fecd206eb784e2aa2659e9b05666572a42e379df87faaaddd4defed2b5c942ad16266be148ec4c7b7db6474219eff06b92b18ba67a95&#39;}
 </pre></div>
 </div>
 </div>
@@ -589,12 +594,16 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>52.2 ms ± 377 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15.4 ms ± 13.5 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>Salts introduced a first layer of security on top of hashes but the hash + salt strategy is still vulnerable to parallelized brute-force attacks. Introducing a new secret sequence of bytes, called <strong>pepper</strong>, solves this issue. Peppers should be stored in a physically separated storage or not stored at all.</p>
 </div>
 </div>
 

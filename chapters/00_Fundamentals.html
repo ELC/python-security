@@ -41,8 +41,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/analytics.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
+    <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -281,13 +281,18 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#concepts">
-   Concepts
+  <a class="reference internal nav-link" href="#caveats">
+   Caveats
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#basic-concepts">
+   Basic Concepts
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#illustration">
-     Illustration
+    <a class="reference internal nav-link" href="#example">
+     Example
     </a>
    </li>
   </ul>
@@ -296,38 +301,6 @@
   <a class="reference internal nav-link" href="#techniques">
    Techniques
   </a>
-  <ul class="nav section-nav flex-column">
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#checksums">
-     Checksums
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#cryptographic-hashes">
-     Cryptographic Hashes
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#encryption">
-     Encryption
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#symmetric-encryption">
-     Symmetric Encryption
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#asymmetric-encryption">
-     Asymmetric Encryption
-    </a>
-   </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#digital-signature">
-     Digital Signature
-    </a>
-   </li>
-  </ul>
  </li>
 </ul>
 
@@ -342,38 +315,52 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-security">
 <h1>Introduction to Security<a class="headerlink" href="#introduction-to-security" title="Permalink to this headline">¶</a></h1>
+<p>This series of short chapters aims to showcase commonly used security concepts. In this document the foundational concepts are explained briefly and each chapter will extend them with code examples.</p>
 <div class="section" id="why-this-material">
 <h2>Why this material?<a class="headerlink" href="#why-this-material" title="Permalink to this headline">¶</a></h2>
-<p>The main objective of this material is to equip Python developers with the sufficient knowledge to understand on a high level key security concepts along with examples and must-knows. This is an educational material and <strong>NONE of the code shown should be considered production-ready</strong>.</p>
+<p>The main objective of this material is to equip software developers, especially Python ones, with the sufficient knowledge to understand on a high level key security concepts along with examples and must-knows. This is an educational material and <strong>NONE of the code shown should be considered production-ready</strong>.</p>
 <p>There are plently of resources online about security and cryptography in general, however this material has some features that may not be present elsewhere:</p>
 <ul class="simple">
 <li><p><strong>Quick Read</strong>: Each chapter is meant to be read in under 10 minutes.</p></li>
-<li><p><strong>Code-First</strong>: All the material is tiered towards a concrete Python Implementation.</p></li>
-<li><p><strong>Example-First</strong>: All topics covered have examples</p></li>
+<li><p><strong>Code-First</strong>: All the material is tiered towards a concrete code Implementation.</p></li>
+<li><p><strong>Example-First</strong>: All topics covered have examples.</p></li>
 <li><p><strong>Minimal-Dependencies</strong>: As much as possible the dependencies are kept to a minimum. Only PyCA Cryptography is needed as third party library.</p></li>
-<li><p><strong>No-Background needed</strong>: Only programming background (In Python) is needed.</p></li>
+<li><p><strong>No-Background needed</strong>: Only programming background (not necessarily in Python) is needed.</p></li>
 <li><p><strong>No-Math</strong>: The objective is to understand the methods on a high level, without low-level math.</p></li>
 </ul>
 </div>
-<div class="section" id="concepts">
-<h2>Concepts<a class="headerlink" href="#concepts" title="Permalink to this headline">¶</a></h2>
-<p>Security is a key concept in all software related projects, properly understanding and applying security best practices is key for the success of any project.</p>
-<p>In this context, there are some important concepts which could be summarized as follows:</p>
+<div class="section" id="caveats">
+<h2>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline">¶</a></h2>
+<p>This material follows a pragmatic approach and as such, some caveats should be taken into account:</p>
 <ul class="simple">
-<li><p>Privacy: verifies that the data is protected from unintended reading/understanding of unintended parties.</p></li>
-<li><p>Integrity: verifies that the data sent was the originally intented.</p></li>
-<li><p>Authenticity: verifies that the received data is from the expected source.</p></li>
-<li><p>Authentication: verifies that the receiver is the expected party to be sent data.</p></li>
+<li><p><strong>Not expert-making material</strong>: Reading this material will <strong>not</strong> make you a security expert by any means.</p></li>
+<li><p><strong>Not In-Depth</strong>: Since topics are covered in a very high level, many details are skipped, after reading this you will only have a grasp of the concepts, follow the references for further learning.</p></li>
+<li><p><strong>Not a cookbook</strong>: This are not copy-paste examples one can add to a codebase, code is just for illustration purposes.</p></li>
+<li><p><strong>Unvalidated</strong>: The material has <strong>not</strong> been written by a security expert, some details might be wrong or outdated.</p></li>
 </ul>
-<div class="section" id="illustration">
-<h3>Illustration<a class="headerlink" href="#illustration" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="basic-concepts">
+<h2>Basic Concepts<a class="headerlink" href="#basic-concepts" title="Permalink to this headline">¶</a></h2>
+<p>Security is a key concept in all software related projects, properly understanding and applying security best practices is critical for the success of any project.</p>
+<p>The following concepts summarized many of the goals of several security algorithms and techniques:</p>
+<ul class="simple">
+<li><p><strong>Privacy</strong>: the data is protected from reading/understanding of unintended parties.</p></li>
+<li><p><strong>Integrity</strong>: the data sent was the originally intented.</p></li>
+<li><p><strong>Authenticity</strong>: the received data is from the expected source.</p></li>
+<li><p><strong>Authentication</strong>: the receiver is the expected party to be sent data.</p></li>
+<li><p><strong>Non-Repudiation</strong>: the sender cannot deny that the data came from it.</p></li>
+</ul>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
 <p>An illustration to better understand the concepts might be:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Alice tries to log in a email server, writes her username and password and then she writes an email to Bob and sends it.
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>Alice logs into an email provider, writes her username and password and then she writes an email, providing Bob&#39;s email address as receipient and sending a bank statement downloaded from the bank Website.
 </pre></div>
 </div>
-<p>On Alice end: <strong>Privacy</strong> ensures Alice’s password is kept secret, <strong>Integrity</strong> ensures Bob receives what was originally written.
-On Bob end: <strong>Authentication</strong> ensures Bob is the only one who can read Alice’s email, <strong>Authenticity</strong> ensures the sender is Alice.</p>
-<p>There is however somo overlap between <strong>integrity</strong> and <strong>authenticity</strong> because “if one verifies the data is exactly the one intended, it likely implies it is from the expected source”</p>
+<p>This can be analysed from both perspectives:</p>
+<p>From Alice Perspective: The email provider gives <strong>Privacy</strong> to Alice by ensuring her password is kept secret. They also provide <strong>Integrity</strong> by delivering to Bob’s email address the same content she wrote, without any modifications.</p>
+<p>From Bob Perspective: The email provider gives <strong>Authentication</strong> by ensuring Bob is the only one who can read Alice’s email and <strong>Authenticity</strong> tells Bob the sender is Alice. Bob can also check the file, the bank website uses <strong>Non-Repudiation</strong> by digitally signing the file, that means that file could have only been generated by the bank, and no ones else.</p>
+<p>There is however somo overlap between <strong>integrity</strong> and <strong>authenticity</strong> because “if one verifies the data is exactly the one intended, it  implies it is from the expected source”. Moreover, even though the file pass through Alice before going to Bob, that did not altered the fact that the file came from the bank’s website, and since Alice did not tampered the file, Bob can be sure it is the original file.</p>
+<p>In this examples all the concepts are intertwined, but that is exactly how it happens in real scenarios, a plethora of techniques and algorithms are used together to ensure these security features.</p>
 </div>
 </div>
 <div class="section" id="techniques">
@@ -384,34 +371,11 @@ On Bob end: <strong>Authentication</strong> ensures Bob is the only one who can 
 <ul class="simple">
 <li><p><strong>Checksums</strong>: to provide <strong>Integrity</strong>.</p></li>
 <li><p><strong>Message authentication codes</strong>: to provide <strong>Integrity</strong> and <strong>Authenticity</strong>.</p></li>
-<li><p><strong>Digital Signature</strong>: to provide <strong>Integrity</strong>, <strong>Authenticity</strong> and <strong>Non-repudiation</strong>.</p></li>
+<li><p><strong>Digital Signature</strong>: to provide <strong>Integrity</strong>, <strong>Authenticity</strong> and <strong>Non-Repudiation</strong>.</p></li>
 <li><p><strong>Cryptographic Hashes</strong>: to provide <strong>Privacy</strong>.</p></li>
 <li><p><strong>Encryption</strong>: to provide <strong>Integrity</strong>, <strong>Authenticity</strong> and <strong>Privacy</strong>.</p></li>
 </ul>
-<div class="section" id="checksums">
-<h3>Checksums<a class="headerlink" href="#checksums" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="cryptographic-hashes">
-<h3>Cryptographic Hashes<a class="headerlink" href="#cryptographic-hashes" title="Permalink to this headline">¶</a></h3>
-<p>A cryptographic hash is a deterministic function that transforms the data in a <em>virtually irreversible</em> way and whose results changes drastically even for tiny modifications in its input. This functions usually have fixed length but there are also variable length implementations.</p>
-<p>Some important properties to be considered cryptoghraphic safe is that, given a hashed data, the only feasible way to get the original data is to brute-force all possible inputs.</p>
-<p>Since only with the original data one can get the same hash, this functions provides <strong>Privacy</strong>, since storing hashed data protects the original data.</p>
-</div>
-<div class="section" id="encryption">
-<h3>Encryption<a class="headerlink" href="#encryption" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="symmetric-encryption">
-<h3>Symmetric Encryption<a class="headerlink" href="#symmetric-encryption" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="asymmetric-encryption">
-<h3>Asymmetric Encryption<a class="headerlink" href="#asymmetric-encryption" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="digital-signature">
-<h3>Digital Signature<a class="headerlink" href="#digital-signature" title="Permalink to this headline">¶</a></h3>
-<p>A digital signature is a piece of information that, it is produced by two components, the data and a secret. The technique consist in transforming the data using the secret such that only a party with the secret could produce the same result.</p>
-<p>Its result (the signature) is usually similar to a cryptographic hash in a sense that, even tiny modifications in either the data or the secret will produce drastically different signatures. This is typically combined with asymmetric encryption, where two keys are used, the private key is used to “sign” the data and the public key to “verify” the signature.</p>
-<p>The data used is usually public and therefore, this techinique <strong>does not provide Privacy</strong>, it is used when the integrity of the data and the sender should be verified.</p>
-</div>
+<p>Each of the upcoming chapters will examine these topics in detail with code examples.</p>
 </div>
 <div class="toctree-wrapper compound">
 </div>

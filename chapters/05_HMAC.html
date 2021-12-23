@@ -41,8 +41,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/analytics.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
+    <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -287,6 +287,11 @@
   </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hmac-checksums">
+   HMAC != Checksums
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#generating-hmac">
    Generating HMAC
   </a>
@@ -309,6 +314,11 @@
    <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#correct-message-and-key">
      Correct Message and Key
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conclusion">
+     Conclusion
     </a>
    </li>
   </ul>
@@ -345,6 +355,10 @@
 <h2>HMAC != Hashes + Salt (+ Pepper)<a class="headerlink" href="#hmac-hashes-salt-pepper" title="Permalink to this headline">¶</a></h2>
 <p>HMAC is a method that combines a <strong>secret key</strong> and the original message in such a way that, if changing the key, the message will also change. At first, it may seem that this key is analogous to a salt or a pepper when hashing but the main difference is that the key is not simply appended/preppended to the message but rather mixed in a cryptographically secure way.</p>
 <p>Moreover salts are public whereas HMAC keys are not and pepper could be re-discovered whereas HMAC should not.</p>
+</div>
+<div class="section" id="hmac-checksums">
+<h2>HMAC != Checksums<a class="headerlink" href="#hmac-checksums" title="Permalink to this headline">¶</a></h2>
+<p>While both checksums and HMACs provides integrity, the main difference is that checksums has no password/key protection and hence a given input will always have the same output, whereas in HMACs the output depends on both the input and the password/key.</p>
 </div>
 <div class="section" id="generating-hmac">
 <h2>Generating HMAC<a class="headerlink" href="#generating-hmac" title="Permalink to this headline">¶</a></h2>
@@ -450,6 +464,10 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
+<p>HMACs are a sequence of bytes that can only be produced with a given input and a password/key, the input message is generally public and the HMAC serves as means of integrity, without requiring a secure channel. The drawback is that the passwrod/key itself should be delivered by a secure channel to begin with.</p>
 </div>
 </div>
 </div>

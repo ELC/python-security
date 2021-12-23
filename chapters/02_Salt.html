@@ -41,8 +41,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/analytics.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
+    <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -337,6 +337,11 @@
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -350,9 +355,9 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="salt">
 <h1>Salt<a class="headerlink" href="#salt" title="Permalink to this headline">¶</a></h1>
-<p>In the case of data that tend to be similar for different users (for example, common used passwords), if the database with all hashes is compromised, an attacker could see if any of the hashes corresponds with a hash from a pre-computed table, examples of this are <a class="reference external" href="https://en.wikipedia.org/wiki/Rainbow_table">Rainbow Attacks</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Dictionary_attack">Dictionary Attacks</a>.</p>
+<p>In the case of data that tend to be similar for different users (e.g. common used passwords), if the database with all hashes is compromised, an attacker could see if any of the hashes corresponds with a hash from a pre-computed table, examples of this are <a class="reference external" href="https://en.wikipedia.org/wiki/Rainbow_table">Rainbow Attacks</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Dictionary_attack">Dictionary Attacks</a>.</p>
 <p>If a random array of bytes is added to the data to be hashed, then the results will not match any pre-computed table attackers might have. This also implies the array of random bytes should be provided along with the hash in order to validate the hash is correct. These bytes are called <strong>salt</strong> and they are not secret (i.e. they can be store in plain text). Even though one might think that salts should be kept secret, there are other vulnerabilities associated with <em>secret salts</em>, such as <a class="reference external" href="https://www.wikiwand.com/en/Length_extension_attack">Length Extension Attacks</a></p>
-<p>The hashlib module has the function <a class="reference external" href="https://docs.python.org/3/library/hashlib.html#hashlib.scrypt">scrypt</a>, which provides a convinient interface to add salts to hashes. This function is an implementation of the <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc7914.html">RFC 7914</a>, it was designed to be memory-intensive and prevent GPU, ASIC and FPGA attacks.</p>
+<p>The hashlib module has the function <a class="reference external" href="https://docs.python.org/3/library/hashlib.html#hashlib.scrypt"><code class="docutils literal notranslate"><span class="pre">scrypt</span></code></a>, which provides a convinient interface to add salts to hashes. This function is an implementation of the <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc7914.html">RFC 7914</a>, it was designed to be memory-intensive and prevent GPU, ASIC and FPGA attacks.</p>
 <p><strong>Note:</strong> Salt could be of any lenght, however a minimum of 128bits (10 bytes) is recommended.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
@@ -377,8 +382,8 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Original: b&#39;Hello World!&#39;
-     Hashed: 6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895c4272aea90cbc9f2234b9c4c65c5def922c80af19301d7a1f11113d55970dbec5faa3c571de5fa5f36
-Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895c4272aea90cbc9f2234b9c4c65c5def922c80af19301d7a1f11113d55970dbec5faa3c571de5fa5f36
+     Hashed: 8bbff44ba6b86eaedd564d89c88fb02afdd4159b5c9ba27c7a15ca3a71bcaeb559c107bbfdc366625b739db16537567a08fb25c6ea62428866ed0b1edd86d53c
+Salt+Hashed: dc2ce9c807a0c03c3506:8bbff44ba6b86eaedd564d89c88fb02afdd4159b5c9ba27c7a15ca3a71bcaeb559c107bbfdc366625b739db16537567a08fb25c6ea62428866ed0b1edd86d53c
 </pre></div>
 </div>
 </div>
@@ -403,7 +408,7 @@ Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n+r+pSalt+Hashed: 64$8$1$8429188b57377b10f312$0253e96a03d33274d587d9e9be25247664bec0bd048816c39c38ea08feba1cea22278ca361c1a88cf9e347af11017a1e00790cc9ccf2b43487341fa503622234
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n+r+pSalt+Hashed: 64$8$1$0474621db924c3d19ca9$4ddf77925ff23274cc47d7ddd599179455c2468660a65d9e982555b6aa027b71a88002054b42cff20b5df1426b748cfdb5d3ab57cfb4d6581d9b89b07c99bd74
 </pre></div>
 </div>
 </div>
@@ -436,7 +441,7 @@ Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 697b5470ff41da016c99:7363edcc
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 6c9c6ad135d7455192f8:860aec20
 </pre></div>
 </div>
 </div>
@@ -454,7 +459,7 @@ Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 354869bac9e277424d9b:4f21159cd435d9a250fe809c9ca7abfe
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 20c6b2efc2b16f89d87b:2b1331b1d85018068850b6f2d5e20cf0
 </pre></div>
 </div>
 </div>
@@ -472,7 +477,7 @@ Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: f272a75ae509611a829f:da86b86475a716085290323c9491f66e16177b3e041840fcb1c45722f248964a2c03d085c1de3e807f398d6cae5024f0f23cf404fbe3de9f6fb266c6ea3dcd5f
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: a7c2654aaa3249c4872d:aa1a34b064d2d045856c9ee7e16e1d9e86352a883d5b981c77d5a6ef23b125b0be7e06516b51565095af397fc2d8470b8fa72dac354b56867472543b4eff4aec
 </pre></div>
 </div>
 </div>
@@ -524,7 +529,7 @@ Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>252 µs ± 3.91 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>215 µs ± 53.3 ns per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </pre></div>
 </div>
 </div>
@@ -539,7 +544,7 @@ Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>14.1 ms ± 76.9 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.1 ms ± 201 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
@@ -554,7 +559,7 @@ Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56.8 ms ± 428 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>48.9 ms ± 504 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre></div>
 </div>
 </div>
@@ -564,6 +569,8 @@ Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895
 </div>
 <div class="section" id="example-user-authentication">
 <h2>Example: User Authentication<a class="headerlink" href="#example-user-authentication" title="Permalink to this headline">¶</a></h2>
+<p>The following example showcases how scrypt can be used to securely store passwords.</p>
+<p><strong>Note: Remember that this code is not suitable for any production use-case.</strong></p>
 <div class="section" id="auxiliary-functions">
 <h3>Auxiliary Functions<a class="headerlink" href="#auxiliary-functions" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
@@ -675,6 +682,10 @@ Salt+Hashed: dc6a7b09d5c5397e71ee:6cf918d20bdfe4c41f464221651c4e2e4a87ea72d42895
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>Hash algorithms themselves have a drawback, anyone can pre-compute most commonly use values and simply do a one by one comparison searching for matches. However, thanks to the small changes in input big changes in output feature of cryptographic hashes, simply adding some bytes to the data mitigates this risk by a great ammount. This bytes are called <strong>salt</strong>, they are public and stored along with the hash. One of the algorithms that uses it is <a class="reference external" href="https://docs.python.org/3/library/hashlib.html#hashlib.scrypt"><code class="docutils literal notranslate"><span class="pre">scrypt</span></code></a>, which is available in the standard library. This particular algorithm also allows customization of memory consumption/processing time.</p>
 </div>
 </div>
 

@@ -41,8 +41,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/analytics.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
+    <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -303,6 +303,16 @@
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#important-considerations-for-openssl">
+   Important Considerations for OpenSSL
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -316,6 +326,22 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-hash-functions">
 <h1>Introduction to Hash Functions<a class="headerlink" href="#introduction-to-hash-functions" title="Permalink to this headline">¶</a></h1>
+<p>Hashes are mathematical functions with certain properties:</p>
+<ul class="simple">
+<li><p>They map an variable length input to a fixed length output.</p></li>
+<li><p>Given a certain input, they produce the same output, i.e. they do not have randomness of any sort.</p></li>
+<li><p>They output is uniformly distributed across all possible values.</p></li>
+<li><p>The likelihood of collisions (two inputs having the same output) is minimized.</p></li>
+</ul>
+<p>An special case of hashes are <strong>cryptographic hashes</strong>, which in addition to the previous properties they have:</p>
+<ul class="simple">
+<li><p>It is fast to compute (otherwise impacting performance).</p></li>
+<li><p>Given a certain output it is unfeasible to reverse it and obtain the input (otherwise susceptible to <a class="reference external" href="https://en.wikipedia.org/wiki/Preimage_attack">pre-image attacks</a>).</p></li>
+<li><p>It is unfeasible to find two distinct inputs with the same output (otherwise susceptible to <a class="reference external" href="https://en.wikipedia.org/wiki/Preimage_attack">second pre-image attacks</a>).</p></li>
+<li><p>Small changes in the input changes the output drastically (otherwise susceptible to <a class="reference external" href="https://en.wikipedia.org/wiki/Birthday_attack">birthday attacks</a>).</p></li>
+</ul>
+<p>When any of this properties is not met, there is an attack that could be perform to crack the hash. Note that the word <strong>unfeasible</strong> is used instead of <strong>impossible</strong> that means that it is theoretically possible but not in any practical way, <a class="reference external" href="https://www.youtube.com/watch?v=S9JGmA5_unY">this video illustrates this notion of infeasibility</a>.</p>
+<p>In Python there are both functions for hashes and for cryptographic hashes.</p>
 <div class="section" id="built-in-hash-function">
 <h2>Built-In Hash Function<a class="headerlink" href="#built-in-hash-function" title="Permalink to this headline">¶</a></h2>
 <p>Python has a <a class="reference external" href="https://docs.python.org/3/library/functions.html#hash">built-in hash function</a> which is internally used by <a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#sets">sets</a> and <a class="reference external" href="https://docs.python.org/3/tutorial/datastructures.html#dictionaries">dictionaries</a>. However this is not a secure or cryptographic hash but rather a convient function to make use of the fast speed of <a class="reference external" href="https://en.wikipedia.org/wiki/Hash_table">HashTables</a>, the underlying data structure of sets and dictionaries.</p>
@@ -326,7 +352,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-2250748172898209754
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>7124421435061327210
 </pre></div>
 </div>
 </div>
@@ -351,7 +377,7 @@ Does 1 have the same hash as 1.0? True
 </div>
 <div class="section" id="hashlib-module">
 <h2>Hashlib Module<a class="headerlink" href="#hashlib-module" title="Permalink to this headline">¶</a></h2>
-<p>The <a class="reference external" href="https://docs.python.org/3/library/hashlib.html">hashlib module</a> uses the <a class="reference external" href="https://www.openssl.org/">OpenSSL</a> library under the hood and exposes several of its cryptographic hash functions.</p>
+<p>The <a class="reference external" href="https://docs.python.org/3/library/hashlib.html"><code class="docutils literal notranslate"><span class="pre">hashlib</span></code> module</a> uses the <a class="reference external" href="https://www.openssl.org/">OpenSSL</a> library under the hood and exposes several of its cryptographic hash functions.</p>
 <p>One of the particularities of most cryptographic-focused modules and libraries is that they work with low level objects, mainly <code class="docutils literal notranslate"><span class="pre">bytes</span></code> objects, instead of the high level built in types, such as lists, strings, custom objects, etc. Since working with Bytes is not for some Python developers, <a class="reference internal" href="91_Bytes.html"><span class="doc std std-doc">an appendix</span></a> is provided as a quick introduction.</p>
 <p>The Hashlib module exposes two ways to construct hashes, one is a simple function call and the other is implementing the <a class="reference external" href="https://en.wikipedia.org/wiki/Builder_pattern">Builder Pattern</a>, which is more object oriented.</p>
 <div class="cell docutils container">
@@ -371,7 +397,7 @@ Does 1 have the same hash as 1.0? True
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sm3, md5, sha3_224, whirlpool, sha3_512, sha512_224, sha384, blake2s, blake2b, md5-sha1, sha1, shake_128, shake_256, sha3_384, ripemd160, sha512, sha256, sha224, md4, sha512_256, sha3_256
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>sha256, md5, shake_128, md5-sha1, md4, sha224, sha512_224, ripemd160, sm3, sha1, whirlpool, sha384, sha3_224, blake2b, blake2s, sha512_256, shake_256, sha3_384, sha3_256, sha512, sha3_512
 </pre></div>
 </div>
 </div>
@@ -379,6 +405,7 @@ Does 1 have the same hash as 1.0? True
 </div>
 <div class="section" id="function-call">
 <h3>Function Call<a class="headerlink" href="#function-call" title="Permalink to this headline">¶</a></h3>
+<p>The way to use functions calls directly is to use the already exposed function (e.g. sha256, blake2s, etc.). This approach does not allow parametrization in a simple way and is more adecuate when the hash algorithm is not likely to change.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hash_object</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span><span class="p">)</span>
@@ -397,6 +424,7 @@ Hex Digest: 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069
 </div>
 <div class="section" id="object-instantiation">
 <h3>Object Instantiation<a class="headerlink" href="#object-instantiation" title="Permalink to this headline">¶</a></h3>
+<p>If instead the builder pattern is used, the hash algorithm is passed as a string, allowing for easy parametrization, this will also mean that the particular hash algorithm used should be saved somewhere because digests are not compatible across hash algorithms.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">hasher</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="s1">&#39;sha256&#39;</span><span class="p">)</span>
@@ -414,6 +442,14 @@ Hex Digest: 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="important-considerations-for-openssl">
+<h2>Important Considerations for OpenSSL<a class="headerlink" href="#important-considerations-for-openssl" title="Permalink to this headline">¶</a></h2>
+<p>When working in lightweight environments (e.g. Alpine Linux in a Docker Container), OpenSSL or some of its implementation might not be available. When using some specific environment, one should make sure the proper dependencies are installed and <strong>OpenSSL is not automatically installed with Python</strong>. Meaning it should be installed at the operating system level (apt-get, homebrew, chocolately, etc.).</p>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>The built-in <code class="docutils literal notranslate"><span class="pre">hash</span></code> function is useful for non-secure operations, such as fast look up in dictionaries, on the other hand the <code class="docutils literal notranslate"><span class="pre">hashlib</span></code> module provides cryptographic hash functions ready to use. It should be considered though that to use <code class="docutils literal notranslate"><span class="pre">hashlib</span></code> OpenSSL should be installed and that not all the exposed functions are actually secure (e.g. MD5 is considered insecure).</p>
 </div>
 </div>
 

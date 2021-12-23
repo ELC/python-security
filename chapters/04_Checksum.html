@@ -41,8 +41,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/analytics.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
+    <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -548,7 +548,7 @@ Checksum: 474547262
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1772</span><span class="o">/</span><span class="mf">3499109848.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1797</span><span class="o">/</span><span class="mf">3499109848.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> 
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">message_crc</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
@@ -689,8 +689,7 @@ Checksum Adler32: 208 ms ± 18.9 ms per loop (mean ± std. dev. of 7 runs, 1 loo
 </div>
 <div class="section" id="conclusion">
 <h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
-<p>As expected, cheksum functions are much faster than hash functions and Adler32 is around three times faster than CRC32.</p>
-<p>When cryptographic features are not needed, and speed is paramount, using Adler32 seems to be a good starting point.</p>
+<p>Checksum functions provide less guarantees than hashes but they are useful to provide integrity. In particular Adler32 is around three times faster than CRC32, and if cryptographic features are not needed, and speed is paramount, using checksum functions over hashes seems to be a good option. Many systems use hashes as checksums for compatibility reasons. In order to give true integrity, the checksum should be public or delivered by a secure channel to avoid man in the middle attacks.</p>
 </div>
 </div>
 </div>

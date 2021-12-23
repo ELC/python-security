@@ -41,8 +41,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/analytics.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
+    <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -376,6 +376,11 @@
      </li>
     </ul>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#conclusion">
+     Conclusion
+    </a>
+   </li>
   </ul>
  </li>
 </ul>
@@ -430,7 +435,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1808</span><span class="o">/</span><span class="mf">521767359.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1833</span><span class="o">/</span><span class="mf">521767359.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="kn">import</span> <span class="nn">secrets</span>
 <span class="ne">----&gt; </span><span class="mi">2</span> <span class="kn">import</span> <span class="nn">cryptography</span>
 
@@ -445,6 +450,10 @@
 <p>One of the most popular algorithms used is the <a class="reference external" href="https://en.wikipedia.org/wiki/Advanced_Encryption_Standard">Advanced Encryption Standard (AES)</a>. It works in combination with a <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation">Mode of Operation</a>, this modes change the way in which the cyphered message is generated.</p>
 <p>Depending on the mode, the result could be authenticated or non-authenticated. The available (in the cryptography module) modes for non-authenticated encryption are <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_block_chaining_(CBC)">CBC</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_feedback_(CFB)">CFB</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Output_feedback_(OFB)">OFB</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)">CTR</a>. For more information see <a class="reference external" href="https://www.highgo.ca/2019/08/08/the-difference-in-five-modes-in-the-aes-encryption-algorithm/">this resource</a>.</p>
 <p>Usually the name of the algorithm is called <strong>AES-MODE</strong> in this chapter for non-authenticated encryption <strong>AES-CTR</strong> will be used.</p>
+<p>AES is one of the symmetric encryption algorithms available in the PyCA <code class="docutils literal notranslate"><span class="pre">cryptography</span></code> library. The particular objects used here are part of the <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> package, <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> stands for “Hazardous Materials” and quoting from their <a class="reference external" href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/">site</a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>This is a “Hazardous Materials” module. You should ONLY use it if you’re 100% absolutely sure that you know what you’re doing because this module is full of land mines, dragons, and dinosaurs with laser guns.
+</pre></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.ciphers</span> <span class="kn">import</span> <span class="n">Cipher</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">modes</span>
@@ -643,6 +652,7 @@ Encrypted Message: c600518eb23b8c18964d8444235e8c758084bc87f559b84b:1f7d86f768ee
 <li><p><a class="reference external" href="https://www.npmjs.com/package/fernet">Javascript (Node)</a>.</p></li>
 </ul>
 <p>This method also allows the usage of <strong>passwords (human-readable)</strong> instead of random bytes as keys, see <a class="reference external" href="https://cryptography.io/en/latest/fernet/#using-passwords-with-fernet">this example</a> for more information.</p>
+<p>The Fernet algorithm is not part of the <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> package and then it is meant to be use as a developer friendly approach to symmetric encryption.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.fernet</span> <span class="kn">import</span> <span class="n">Fernet</span>
@@ -721,6 +731,10 @@ Encrypted Message: 67414141414142686d384955396d3075646c3055423662675f4e795751303
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="conclusion">
+<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
+<p>Symmetric encryption provides a way to hide the original information in a reversible way. When using authenticated algorithms, if the encrypted message is modified, when decrypted, the output will be have no sense. Authenticated algorithms can detect changes and throw errors. There are many implementations of symmetric algorithms, many are low-level like AES but are more cross-platform whereas other such as Fernet have a more user-friendly approach but are only avaiable in certain programming languages.</p>
 </div>
 </div>
 </div>

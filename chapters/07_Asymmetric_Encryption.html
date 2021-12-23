@@ -41,8 +41,8 @@
     <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
-    <script src="../_static/analytics.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
+    <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
     <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
     <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
@@ -277,6 +277,28 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#public-key-encryption-certificate-based-communication">
+   Public Key Encryption != Certificate Based Communication
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example">
+     Example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#practical-example">
+     Practical Example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-certificates-implementation-considerations">
+     Using Certificates - Implementation Considerations
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#rsa">
    RSA
   </a>
@@ -299,18 +321,30 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#using-pem-files-for-keys">
-   Using PEM Files for Keys
+  <a class="reference internal nav-link" href="#using-pem-files">
+   Using PEM Files
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#storing-the-keys">
-     Storing the Keys
+    <a class="reference internal nav-link" href="#storing-the-keys-as-pem-files">
+     Storing the Keys as PEM Files
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#saving-private-key">
+       Saving Private Key
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#saving-public-key">
+       Saving Public Key
+      </a>
+     </li>
+    </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#loading-the-keys">
-     Loading the Keys
+    <a class="reference internal nav-link" href="#loading-pem-files">
+     Loading PEM Files
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
@@ -326,23 +360,28 @@
     </ul>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#testing-keys">
-     Testing Keys
+    <a class="reference internal nav-link" href="#encryption-and-decryption-using-pem-files">
+     Encryption and Decryption using PEM Files
     </a>
     <ul class="nav section-nav flex-column">
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id1">
+      <a class="reference internal nav-link" href="#id2">
        Encrypting
       </a>
      </li>
      <li class="toc-h4 nav-item toc-entry">
-      <a class="reference internal nav-link" href="#id2">
+      <a class="reference internal nav-link" href="#id3">
        Decrypting
       </a>
      </li>
     </ul>
    </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
  </li>
 </ul>
 
@@ -357,8 +396,61 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="asymmetric-encryption">
 <h1>Asymmetric Encryption<a class="headerlink" href="#asymmetric-encryption" title="Permalink to this headline">¶</a></h1>
+<p>Asymmetric encryption does not have passwords or keys like symmetric but rather it splits the security into a pair of keys, one used to encrypt (usually called Public Key) and another used to decrypt (usually call Private Key). As the name implies one can be shared publicly and the other should be kept secret. This method is also known as <a class="reference external" href="https://en.wikipedia.org/wiki/Public-key_cryptography"><strong>Public-key cryptography</strong></a>.</p>
+<p>The keys are sequences of bytes generated together and are mathematically linked, they are also called “Key Pair”. Each party in the communication should have its own key pair and have their Public Keys shared. This means that there is no need for a “secure channel” to exchange keys as in symmetric encryption since the Public key are by design sharable.</p>
+<p>This type of encryption is used nowadays in many applications, ranging from the commonplace SSH protocol to the trendy Bitcoin transactions.</p>
+<p>A party can generate as many Key Pairs as needed, meaning that, in case of a Private Key being compromised, a new Key Pair can be generated.</p>
+<div class="section" id="public-key-encryption-certificate-based-communication">
+<h2>Public Key Encryption != Certificate Based Communication<a class="headerlink" href="#public-key-encryption-certificate-based-communication" title="Permalink to this headline">¶</a></h2>
+<p>One way to implement Public Key Encryption is through <a class="reference external" href="https://en.wikipedia.org/wiki/Public_key_certificate"><strong>Certificates</strong></a>, a certificate is something bigger in scope than the Key Pair because the Key Pair is simply two sequences of bytes whereas the certificate includes not only the public key but also information about the algorithm, versioning, subject and issuer information and so on.</p>
+<p>Therefore, a Key Pair is enough to encrypt and decrypt but a certificate has metadata and additional information to establish a <strong>secure channel of communication</strong>. One of the most widely used algorithms for Public Key Encryption is <a class="reference external" href="https://en.wikipedia.org/wiki/RSA_(cryptosystem)"><code class="docutils literal notranslate"><span class="pre">RSA</span></code></a> and the current standard for certificate is <a class="reference external" href="https://en.wikipedia.org/wiki/X.509"><code class="docutils literal notranslate"><span class="pre">X.509</span></code></a> (which uses RSA Public Key Encryption). Certificate based communication is used in most website, the key indicator is the use of TLS, more commonly reflected by the use of HTTPS (instead of HTTP).</p>
+<p>Some of the information a certificate contains is:</p>
+<ul class="simple">
+<li><p>Information about the <strong>identity</strong> (Email, Organization Name, Country, State, <a class="reference external" href="https://en.wikipedia.org/wiki/Certificate_signing_request#Procedure">among others</a>) of who generated the Public Key (the subject).</p></li>
+<li><p>A <strong>digital signature</strong> <a class="footnote-reference brackets" href="#id4" id="id1">1</a> that validates the identity information is correct and it corresponds to the subject.</p></li>
+</ul>
+<p>The drawback of this approach is that nothing impedes an attacker to sign their own certificates, i.e. anyone can claim being anyone else. These are the so-called <a class="reference external" href="https://en.wikipedia.org/wiki/Self-signed_certificate">self-signed certificates</a>. To avoid that, the signature should come from a trusted third party, known as <a class="reference external" href="https://en.wikipedia.org/wiki/Certificate_authority"><strong>Certificate Authority</strong></a>. It needs to be an independent and trusted-by-everyone party that validates the identity of who is generating the Public Key. This is necessary if the subject is unknown or could not be trusted.</p>
+<p>When the subject acts as its own CA, generating a self-signed certificate, it triggers warnings in most environments, e.g. most programming libraries will throw validation errors. Web browsers will consider a self-signed certificate to be <strong>insecure</strong>. It is not a matter of security (i.e. the data will be encrypted anyway) but rather a matter of trust, trusting that the received Public Key comes from the intended subject and that there is no other man-in-the-middle.</p>
+<p>For debugging and testing, self-signed certificates are usually not a concern, for all other use cases, a certificate signed by a CA should be used.</p>
+<p>To get a certificate signed by a CA, one has to submit a <a class="reference external" href="https://en.wikipedia.org/wiki/Certificate_signing_request"><strong>Certificate Signing Request</strong></a>, it normally takes several days and it is usually paid service, they also validate that the identity information corresponds to the one asking for the validation. A CA will not sign certificates to anyone on behalf of anyone else, i.e. I cannot get a CA signing a certificate saying I am Google.</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<p>When logging in a service (e.g. email), one enters a username and a password. It is desired that the password travels encrypted through internet, so that no one can read it but the service provider. To encrypt that, certificate based communication is used, the Public Key is used to encrypt the password and then the service provider can use its private key to read it.</p>
+<p>That being said, what happens if the Public Key used does not come from the service provider and instead was injected by an attacker’s Key Pair? They would have a corresponding Private Key with which they can see the password (and then if needed redirect to the real service provider).</p>
+<p>That is when Certificate Authorities come in, because the certificate will also include a digital signature saying “This is the public key for this service provider”. Attackers can mimic Public Keys from any subject, however, they cannot bypass the digital signature, because everyone can verify if a digital signature comes from a CA or not.</p>
+</div>
+<div class="section" id="practical-example">
+<h3>Practical Example<a class="headerlink" href="#practical-example" title="Permalink to this headline">¶</a></h3>
+<p>This particular site has <strong>HTTPS</strong> with a certificate signed by <a class="reference external" href="https://www.digicert.com/">DigiCert</a>, one of many Certificate Authorities.</p>
+<center>
+<img src="images/certificate_CA_example.png">
+</center>
+<p>When opened, some details are shown</p>
+<center>
+<img src="images/certificate_details.png">
+</center>
+<p>However, something might draw special attention, it says “<strong>Issued to</strong>: www.github.com” but the site is <a class="reference external" href="https://elc.github.io/"><strong>elc.github.io</strong></a>. If we inspect the details, we can see that the <strong>Issuer</strong> is the CA, the <strong>Subject</strong> is Github and the there is an special field called <strong>Subject Alternative Name</strong>, there one of the DNS Names is <strong>*.github.io</strong> which is compatible which this site URL. Therefore, the browser knows the certificate is from Github, validated by DigiCert and even though the URL is not Github’s it is under one of the registered alternative names.</p>
+<center>
+<img src="images/certificate_details_dns.png">
+</center></div>
+<div class="section" id="using-certificates-implementation-considerations">
+<h3>Using Certificates - Implementation Considerations<a class="headerlink" href="#using-certificates-implementation-considerations" title="Permalink to this headline">¶</a></h3>
+<p>Some times the process of getting a signed certificate might be troublesome or tedious, fortunately there are shortcuts:</p>
+<ul class="simple">
+<li><p>Using a hosting service that provides HTTPS out of the box (e.g. Github Pages does it freely)</p></li>
+<li><p>Outsourcing the certificate request (e.g. Most cloud providers will do that on our behalf)</p></li>
+<li><p>Using hosted services (e.g. Azure Web Apps comes with HTTPS support)</p></li>
+</ul>
+<p>It is usually useful to work in layers, many times one can have a gateway server (Apache, Nginx or similar) that takes care of the TLS connection (certificate based communications) while the underlying application use it seemlessly. Meaning there is no code change needed on the application side.</p>
+<p>The following examples will focus on the Public Key Encryption without the CA signing process for simplicity. To implement a certificate signed by a CA, <a class="reference external" href="https://cryptography.io/en/latest/x509/tutorial">follow the official tutorial</a>. However, <strong>unless being supported by a security expert it is always recommended to trust hosted/managed services instead of doing security from scratch</strong>.</p>
+</div>
+</div>
 <div class="section" id="rsa">
 <h2>RSA<a class="headerlink" href="#rsa" title="Permalink to this headline">¶</a></h2>
+<p>RSA is one of the asymmetric encryption algorithms available in the PyCA cryptography library. The particular objects used here are part of the <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> package, <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> stands for “Hazardous Materials” and quoting from their <a class="reference external" href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/">site</a>:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>This is a “Hazardous Materials” module. You should ONLY use it if you’re 100% absolutely sure that you know what you’re doing because this module is full of land mines, dragons, and dinosaurs with laser guns.
+</pre></div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
@@ -369,7 +461,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1828</span><span class="o">/</span><span class="mf">758462445.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1851</span><span class="o">/</span><span class="mf">758462445.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span><span class="p">,</span> <span class="n">padding</span>
 
@@ -380,11 +472,14 @@
 </div>
 <div class="section" id="generating-keys">
 <h3>Generating Keys<a class="headerlink" href="#generating-keys" title="Permalink to this headline">¶</a></h3>
+<p>The first step is to generate the private key, for that two parameters are needed the <code class="docutils literal notranslate"><span class="pre">public_exponent</span></code> and the <code class="docutils literal notranslate"><span class="pre">key_size</span></code>. The former should be fixed to <code class="docutils literal notranslate"><span class="pre">65537</span></code> whereas the second can be changed and as per modern security standards it should be at least <code class="docutils literal notranslate"><span class="pre">2048</span></code>. Then the Public Key is generated from the private Key object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span>
-    <span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span>
-    <span class="n">key_size</span><span class="o">=</span><span class="mi">2048</span><span class="p">,</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">key_size</span> <span class="o">=</span> <span class="mi">2048</span>  <span class="c1"># Should be at least 2048</span>
+
+<span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span>
+    <span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span>  <span class="c1"># Do not change</span>
+    <span class="n">key_size</span><span class="o">=</span><span class="n">key_size</span><span class="p">,</span>
 <span class="p">)</span>
 
 <span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
@@ -413,7 +508,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 4ff0ef97f2350a89d83d25d77fee64af5b3a154536a6e70e34802a9a140e45c388693cba9417dbca73c38a5dc4a840dc5d7f184b93f6986f4a28e64bfb6e5c772eec1037a8e78381cedc85c119ff08c20632537fd31779b1fee129ab0466399b8b3a5d768580e3af9eeb75cbe3f1277e9d02a75186c7991b904346e8926501f7bbc3a9743c90ae82a4d9b88ccbfd258adce4a641219b45681479e50b4c5fff24db480faed2647587e319ae8adc629a8ae3069608a61556f7c1b2ad6147b2cd8d5de2d9858399b145df0ed6948d4783f8d3f6be56adf387d99ce2d2d0b8aa1fee08b50a533d9e077d37f09d7f379fe80ebf88271afcfbb579c9a7fc409a7a7616
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 52a643e71a32707517fd5ba144de0a4a53ad2c74b0a6d1569ade22b1237619acf646eed8fc3703b1f3e0ebf0c6fa62a42d88ba0fe61815904a81e50c0e16999d0dcf0f00ad6724bc5c40d2a7109da8c4e2f7f0c887201ed150439b21ca7a0d4dc4c6bfca7c4b6f3909b439951af10918fd4464af5dac0d90cf4531a3df85808fd266947d3ca653db713a6b8092c24861f04d9d11ab64340b1f50cad40aba16225c5d9af06025ccda6cb0d3a1b618333d0f16f1af059203f84a5c17566f76e1d15120451d6ce0a1966c47f7f8090c178602e37f42d9f912a3cfc0dfb6409edf2cac8006d010ba1a6158a84ac7e5036a046c10f03bdbba7a6e9f5e8a7e0a940508
 </pre></div>
 </div>
 </div>
@@ -444,8 +539,10 @@
 </div>
 </div>
 </div>
-<div class="section" id="using-pem-files-for-keys">
-<h2>Using PEM Files for Keys<a class="headerlink" href="#using-pem-files-for-keys" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="using-pem-files">
+<h2>Using PEM Files<a class="headerlink" href="#using-pem-files" title="Permalink to this headline">¶</a></h2>
+<p>Public Keys, Private Keys and certificates can be saved as files, in that case the <a class="reference external" href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">Privacy-Enhanced Mail (PEM)</a> format is used. Those are files with suffix <code class="docutils literal notranslate"><span class="pre">.pem</span></code>, <code class="docutils literal notranslate"><span class="pre">.cer</span></code>, <code class="docutils literal notranslate"><span class="pre">.cert</span></code> or <code class="docutils literal notranslate"><span class="pre">.crt</span></code>. They have a characteristic <code class="docutils literal notranslate"><span class="pre">BEGIN</span></code> and <code class="docutils literal notranslate"><span class="pre">END</span></code> line which encloses the content. Since a key pair is a sequence of bytes, base64 is used to convert those to string.</p>
+<p>The extension is just to tell the content but the PEM format is a plain-text file, i.e. it can be opened with any text editor.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -455,50 +552,96 @@
 </div>
 </div>
 </div>
-<div class="section" id="storing-the-keys">
-<h3>Storing the Keys<a class="headerlink" href="#storing-the-keys" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="storing-the-keys-as-pem-files">
+<h3>Storing the Keys as PEM Files<a class="headerlink" href="#storing-the-keys-as-pem-files" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="saving-private-key">
+<h4>Saving Private Key<a class="headerlink" href="#saving-private-key" title="Permalink to this headline">¶</a></h4>
+<p>The PEM file for the private key <strong>should be kept secret</strong> and never shared, the <strong>whole asymmetric encryption depends on it being hidden</strong>.</p>
+<p>Because the <a class="reference external" href="https://en.wikipedia.org/wiki/PKCS_8">Public-Key Cryptography Standards (PKCS) #8 (<code class="docutils literal notranslate"><span class="pre">PKCS8</span></code>)</a> is used as the serialization format, the private key is not stored in raw bytes but rather it is encrypted using symmetric encryption. The symmetric algorithm used is <a class="reference external" href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>. Therefore, in theory there should not be any risks if the files is leaked, that being said, sharing private key files is against all good practices.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">password</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;my secret&quot;</span>
 
-<span class="n">encoding</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span>
-<span class="n">format_private</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">PrivateFormat</span><span class="o">.</span><span class="n">PKCS8</span>
-<span class="n">algorithm</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">BestAvailableEncryption</span><span class="p">(</span><span class="n">password</span><span class="p">)</span>
-
-<span class="n">key_pem</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">private_bytes</span><span class="p">(</span>
-   <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
-   <span class="nb">format</span><span class="o">=</span><span class="n">format_private</span><span class="p">,</span>
-   <span class="n">encryption_algorithm</span><span class="o">=</span><span class="n">algorithm</span><span class="p">,</span>
+<span class="n">key_pem_bytes</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">private_bytes</span><span class="p">(</span>
+   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>  <span class="c1"># PEM Format is specified</span>
+   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PrivateFormat</span><span class="o">.</span><span class="n">PKCS8</span><span class="p">,</span>
+   <span class="n">encryption_algorithm</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">BestAvailableEncryption</span><span class="p">(</span><span class="n">password</span><span class="p">),</span>
 <span class="p">)</span>
 
-<span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
-
-<span class="n">format_public</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">PublicFormat</span><span class="o">.</span><span class="n">SubjectPublicKeyInfo</span>
-
-<span class="n">public_pem</span> <span class="o">=</span> <span class="n">public_key</span><span class="o">.</span><span class="n">public_bytes</span><span class="p">(</span>
-   <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
-   <span class="nb">format</span><span class="o">=</span><span class="n">format_public</span><span class="p">,</span>
-<span class="p">)</span>
-
+<span class="c1"># Filename could be anything</span>
 <span class="n">key_pem_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;key.pem&quot;</span><span class="p">)</span>
-<span class="n">key_pem_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">key_pem</span><span class="p">)</span>
+<span class="n">key_pem_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">key_pem_bytes</span><span class="p">);</span>
 
-<span class="n">public_pem_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;public.pem&quot;</span><span class="p">)</span>
-<span class="n">public_pem_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">public_pem</span><span class="p">)</span>
+<span class="n">warning_message</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">     TRUNCATED CONTENT TO REMIND THIS SHOULD NOT BE SHARED</span><span class="se">\n</span><span class="s2">&quot;</span>
+
+<span class="n">content</span> <span class="o">=</span> <span class="n">key_pem_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="n">content</span> <span class="o">=</span> <span class="n">content</span><span class="p">[:</span><span class="mi">232</span><span class="p">]</span> <span class="o">+</span> <span class="n">warning_message</span> <span class="o">+</span> <span class="n">content</span><span class="p">[</span><span class="mi">1597</span><span class="p">:]</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">content</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>451
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----BEGIN ENCRYPTED PRIVATE KEY-----
+MIIFLTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIOmcnePGVUgkCAggA
+MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBB+ac/2DQgW64toFlxGQbf0BIIE
+0MRARXl0T3SAzEh1IzmrYfGHZDJXv8dVunjRVTbCky8IuCzztHLsP06YQnM/KEnW
+
+     TRUNCATED CONTENT TO REMIND THIS SHOULD NOT BE SHARED
+
+yAD4jKkUo5ypvtXbsAXy0DssarPHQSkOKgziItRAb3au7gjgBkZN5BT1MNvaBpHg
+oOknekFchNR+Y/FmiDX7Pcw80fBoeI8dn2QgpCA6vTeiLCYRGnnl10wkakyF/Pl/
+vYMvXFDh6nCOE6vUkQs6m46l3ZJkluTXGRsQYn4bJwhG+6ONhYvJ7k0IJgDKLRmm
+VY3UT9mP/sk1q8WmW1+qhbI/CFS/Raq7Stfc/fxLb8E7
+-----END ENCRYPTED PRIVATE KEY-----
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="loading-the-keys">
-<h3>Loading the Keys<a class="headerlink" href="#loading-the-keys" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="saving-public-key">
+<h4>Saving Public Key<a class="headerlink" href="#saving-public-key" title="Permalink to this headline">¶</a></h4>
+<p>The PEM file for the public key will be part of a public certificate which will be send to everyone wanting to comunicate with the subject. <strong>There is no risk sharing this</strong>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
+
+<span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">public_key</span><span class="o">.</span><span class="n">public_bytes</span><span class="p">(</span>
+   <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
+   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PublicFormat</span><span class="o">.</span><span class="n">SubjectPublicKeyInfo</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="c1"># Filename could be anything</span>
+<span class="n">public_pem_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;public.pem&quot;</span><span class="p">)</span>
+<span class="n">public_pem_path</span><span class="o">.</span><span class="n">write_bytes</span><span class="p">(</span><span class="n">public_pem_bytes</span><span class="p">);</span>
+
+<span class="n">public_key_content</span> <span class="o">=</span> <span class="n">public_pem_path</span><span class="o">.</span><span class="n">read_text</span><span class="p">()</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">public_key_content</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----BEGIN PUBLIC KEY-----
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3jq5qPmNS+wMFp1Lhu7K
+yBm/9IgKa0aO8QlT2ZgkJZTzqxcliswQzuQEpZzZEzOkEbUEfGRPAWTSJuu4KnfK
+J+6Kn47X3d/YoUq6N2rZEP03mJSqEf3tC1in8bwWO/3IPNv0R28FZIwdRxZxhvvs
+VcTc6LRLu9i8t7A5zq41sBNetUEY4SObv4UBatz6/+SlDO2hJWCN6wx1b2OS4pxy
+COWQtgV1KqPyozBuX6wdLMWk1/yGRd7WHPXZKx07smltkxzu7FII/JYj4Nfoh77Q
+ujHI3a6IvQWIu+Mihj7QdHgzFfN0lJHm+nqwlz8+dqdXGbEgcjX5dn559dSkrUMn
+4QIDAQAB
+-----END PUBLIC KEY-----
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="loading-pem-files">
+<h3>Loading PEM Files<a class="headerlink" href="#loading-pem-files" title="Permalink to this headline">¶</a></h3>
+<p>PEM files can be loaded directly using the load methods, in the case of the private key, a password should be provided because the <code class="docutils literal notranslate"><span class="pre">PKCS8</span></code> was used to serialized it.</p>
 <div class="section" id="wrong-password">
 <h4>Wrong Password<a class="headerlink" href="#wrong-password" title="Permalink to this headline">¶</a></h4>
+<p>The <code class="docutils literal notranslate"><span class="pre">cryptography</span></code> library will throw <code class="docutils literal notranslate"><span class="pre">ValueError</span></code> if the password is incorrect</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_pem_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;key.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
@@ -507,11 +650,12 @@
 <span class="n">guess_password</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;my pass&quot;</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">private_key</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_private_key</span><span class="p">(</span>
-        <span class="n">private_pem_text</span><span class="p">,</span>
+    <span class="n">private_key_from_pem</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_private_key</span><span class="p">(</span>
+        <span class="n">private_pem_bytes</span><span class="p">,</span>
         <span class="n">password</span><span class="o">=</span><span class="n">guess_password</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">public_key</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_public_key</span><span class="p">(</span><span class="n">public_pem_bytes</span><span class="p">)</span>
+    <span class="n">public_key_from_pem</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_public_key</span><span class="p">(</span><span class="n">public_pem_bytes</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Keys Correctly Loaded&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incorrect Password&quot;</span><span class="p">)</span>
 </pre></div>
@@ -526,34 +670,45 @@
 </div>
 <div class="section" id="right-password">
 <h4>Right Password<a class="headerlink" href="#right-password" title="Permalink to this headline">¶</a></h4>
+<p>If the correct password is used, no errors should be thrown</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_pem_text</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;key.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_pem_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;key.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
 <span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;public.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
 
 <span class="k">try</span><span class="p">:</span>
-    <span class="n">private_key</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_private_key</span><span class="p">(</span>
-        <span class="n">private_pem_text</span><span class="p">,</span>
+    <span class="n">private_key_from_pem</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_private_key</span><span class="p">(</span>
+        <span class="n">private_pem_bytes</span><span class="p">,</span>
         <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
     <span class="p">)</span>
-    <span class="n">public_key</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_public_key</span><span class="p">(</span><span class="n">public_pem_bytes</span><span class="p">)</span>
+    <span class="n">public_key_from_pem</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_public_key</span><span class="p">(</span><span class="n">public_pem_bytes</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Keys Correctly Loaded&quot;</span><span class="p">)</span>
 <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
     <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Incorrect Password&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Keys Correctly Loaded
 </pre></div>
 </div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="testing-keys">
-<h3>Testing Keys<a class="headerlink" href="#testing-keys" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id1">
-<h4>Encrypting<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="encryption-and-decryption-using-pem-files">
+<h3>Encryption and Decryption using PEM Files<a class="headerlink" href="#encryption-and-decryption-using-pem-files" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id2">
+<h4>Encrypting<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<p>Only the Public Key is needed for Encryption</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
 
-<span class="n">message_encrypted</span> <span class="o">=</span> <span class="n">public_key</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
+<span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;public.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+<span class="n">public_key_from_pem</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_public_key</span><span class="p">(</span><span class="n">public_pem_bytes</span><span class="p">)</span>
+
+<span class="n">message_encrypted</span> <span class="o">=</span> <span class="n">public_key_from_pem</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
     <span class="n">message</span><span class="p">,</span>
     <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
         <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
@@ -567,17 +722,25 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 9b00e74a22ea4597bfa37cd53c575ad18a0c49867957de5b9dc10ec7e99545a3e90ef39e3481553581a853387287eca71de53b32cd6106f70bacf4311b23117cc46d5d0f949988278d8cdc22418fe8b5fbf704d66466f155fbdb3b88fb516278e35df663a28ef8eaa25c41c6a5e4954bbe32682fa761ad553b2a55ecda82b52d76ff56cb2c4daa6570539e57a6719ac6710ba9b6b4f66f90f75eb3088598e52b9f94805748ea5277dd3cf61903f160f638a126d944ebc0fbb49522428ca463f41b3839f9e762f02aceaa2c6b388f786de2f9834516abf38076f81154e566fa982217ad741b3929be812f2e6f108bc85d8e789e452421bcc0e45020e701bef020
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 3849a8acc1ab3ed9ad7c4f7a2af60616943254a2d85e6e1420c080f77234026f6895cf845ab7c04a096727d3ab8420ac16641c2917d0ba6189552dd0a8fe24c56d8af039dd4f3a9faa17393a584bbc9a1f5dbe7765dc45376e31ba33dcb1caa0e549d0df7070857548680023c1a03b70340ef3fa1cdb2e9b25769476b7fbdcaa285b6da0a4f8b0b4dbadc833204ea23cdc68a7b0f2b74f315071d08b92aa6098b996f74d49888d19bb78174d843943ccb0d2a6d0fe018d4de38f15829b1b624ad5d6fe50f2ccfecfc848b23f1fbfeee1c756b8a5e9e042576f27b26ad2fb7ae79481821326e71fe3f023f5d53cca795a7917a3cda2b790bcb513e7f2a7a758ea
 </pre></div>
 </div>
 </div>
 </div>
 </div>
-<div class="section" id="id2">
-<h4>Decrypting<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="id3">
+<h4>Decrypting<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<p>To decrypt, both the Private Key PEM file as well as the password used are needed. If any of the two is missing, the message could not be decrypted.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_pem_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;key.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+
+<span class="n">private_key_from_pem</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_private_key</span><span class="p">(</span>
+    <span class="n">private_pem_bytes</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">private_key_from_pem</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span>
     <span class="n">message_encrypted</span><span class="p">,</span>
     <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
         <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
@@ -598,6 +761,19 @@
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>As opposed to symmetric encryption, asymmetric encryption does not rely on a single key shared across parties. Instead, a Key Pair, consisting of a Public and a Private Key which are mathematically linked, is generated by each party, then the public keys are shared. The public key is used to encrypt the message and only the linked Private Key can decrypt it.</p>
+<p>For serialization and persistance Key Pairs can be stored in disk using the PEM format, for security reasons the Private Key PEM file is saved encrypted with symmetric encryption and hence requires a passphrase.</p>
+<p>Asymmetric Encryption is mostly used as part of a bigger technology called Certificates which provides not only access to the Public Key needed to encrypt the message but also information about the subject, the issuer and a digital signature (among other fields). Certificates could be self-signed (insecure or only suitable for testing) or signed by a trusted third party called Certificate Authority.</p>
+<p>The most widely used algorithm for Public Key Encryption is RSA and for Certificate Based Comunication is X.509</p>
+<hr class="footnotes docutils" />
+<dl class="footnote brackets">
+<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dd><p>Digital signature is the topic of the next chapter</p>
+</dd>
+</dl>
 </div>
 </div>
 
