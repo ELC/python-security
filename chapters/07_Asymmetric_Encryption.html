@@ -434,15 +434,15 @@
 <h3>Practical Example<a class="headerlink" href="#practical-example" title="Permalink to this headline">¶</a></h3>
 <p>This particular site has <strong>HTTPS</strong> with a certificate signed by <a class="reference external" href="https://www.digicert.com/">DigiCert</a>, one of many Certificate Authorities.</p>
 <center>
-<img src="../static_/images/certificate_CA_example.png">
+<img src="../_static/images/certificate_CA_example.png">
 </center>
 <p>When opened, some details are shown</p>
 <center>
-<img src="../static_/images/certificate_details.png">
+<img src="../_static/images/certificate_details.png">
 </center>
 <p>However, something might draw special attention, it says “<strong>Issued to</strong>: www.github.com” but the site is <a class="reference external" href="https://elc.github.io/"><strong>elc.github.io</strong></a>. If we inspect the details, we can see that the <strong>Issuer</strong> is the CA, the <strong>Subject</strong> is Github and the there is an special field called <strong>Subject Alternative Name</strong>, there one of the DNS Names is <strong>*.github.io</strong> which is compatible which this site URL. Therefore, the browser knows the certificate is from Github, validated by DigiCert and even though the URL is not Github’s it is under one of the registered alternative names.</p>
 <center>
-<img src="../static_/images/certificate_details_dns.png">
+<img src="../_static/images/certificate_details_dns.png">
 </center></div>
 <div class="section" id="using-certificates-implementation-considerations">
 <h3>Using Certificates - Implementation Considerations<a class="headerlink" href="#using-certificates-implementation-considerations" title="Permalink to this headline">¶</a></h3>
