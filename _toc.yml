@@ -19,9 +19,19 @@ parts:
       - file: chapters/06_Symmetric_Encryption
       - file: chapters/07_Asymmetric_Encryption
 
+  - caption: Threats
+    chapters:
+      - file: chapters/08_Input_Sanitization
+      - file: chapters/09_Common_Threats
+
   - caption: Applications
     chapters:
-      - file: chapters/08_JSON_Web_Token
+      - file: chapters/10_JSON_Web_Tokens
+      - file: chapters/19_Blockchain
+      
+  - caption: Additional Material
+    chapters:
+      - file: chapters/80_Additional_Resources
 
   - caption: Appendices
     chapters:
