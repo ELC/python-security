@@ -287,6 +287,11 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#other-usage-for-certificates">
+     Other usage for Certificates
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
     <a class="reference internal nav-link" href="#practical-example">
      Practical Example
     </a>
@@ -419,6 +424,12 @@
 <p>That being said, what happens if the Public Key used does not come from the service provider and instead was injected by an attacker’s Key Pair? They would have a corresponding Private Key with which they can see the password (and then if needed redirect to the real service provider).</p>
 <p>That is when Certificate Authorities come in, because the certificate will also include a digital signature saying “This is the public key for this service provider”. Attackers can mimic Public Keys from any subject, however, they cannot bypass the digital signature, because everyone can verify if a digital signature comes from a CA or not.</p>
 </div>
+<div class="section" id="other-usage-for-certificates">
+<h3>Other usage for Certificates<a class="headerlink" href="#other-usage-for-certificates" title="Permalink to this headline">¶</a></h3>
+<p>Another usage of certificates is <strong>User Authentication</strong>, in this case one organization can generate specific certificates for each user with all the authentication relevant information. The user can add that certificate to their operating system, and then when making a request only a user id (email, GUID or similar) should be provided.</p>
+<p>If the user id matches the information in the certificate and the signature of the certificate is valid (i.e. is was signed by the organization server), the user is consider authenticated and the request is processed.</p>
+<p>An example of such authentication mechanism in Flask can be seen in this <a class="reference external" href="https://github.com/ContinuumIO/flask-ssl-authentication">Anaconda Repo</a></p>
+</div>
 <div class="section" id="practical-example">
 <h3>Practical Example<a class="headerlink" href="#practical-example" title="Permalink to this headline">¶</a></h3>
 <p>This particular site has <strong>HTTPS</strong> with a certificate signed by <a class="reference external" href="https://www.digicert.com/">DigiCert</a>, one of many Certificate Authorities.</p>
@@ -461,7 +472,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1800</span><span class="o">/</span><span class="mf">758462445.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1777</span><span class="o">/</span><span class="mf">758462445.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span><span class="p">,</span> <span class="n">padding</span>
 
