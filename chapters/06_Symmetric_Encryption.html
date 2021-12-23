@@ -486,9 +486,9 @@
 <p>Depending on the mode, the result could be authenticated or non-authenticated. The available (in the cryptography module) modes for non-authenticated encryption are <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_block_chaining_(CBC)">CBC</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Cipher_feedback_(CFB)">CFB</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Output_feedback_(OFB)">OFB</a>, <a class="reference external" href="https://en.wikipedia.org/wiki/Block_cipher_mode_of_operation#Counter_(CTR)">CTR</a>. For more information see <a class="reference external" href="https://www.highgo.ca/2019/08/08/the-difference-in-five-modes-in-the-aes-encryption-algorithm/">this resource</a>.</p>
 <p>Usually the name of the algorithm is called <strong>AES-MODE</strong> in this chapter for non-authenticated encryption <strong>AES-CTR</strong> will be used.</p>
 <p>AES is one of the symmetric encryption algorithms available in the PyCA <code class="docutils literal notranslate"><span class="pre">cryptography</span></code> library. The particular objects used here are part of the <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> package, <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> stands for “Hazardous Materials” and quoting from their <a class="reference external" href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/">site</a>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>This is a “Hazardous Materials” module. You should ONLY use it if you’re 100% absolutely sure that you know what you’re doing because this module is full of land mines, dragons, and dinosaurs with laser guns.
-</pre></div>
-</div>
+<blockquote>
+<div><p>This is a “Hazardous Materials” module. You should ONLY use it if you’re 100% absolutely sure that you know what you’re doing because this module is full of land mines, dragons, and dinosaurs with laser guns.</p>
+</div></blockquote>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.ciphers</span> <span class="kn">import</span> <span class="n">Cipher</span><span class="p">,</span> <span class="n">algorithms</span><span class="p">,</span> <span class="n">modes</span>
@@ -520,9 +520,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 44dc3af99cdb8424dcecf42c3f923b101f35bfdfce3064ea7e118de9c3839462
-Public Initialization Vector: 219eea1f84171a00fbbcb640888f6669
-Encrypted Message: f2d78e577023332eac8e2d8b
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 767377546810137d5caf0b93b2eb2609886bb8ca5b4f844bdba5e122ab471f85
+Public Initialization Vector: 55c4ed369d845c0ac2713f2b36c0b0c5
+Encrypted Message: f08a22e74c2a4dc3e1195680
 </pre></div>
 </div>
 </div>
@@ -549,7 +549,7 @@ Encrypted Message: f2d78e577023332eac8e2d8b
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Decrypted Message: b&#39;\x05\xb27f:;&gt;&gt;\xb3:\x99\xbc&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Decrypted Message: b&#39;\xe9k#\xca\x11\x02&lt;E?o\xb8\xa3&#39;
 </pre></div>
 </div>
 </div>
@@ -610,9 +610,9 @@ Encrypted Message: f2d78e577023332eac8e2d8b
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: b1c051bd880c58e1ec7d40b17c21f4264c21be789f811cc7b6756686d905fc6b
-Public Nonce: 38166abf6b61dc9a153263bd8a841640199ff3c543e546bf
-Encrypted Message: 38166abf6b61dc9a153263bd8a841640199ff3c543e546bf:ef2aca0e152ff58cfb1a940394dd87b237f628265a9c34440b750cba
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 0fb0238bc47eb3505eeb62862460d64b37eb4ca9e71a351628ad3e45c40b0e10
+Public Nonce: c96f6cc92291cff77552b59b6ed282a198ba5b0e438b00fc
+Encrypted Message: c96f6cc92291cff77552b59b6ed282a198ba5b0e438b00fc:d9423aba1db36f963d957ec338761c7523a19edf7ea83b6f98998489
 </pre></div>
 </div>
 </div>
@@ -713,8 +713,8 @@ Encrypted Message: 38166abf6b61dc9a153263bd8a841640199ff3c543e546bf:ef2aca0e152f
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 6f35567274775241345951596265585f666f324237634a585f69566547575552716b705f4a77514d4241343d
-Encrypted Message: 6741414141414268784a72365176556c435f71674e6b514467647a7747456f437a4b6e6875653268376439725235544842466648744d523569724f774575646163794b37345948734b4a68316d72334e584f327436396c2d6d4e4b314771364450773d3d
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 2d334f5850374e5058676c59556848336d546551334c62556a7263504e75745f5f4a674d7a30745a7054513d
+Encrypted Message: 6741414141414268784a316c6f48335f4b5143764553484c5f2d47316b4c656b65426f3176636b344966625f796e5f4e345a7331784b767759364d756f694b546f5757477969586e6f412d456d4e4e464b43737a494e37534f6279474b36376851773d3d
 </pre></div>
 </div>
 </div>
