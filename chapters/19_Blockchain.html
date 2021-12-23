@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>&lt;no title&gt; &#8212; Python Security</title>
+    <title>BlockChain &#8212; Python Security</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -52,11 +52,11 @@
         const thebe_selector_output = ".output,.cell_output"
     </script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
-    <link rel="canonical" href="https://elc.github.com/python-security/chapters/08_JSON_Web_Token.html" />
+    <link rel="canonical" href="https://elc.github.com/python-security/chapters/19_Blockchain.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Appendix: The Bytes Data Type" href="91_Bytes.html" />
-    <link rel="prev" title="Asymmetric Encryption" href="07_Asymmetric_Encryption.html" />
+    <link rel="next" title="Additional Resources" href="80_Additional_Resources.html" />
+    <link rel="prev" title="JSON Web Tokens (JWT)" href="10_JSON_Web_Tokens.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -146,6 +146,52 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
+  Threats
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_Input_Sanitization.html">
+   Input Sanitization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_Common_Threats.html">
+   Common Threats
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Applications
+ </span>
+</p>
+<ul class="current nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_JSON_Web_Tokens.html">
+   JSON Web Tokens (JWT)
+  </a>
+ </li>
+ <li class="toctree-l1 current active">
+  <a class="current reference internal" href="#">
+   BlockChain
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Additional Material
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="80_Additional_Resources.html">
+   Additional Resources
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
   Appendices
  </span>
 </p>
@@ -206,7 +252,7 @@
         <!-- ipynb file if we had a myst markdown file -->
         
         <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/chapters/08_JSON_Web_Token.ipynb"><button type="button"
+        <a class="dropdown-buttons" href="../_sources/chapters/19_Blockchain.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
                 data-placement="left">.ipynb</button></a>
         <!-- Download PDF via print -->
@@ -226,7 +272,7 @@
                 data-toggle="tooltip" data-placement="left" title="Source repository"><i
                     class="fab fa-github"></i>repository</button></a>
         
-        <a class="edit-button" href="https://github.com/ELC/python-security/edit/source/chapters/08_JSON_Web_Token.ipynb"><button
+        <a class="edit-button" href="https://github.com/ELC/python-security/edit/source/chapters/19_Blockchain.ipynb"><button
                 type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
                 title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
     </div>
@@ -246,7 +292,7 @@
         aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
     <div class="dropdown-buttons">
         
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/08_JSON_Web_Token.ipynb"><button type="button"
+        <a class="binder-button" href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/19_Blockchain.ipynb"><button type="button"
                 class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
                 data-placement="left"><img class="binder-button-logo"
                     src="../_static/images/logo_binder.svg"
@@ -254,7 +300,7 @@
         
         
         
-        <a class="colab-button" href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/08_JSON_Web_Token.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
+        <a class="colab-button" href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/19_Blockchain.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
                 title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
                     src="../_static/images/logo_colab.png"
                     alt="Interact on Colab">Colab</button></a>
@@ -271,14 +317,6 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
-            </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="simple visible nav section-nav flex-column">
-</ul>
-
-            </nav>
         </div>
     </div>
 </div>
@@ -287,7 +325,10 @@
         
               <div>
                 
-  
+  <div class="tex2jax_ignore mathjax_ignore section" id="blockchain">
+<h1>BlockChain<a class="headerlink" href="#blockchain" title="Permalink to this headline">¶</a></h1>
+</div>
+
     <script type="text/x-thebe-config">
     {
         requestKernel: true,
@@ -313,17 +354,17 @@
         
             <!-- Previous / next buttons -->
 <div class='prev-next-area'> 
-    <a class='left-prev' id="prev-link" href="07_Asymmetric_Encryption.html" title="previous page">
+    <a class='left-prev' id="prev-link" href="10_JSON_Web_Tokens.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Asymmetric Encryption</p>
+            <p class="prev-next-title">JSON Web Tokens (JWT)</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="91_Bytes.html" title="next page">
+    <a class='right-next' id="next-link" href="80_Additional_Resources.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Appendix: The Bytes Data Type</p>
+        <p class="prev-next-title">Additional Resources</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

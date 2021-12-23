@@ -55,7 +55,7 @@
     <link rel="canonical" href="https://elc.github.com/python-security/chapters/07_Asymmetric_Encryption.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="&lt;no title&gt;" href="08_JSON_Web_Token.html" />
+    <link rel="next" title="Input Sanitization" href="08_Input_Sanitization.html" />
     <link rel="prev" title="Symmetric Encryption" href="06_Symmetric_Encryption.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -141,6 +141,52 @@
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
    Asymmetric Encryption
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Threats
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_Input_Sanitization.html">
+   Input Sanitization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_Common_Threats.html">
+   Common Threats
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Applications
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_JSON_Web_Tokens.html">
+   JSON Web Tokens (JWT)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="19_Blockchain.html">
+   BlockChain
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Additional Material
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="80_Additional_Resources.html">
+   Additional Resources
   </a>
  </li>
 </ul>
@@ -277,6 +323,11 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#public-key-encryption-digital-signature">
+   Public Key Encryption != Digital Signature
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#public-key-encryption-certificate-based-communication">
    Public Key Encryption != Certificate Based Communication
   </a>
@@ -304,8 +355,13 @@
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
-  <a class="reference internal nav-link" href="#rsa">
-   RSA
+  <a class="reference internal nav-link" href="#caveats-of-public-key-encryption">
+   Caveats of Public Key Encryption
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#rsa-encryption">
+   RSA Encryption
   </a>
   <ul class="nav section-nav flex-column">
    <li class="toc-h3 nav-item toc-entry">
@@ -322,6 +378,55 @@
     <a class="reference internal nav-link" href="#decrypting">
      Decrypting
     </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#using-unlinked-private-key">
+       Using unlinked Private Key
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#using-unlinked-public-key">
+       Using unlinked Public Key
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#using-original-private-key">
+       Using original Private Key
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#signing-message">
+     Signing Message
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#verifying-signature">
+     Verifying Signature
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tampered-message">
+       Tampered Message
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tampered-message-and-signature">
+       Tampered Message and Signature
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#unliked-public-key">
+       Unliked Public Key
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#original-message-signature-and-public-key">
+       Original Message, Signature and Public Key
+      </a>
+     </li>
+    </ul>
    </li>
   </ul>
  </li>
@@ -381,6 +486,23 @@
      </li>
     </ul>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#digital-signature-using-pem-files">
+     Digital Signature using PEM Files
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#signing-a-message">
+       Signing a Message
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Verifying Signature
+      </a>
+     </li>
+    </ul>
+   </li>
   </ul>
  </li>
  <li class="toc-h2 nav-item toc-entry">
@@ -405,6 +527,12 @@
 <p>The keys are sequences of bytes generated together and are mathematically linked, they are also called “Key Pair”. Each party in the communication should have its own key pair and have their Public Keys shared. This means that there is no need for a “secure channel” to exchange keys as in symmetric encryption since the Public key are by design sharable.</p>
 <p>This type of encryption is used nowadays in many applications, ranging from the commonplace SSH protocol to the trendy Bitcoin transactions.</p>
 <p>A party can generate as many Key Pairs as needed, meaning that, in case of a Private Key being compromised, a new Key Pair can be generated.</p>
+<div class="section" id="public-key-encryption-digital-signature">
+<h2>Public Key Encryption != Digital Signature<a class="headerlink" href="#public-key-encryption-digital-signature" title="Permalink to this headline">¶</a></h2>
+<p>The idea of a <a class="reference external" href="https://en.wikipedia.org/wiki/Digital_signature">Digital Signature</a> is basically reversing Public Key Encryption, that is, instead of encrypting messages that only the holder of the Private Key can decrypt, a message is encrypted with the Private Key so that everyone else can decrypt it using the Public Key. In this case, even though the message is encrypted, the word <strong>signature</strong> is used to represent that it is no secret. The signature itself has the same format as an encrypted message, it is a sequence of bytes.</p>
+<p>This scheme does not provide <strong>privacy</strong>, since everyone can decrypt the signature, but it provides <strong>Authentication</strong> (Only the holder of the Private Key could have signed this message) and in some context also legal <strong>Non-Repudiation</strong>. Some countries consider that digitally signed files/messages are subject to non-repudiation.</p>
+<p>The Key Pair is exactly the the same as the one used in Public Key Encryption, however the terminology changes to avoid confusion. If Public Key Encryption is an asymmetric analog as symmetric encryption, digital signatures can be thought of as an asymmetric analog of HMACs.</p>
+</div>
 <div class="section" id="public-key-encryption-certificate-based-communication">
 <h2>Public Key Encryption != Certificate Based Communication<a class="headerlink" href="#public-key-encryption-certificate-based-communication" title="Permalink to this headline">¶</a></h2>
 <p>One way to implement Public Key Encryption is through <a class="reference external" href="https://en.wikipedia.org/wiki/Public_key_certificate"><strong>Certificates</strong></a>, a certificate is something bigger in scope than the Key Pair because the Key Pair is simply two sequences of bytes whereas the certificate includes not only the public key but also information about the algorithm, versioning, subject and issuer information and so on.</p>
@@ -412,7 +540,7 @@
 <p>Some of the information a certificate contains is:</p>
 <ul class="simple">
 <li><p>Information about the <strong>identity</strong> (Email, Organization Name, Country, State, <a class="reference external" href="https://en.wikipedia.org/wiki/Certificate_signing_request#Procedure">among others</a>) of who generated the Public Key (the subject).</p></li>
-<li><p>A <strong>digital signature</strong> <a class="footnote-reference brackets" href="#id4" id="id1">1</a> that validates the identity information is correct and it corresponds to the subject.</p></li>
+<li><p>A <strong>digital signature</strong> <a class="footnote-reference brackets" href="#id5" id="id1">1</a> that validates the identity information is correct and it corresponds to the subject.</p></li>
 </ul>
 <p>The drawback of this approach is that nothing impedes an attacker to sign their own certificates, i.e. anyone can claim being anyone else. These are the so-called <a class="reference external" href="https://en.wikipedia.org/wiki/Self-signed_certificate">self-signed certificates</a>. To avoid that, the signature should come from a trusted third party, known as <a class="reference external" href="https://en.wikipedia.org/wiki/Certificate_authority"><strong>Certificate Authority</strong></a>. It needs to be an independent and trusted-by-everyone party that validates the identity of who is generating the Public Key. This is necessary if the subject is unknown or could not be trusted.</p>
 <p>When the subject acts as its own CA, generating a self-signed certificate, it triggers warnings in most environments, e.g. most programming libraries will throw validation errors. Web browsers will consider a self-signed certificate to be <strong>insecure</strong>. It is not a matter of security (i.e. the data will be encrypted anyway) but rather a matter of trust, trusting that the received Public Key comes from the intended subject and that there is no other man-in-the-middle.</p>
@@ -456,16 +584,25 @@
 <p>The following examples will focus on the Public Key Encryption without the CA signing process for simplicity. To implement a certificate signed by a CA, <a class="reference external" href="https://cryptography.io/en/latest/x509/tutorial">follow the official tutorial</a>. However, <strong>unless being supported by a security expert it is always recommended to trust hosted/managed services instead of doing security from scratch</strong>.</p>
 </div>
 </div>
-<div class="section" id="rsa">
-<h2>RSA<a class="headerlink" href="#rsa" title="Permalink to this headline">¶</a></h2>
-<p>RSA is one of the asymmetric encryption algorithms available in the PyCA cryptography library. The particular objects used here are part of the <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> package, <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> stands for “Hazardous Materials” and quoting from their <a class="reference external" href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/">site</a>:</p>
-<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>This is a “Hazardous Materials” module. You should ONLY use it if you’re 100% absolutely sure that you know what you’re doing because this module is full of land mines, dragons, and dinosaurs with laser guns.
-</pre></div>
+<div class="section" id="caveats-of-public-key-encryption">
+<h2>Caveats of Public Key Encryption<a class="headerlink" href="#caveats-of-public-key-encryption" title="Permalink to this headline">¶</a></h2>
+<p>Asymmetric Encryption is usually much slower than symmetric encryption, that is way in many applications both are used:</p>
+<ol class="simple">
+<li><p>Both parties exchange their Public Keys.</p></li>
+<li><p>The Public Keys are then used to send an encrypted password/key for symmetric encryption.</p></li>
+<li><p>All following communication is done encrypted using the symmetric encryption method.</p></li>
+</ol>
+<p>The particular details of the implementation may vary depending on the specific protocol but generally Asymmetric Encryption is used as the so-called “Secure Channel” to exchange the keys for the symmetric encryption method. Modern HTTPS connections work like this.</p>
 </div>
+<div class="section" id="rsa-encryption">
+<h2>RSA Encryption<a class="headerlink" href="#rsa-encryption" title="Permalink to this headline">¶</a></h2>
+<p>RSA is one of the asymmetric encryption algorithms available in the PyCA cryptography library. The particular objects used here are part of the <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> package, <code class="docutils literal notranslate"><span class="pre">hazmat</span></code> stands for “Hazardous Materials” and quoting from their <a class="reference external" href="https://cryptography.io/en/latest/hazmat/primitives/asymmetric/rsa/">site</a>:</p>
+<p>: &gt; This is a “Hazardous Materials” module. You should ONLY use it if you’re 100% absolutely sure that you know what you’re doing because this module is full of land mines, dragons, and dinosaurs with laser guns.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
 <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span><span class="p">,</span> <span class="n">padding</span>
+<span class="kn">from</span> <span class="nn">cryptography.exceptions</span> <span class="kn">import</span> <span class="n">InvalidSignature</span>
 </pre></div>
 </div>
 </div>
@@ -475,14 +612,23 @@
 <p>The first step is to generate the private key, for that two parameters are needed the <code class="docutils literal notranslate"><span class="pre">public_exponent</span></code> and the <code class="docutils literal notranslate"><span class="pre">key_size</span></code>. The former should be fixed to <code class="docutils literal notranslate"><span class="pre">65537</span></code> whereas the second can be changed and as per modern security standards it should be at least <code class="docutils literal notranslate"><span class="pre">2048</span></code>. Then the Public Key is generated from the private Key object.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">key_size</span> <span class="o">=</span> <span class="mi">2048</span>  <span class="c1"># Should be at least 2048</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_key_pair</span><span class="p">():</span>
+    <span class="n">key_size</span> <span class="o">=</span> <span class="mi">2048</span>  <span class="c1"># Should be at least 2048</span>
 
-<span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span>
-    <span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span>  <span class="c1"># Do not change</span>
-    <span class="n">key_size</span><span class="o">=</span><span class="n">key_size</span><span class="p">,</span>
-<span class="p">)</span>
+    <span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span>
+        <span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span>  <span class="c1"># Do not change</span>
+        <span class="n">key_size</span><span class="o">=</span><span class="n">key_size</span><span class="p">,</span>
+    <span class="p">)</span>
 
-<span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
+    <span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span> <span class="o">=</span> <span class="n">generate_key_pair</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
@@ -490,25 +636,34 @@
 </div>
 <div class="section" id="encrypting">
 <h3>Encrypting<a class="headerlink" href="#encrypting" title="Permalink to this headline">¶</a></h3>
+<p>For the encryption process only the public key is used, no password is needed. The messages encrypted with this Public Key will only be decryptable with the linked Private Key. Moreover, if other messages are encrypted with different Public Keys, they will not be decryptable with the linked Private Key.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">public_key</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">public_key</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
+            <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+            <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
+            <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+        <span class="p">)</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
 
-<span class="n">message_encrypted</span> <span class="o">=</span> <span class="n">public_key</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
-    <span class="n">message</span><span class="p">,</span>
-    <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
-        <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
-        <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
-        <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+<span class="n">message_encrypted</span> <span class="o">=</span> <span class="n">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encrypted Text: </span><span class="si">{</span><span class="n">message_encrypted</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: a3a9926fcdca5ca082c475dde5b58da3ff00802c6b1fb2fbb2ff7339777126cc3cbff9d7860b795bc380fb5c8183e15615adeb87d697bedbb78b05e6baad7eb5edcc2ab93b70c9064cae8cf09b6e84c94c5c0abf92c1e29d0aa2e05ad2711bf3846aee36a4d2788e7eee6123b150d475d931927cd54ba76b1d3fc63d329fe11b3d6251399e9d5c66f771544c4c4bbd4d58f9bd88f42ecd2672caf6b7257c831cefb86fa9bef9b238597085b7127186cfd9186a2eb1efa5d74f20894138afc2af7e511e471e8f960fa9e89f127d990c0f97950663f0acc7c50ea1e3a16fb852ede8c6c7adceafe24c894bebf52d2f5f507a3612ddf394eabfa9ec328ea8363bec
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: a518bd3c2d77df2e7cc1e8620e8de73bd9ff9999e277ff41e586e3959a1d3566cd8e1978e226964c5ac462904673246109e311c712fd53339e3825e65e4ac29b24f19edb52379ae63902e28cd4d6a146996ed8ea5c067934d833366d92b6ca0ee14fdd46a0e175b68f2b055cbbfb22082999d4b1cdb6acbed3982d4a48dbb4438eed43855aa9456b261bc37b450998c5a5453edd35f5b65d792ddf309af95d5e719c83691b25c4f6a15cf707c7e43827d3b172395c8988047647bf92532c0b89f23bdd3a25ba6f2b0e32854361657ed9777546a85087295e042ddecb949a658e7552f1fcc785bf184b53de4d86f9eb96560431248fe1dd85dee7afb719e769be
 </pre></div>
 </div>
 </div>
@@ -516,18 +671,72 @@
 </div>
 <div class="section" id="decrypting">
 <h3>Decrypting<a class="headerlink" href="#decrypting" title="Permalink to this headline">¶</a></h3>
+<p>Auxiliary Function to decrypt an encrypted message and returning a string message.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span>
-    <span class="n">message_encrypted</span><span class="p">,</span>
-    <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
-        <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
-        <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
-        <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">decrypt</span><span class="p">(</span><span class="n">message_encrypted</span><span class="p">,</span> <span class="n">private_key</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span>
+            <span class="n">message_encrypted</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
+                <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+                <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
+                <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
+            <span class="p">)</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Decrypted Message: </span><span class="si">{</span><span class="n">message_decrypted</span><span class="si">}</span><span class="s2">&quot;</span>
+    <span class="k">except</span> <span class="ne">ValueError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Failed to Decrypt&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="using-unlinked-private-key">
+<h4>Using unlinked Private Key<a class="headerlink" href="#using-unlinked-private-key" title="Permalink to this headline">¶</a></h4>
+<p>If other <strong>Private Key</strong> different from the one of the original Key Pair is used, the decryption will fail.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_key_other</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">generate_key_pair</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decrypted Message: </span><span class="si">{</span><span class="n">message_decrypted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">message_encrypted</span><span class="p">,</span> <span class="n">private_key_other</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">message_decrypted</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Failed to Decrypt
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="using-unlinked-public-key">
+<h4>Using unlinked Public Key<a class="headerlink" href="#using-unlinked-public-key" title="Permalink to this headline">¶</a></h4>
+<p>If other <strong>Public Key</strong> different from the one of the original Key Pair is used, the decryption will fail.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">public_key_other</span> <span class="o">=</span> <span class="n">generate_key_pair</span><span class="p">()</span>
+
+<span class="n">message_encrypted_other</span> <span class="o">=</span> <span class="n">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">public_key_other</span><span class="p">)</span>
+
+<span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">message_encrypted_other</span><span class="p">,</span> <span class="n">private_key</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">message_decrypted</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Failed to Decrypt
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="using-original-private-key">
+<h4>Using original Private Key<a class="headerlink" href="#using-original-private-key" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">message_encrypted</span><span class="p">,</span> <span class="n">private_key</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">message_decrypted</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -539,10 +748,159 @@
 </div>
 </div>
 </div>
+<div class="section" id="signing-message">
+<h3>Signing Message<a class="headerlink" href="#signing-message" title="Permalink to this headline">¶</a></h3>
+<p>To use the Key Pair for Digital Signature, the Private Key is used for encryption. In this case the method is called <code class="docutils literal notranslate"><span class="pre">sign</span></code> and not <code class="docutils literal notranslate"><span class="pre">encrypt</span></code> to have consistent terminology and avoid confusion.</p>
+<p>A pair (message, signature) will only be valid if the message, the signature and the public key are the original ones, if any of those gets modified, an error will be thrown.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">sign</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">private_key</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">private_key</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span>
+        <span class="n">message</span><span class="p">,</span>
+        <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
+            <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+            <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+        <span class="p">),</span>
+        <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+    <span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;My website is http://elc.github.io&quot;</span>
+
+<span class="n">signature</span> <span class="o">=</span> <span class="n">sign</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">private_key</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Digital Signature: </span><span class="si">{</span><span class="n">signature</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Digital Signature: 25dab5ec9cd62d0994e070ba94907ea3e575a0d3bc2b60d6b672bb316651f95dec828be9171cc053d5829e1f6624ba909b8c3ed83ce603540fed084d5efa23c671d99a9441d9dd6b10cdfdc21b113064d84fe530a3c9c6c484091c85a6abf3a2796e7f6f3da22b41bd2a477d3939d0b55bca6eeccc816817b7cfa17815094efbef7a18e51834265747d5a186dd86288c371b913e1e3da89f9c43ab992b6d1032fa00217b6263e202ec47edee79a9f707d8afe32340d0a675d874822183dcd428dd52d9001a54fecec51657f74beddb93c8f78e78ea404325fbe99147b60cdd5480ceb3ddf5425ba894d61c1b514d6aac306af721e9d7bada8748430c15cb99a2
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="verifying-signature">
+<h3>Verifying Signature<a class="headerlink" href="#verifying-signature" title="Permalink to this headline">¶</a></h3>
+<p>This is a helper function to avoid code duplication, it will return a string message depending on whether the message, signature pair is valid.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">public_key</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">public_key</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span>
+            <span class="n">signature</span><span class="p">,</span>
+            <span class="n">message</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="p">(</span>
+                <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
+                <span class="n">salt_length</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">PSS</span><span class="o">.</span><span class="n">MAX_LENGTH</span>
+            <span class="p">),</span>
+            <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;The message has been successfully verified&quot;</span>
+    <span class="k">except</span> <span class="n">InvalidSignature</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;The signature, the message or the Public Key is invalid&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tampered-message">
+<h4>Tampered Message<a class="headerlink" href="#tampered-message" title="Permalink to this headline">¶</a></h4>
+<p>Possible scenario:</p>
+<ol class="simple">
+<li><p>An attacker intercepts the message</p></li>
+<li><p>They change the message and leave the signature intact</p></li>
+</ol>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wrong_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;My website is http://www.google.com&quot;</span>
+
+<span class="n">verification_message</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">wrong_message</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The signature, the message or the Public Key is invalid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="tampered-message-and-signature">
+<h4>Tampered Message and Signature<a class="headerlink" href="#tampered-message-and-signature" title="Permalink to this headline">¶</a></h4>
+<p>Possible scenario:</p>
+<ol class="simple">
+<li><p>An attacker intercepts the message</p></li>
+<li><p>They change the message and generate another signature with their own Private Key</p></li>
+</ol>
+<p>Note: it would be possible to test leaving the message intact and only changing the signature but that has no practical purpose.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">wrong_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;My website is http://www.google.com&quot;</span>
+
+<span class="n">fake_private_key</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">generate_key_pair</span><span class="p">()</span>
+<span class="n">fake_signature</span> <span class="o">=</span> <span class="n">sign</span><span class="p">(</span><span class="n">wrong_message</span><span class="p">,</span> <span class="n">fake_private_key</span><span class="p">)</span>
+
+<span class="n">verification_message</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">fake_signature</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The signature, the message or the Public Key is invalid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="unliked-public-key">
+<h4>Unliked Public Key<a class="headerlink" href="#unliked-public-key" title="Permalink to this headline">¶</a></h4>
+<p>This is an unlikely possibility. Because since Public Keys are shared and public, an attacker has very limited chance to inject a fake public key. It would need to hack the sender and modify their Public Key, if they were able to do such a thing, they would have access the original message anyway.</p>
+<p>However, for illustration, if the Public Key is changed, the validation fails as well.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">_</span><span class="p">,</span> <span class="n">public_key_other</span> <span class="o">=</span> <span class="n">generate_key_pair</span><span class="p">()</span>
+
+<span class="n">verification_message</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">public_key_other</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The signature, the message or the Public Key is invalid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="original-message-signature-and-public-key">
+<h4>Original Message, Signature and Public Key<a class="headerlink" href="#original-message-signature-and-public-key" title="Permalink to this headline">¶</a></h4>
+<p>Only when the message, the signature and the public match will the verficiation process succeed</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verification_message</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The message has been successfully verified
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
 <div class="section" id="using-pem-files">
 <h2>Using PEM Files<a class="headerlink" href="#using-pem-files" title="Permalink to this headline">¶</a></h2>
 <p>Public Keys, Private Keys and certificates can be saved as files, in that case the <a class="reference external" href="https://en.wikipedia.org/wiki/Privacy-Enhanced_Mail">Privacy-Enhanced Mail (PEM)</a> format is used. Those are files with suffix <code class="docutils literal notranslate"><span class="pre">.pem</span></code>, <code class="docutils literal notranslate"><span class="pre">.cer</span></code>, <code class="docutils literal notranslate"><span class="pre">.cert</span></code> or <code class="docutils literal notranslate"><span class="pre">.crt</span></code>. They have a characteristic <code class="docutils literal notranslate"><span class="pre">BEGIN</span></code> and <code class="docutils literal notranslate"><span class="pre">END</span></code> line which encloses the content. Since a key pair is a sequence of bytes, base64 is used to convert those to string.</p>
 <p>The extension is just to tell the content but the PEM format is a plain-text file, i.e. it can be opened with any text editor.</p>
+<p>PEM Files can be used for either Public Key Encryption or Digital Signature.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
@@ -584,16 +942,16 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----BEGIN ENCRYPTED PRIVATE KEY-----
-MIIFLTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIZggdsG6EWHQCAggA
-MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBAbar9ImIoa6soRJ1EQWbduBIIE
-0Lh7XpETsju888PYrgqcF4u7fDEUdafgorerqLPGhmwWm9KLVgAZi6ohB/yhwRYI
+MIIFLTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQI3p/tZKeyUmECAggA
+MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBAZbbNdb53gcqAmjEoxuKwdBIIE
+0Ox8Uv3Y2BV31851jI9VnxAhp72H3dd7+HQ3oyQBzHO1itskyTC1fCESHjrHyeKM
 
      TRUNCATED CONTENT TO REMIND THIS SHOULD NOT BE SHARED
 
-hpqxGOZOiga6Ptq810axKYVgITgmU0+HQqgYVOiEXTDKIHiy6xIGIsypFG8vv/Wr
-HTInIZY7f3veZ41lSL0XbDLaZV5bfnrvKgTYMpWZ0F/JZTgDr3IKxl8neiUd25B5
-XqyEP5WsPBK584/efgQyQnoaNnvAuuEX8f45XlTDv1zIiWHbNLcuHfX00AhgylAR
-jgnpwBMqiwO5MZwN62dKWfN0iLJRvnwUpv//kdhc8Qoo
+WQT+y87aMBoBdHg5hYCZeogVNtJsKxEjCAWNcDXk412v4lH9VEpqRjmoMI5cIEFb
+uX2Jt5B2/7Gvbe++2SSjndZEeibDKqFfAbgadxFKO0OfH4Zwb3OKjmayaspTt/+y
+BmXjUxDTQzdpazGdnEzqoBFVhYru02fNS4ROC1C85T6rCXHv5AgjNvK5aaNsO78s
+9WykDD6Ma0R9W6/afcvGGZXsGomHo8PhaSsi8KAa5Tdl
 -----END ENCRYPTED PRIVATE KEY-----
 </pre></div>
 </div>
@@ -623,13 +981,13 @@ jgnpwBMqiwO5MZwN62dKWfN0iLJRvnwUpv//kdhc8Qoo
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBgroNXlUpd1GUs1pRqh
-4UIw/XyUxVs48QSLH0ZBcA8sAnv5zhqMXbpuHidAqrU6GsYoGucAaBux6lDilPoA
-LOVgaTpDMqPCgN5Z4h6AEk7Ufc8FjZnOwKFqNS80cY7fg8Z6/NDUckRGKBu85ByV
-63wKsaiI2iIn/JBjjNR6pmBcYxQF1ATYjFAG7Mta4/LuBXQiwuz99k9nBd4uYZRn
-8sow+U5XFxc0YpX1/KwshTJNZ/c+vQUeXPlhc7FBPCcyfRJEYx/KhhRQXZzq7LHh
-JlOpviMRN+utnVGw5ZzcUXJ3YOdnn+SLwfwCyDiDhREEwVYxwqyPHgQipnTBroRB
-8wIDAQAB
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA+xlDB5w02hs6G+sFjnkv
+wU6fvvpBqe5UI9oU1xnnBbDx18mP9WRSFBWrSlhcobjd9GbK/8QPxTeoYnvhCGyS
+vofT2YRzKiVT/7HXooIyo63iIJLlQVfki3s7uMUpTJOGej8zwtL11MS/jGOO84Tx
+Y5HgkwbFZPiRYTuh3GOMAy3G/utD2xdupwyRvroR4k1yIzLAnvtrXLwv8WjMONVn
+UsMfSGOFxNmPai37ikHUOPAcdG8w0sdLT1P/A8iEmc1OMz1Qh2Fj43yxmJ6fH3YO
+QMfbOrcSNLJEVDeA5VUGGI2OrjJUu6eFbW0ZHph9ShcT7kmUmHJiw6b7Vj5K4VVX
+VwIDAQAB
 -----END PUBLIC KEY-----
 </pre></div>
 </div>
@@ -699,9 +1057,9 @@ JlOpviMRN+utnVGw5ZzcUXJ3YOdnn+SLwfwCyDiDhREEwVYxwqyPHgQipnTBroRB
 </div>
 <div class="section" id="encryption-and-decryption-using-pem-files">
 <h3>Encryption and Decryption using PEM Files<a class="headerlink" href="#encryption-and-decryption-using-pem-files" title="Permalink to this headline">¶</a></h3>
+<p>This are simple examples of encryption and decryption, the functions used are the same as the ones in the above section</p>
 <div class="section" id="id2">
 <h4>Encrypting<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
-<p>Only the Public Key is needed for Encryption</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
@@ -709,21 +1067,14 @@ JlOpviMRN+utnVGw5ZzcUXJ3YOdnn+SLwfwCyDiDhREEwVYxwqyPHgQipnTBroRB
 <span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;public.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
 <span class="n">public_key_from_pem</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_public_key</span><span class="p">(</span><span class="n">public_pem_bytes</span><span class="p">)</span>
 
-<span class="n">message_encrypted</span> <span class="o">=</span> <span class="n">public_key_from_pem</span><span class="o">.</span><span class="n">encrypt</span><span class="p">(</span>
-    <span class="n">message</span><span class="p">,</span>
-    <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
-        <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
-        <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
-        <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+<span class="n">message_encrypted</span> <span class="o">=</span> <span class="n">encrypt</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">public_key_from_pem</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Encrypted Text: </span><span class="si">{</span><span class="n">message_encrypted</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 0e46bef7b588cdad3998ffe321fa33a19177a4f664bbf6e6959412590ad1a23953eb00dc2f2f955278467dbca2d5a1a6ed24e4070a22dd8f3cbf9b6b858965158fb6d640ad757415b1f886f97546e8e5861f1e8f862d6f1716ed23427f1464bd701338f7b3fd082d7143fdb121d0f6335f7513e14e8c48375083e456da6e57dbcad7518b1f08eee9c6166538ceff1b380c3bfc97854a8e7183cd0a70a807a3e0b5cc68521f01938bc41a9a73595e18e3f784a779aa127a2309f1222fd90a564ed68378416ba1de5d74a05b81de505032a948fad63b34d4c952c0bd34a09f9102e156d6aa191285f9284f8cbc10310f1f5849e7d6bba726b63d8dddea5c288e8d
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 24a13afd9ea10d3c25f0223a9632f5c48549c65c76176223bfb3f5f7f4a7b630779906c2f00fd8c747256f8ab07a0c7f24c34108c68b885b4f10767a9fa5314fb8576a1d1121966be62ed86b08861a904b2efcde0e8d060b1c2db356d4311c716e2de1bd1e3c485e5b88011d97ee1fc58412d5c8bd7df7ec6505b2b8df4fcc72d006b88a000e1138fb17b1dc24b40527da1550e1688cf8ae965a8cd6fa138bd13f7de560cdfef11af34f6798a051de07dec4e6efc513c0f34adb2d0ca3d105a9999e391621b1bd43b639175be291f3d187c8e3db77c5273448529b6b0c58dc68ee1b38d9aa0c59968f202541cd60d469526a8c1365ac492938e7ce2c50058eb3
 </pre></div>
 </div>
 </div>
@@ -731,7 +1082,6 @@ JlOpviMRN+utnVGw5ZzcUXJ3YOdnn+SLwfwCyDiDhREEwVYxwqyPHgQipnTBroRB
 </div>
 <div class="section" id="id3">
 <h4>Decrypting<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
-<p>To decrypt, both the Private Key PEM file as well as the password used are needed. If any of the two is missing, the message could not be decrypted.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_pem_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;key.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
@@ -741,16 +1091,9 @@ JlOpviMRN+utnVGw5ZzcUXJ3YOdnn+SLwfwCyDiDhREEwVYxwqyPHgQipnTBroRB
     <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
 <span class="p">)</span>
 
-<span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">private_key_from_pem</span><span class="o">.</span><span class="n">decrypt</span><span class="p">(</span>
-    <span class="n">message_encrypted</span><span class="p">,</span>
-    <span class="n">padding</span><span class="o">.</span><span class="n">OAEP</span><span class="p">(</span>
-        <span class="n">mgf</span><span class="o">=</span><span class="n">padding</span><span class="o">.</span><span class="n">MGF1</span><span class="p">(</span><span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()),</span>
-        <span class="n">algorithm</span><span class="o">=</span><span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">(),</span>
-        <span class="n">label</span><span class="o">=</span><span class="kc">None</span>
-    <span class="p">)</span>
-<span class="p">)</span>
+<span class="n">message_decrypted</span> <span class="o">=</span> <span class="n">decrypt</span><span class="p">(</span><span class="n">message_encrypted</span><span class="p">,</span> <span class="n">private_key_from_pem</span><span class="p">)</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decrypted Message: </span><span class="si">{</span><span class="n">message_decrypted</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">message_decrypted</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
@@ -762,16 +1105,66 @@ JlOpviMRN+utnVGw5ZzcUXJ3YOdnn+SLwfwCyDiDhREEwVYxwqyPHgQipnTBroRB
 </div>
 </div>
 </div>
+<div class="section" id="digital-signature-using-pem-files">
+<h3>Digital Signature using PEM Files<a class="headerlink" href="#digital-signature-using-pem-files" title="Permalink to this headline">¶</a></h3>
+<p>This are simple examples of signing and verification, the functions used are the same as the ones in the above section</p>
+<div class="section" id="signing-a-message">
+<h4>Signing a Message<a class="headerlink" href="#signing-a-message" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;My website is http://elc.github.io&quot;</span>
+
+<span class="n">private_pem_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;key.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+
+<span class="n">private_key_from_pem</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_private_key</span><span class="p">(</span>
+    <span class="n">private_pem_bytes</span><span class="p">,</span>
+    <span class="n">password</span><span class="o">=</span><span class="n">password</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">signature</span> <span class="o">=</span> <span class="n">sign</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">private_key_from_pem</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Digital Signature: </span><span class="si">{</span><span class="n">signature</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Digital Signature: 9fb1392d07ae1960c99823416310cb9a0e66e3bd0bc7b43fd35480108ff7fc551bac6d0ef9a538c0ff311d6ad734609bac368ea9a02f019be429d2612969e75314439005893d8c3c27fc72215a2055f7b55f30c3b657df49914a35e96e501600ae25cea377e79e99342f830aa53429c4fe54685c9832bc72cc7fcc790fa625010a01c306a15444b68cb9e04cf71eee5a8577a7943f39b86fe35706904e77d3b8e6a1e95b4727d3f658b727533d32d583fd8fa5896059d875c0c74ab21a3cf9f70aca066398015745d7a30c35ca5d437e9fad1ec6f5af754861fe2f8bdb07a80005b763a286f4fa6f99d7810f5d0e61020812a1fefd55f24eb8ff5a6bfea7c64c
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4>Verifying Signature<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;public.pem&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+<span class="n">public_key_from_pem</span> <span class="o">=</span> <span class="n">serialization</span><span class="o">.</span><span class="n">load_pem_public_key</span><span class="p">(</span><span class="n">public_pem_bytes</span><span class="p">)</span>
+
+<span class="n">verification_message</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">signature</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">public_key_from_pem</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The message has been successfully verified
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
 </div>
 <div class="section" id="conclusion">
 <h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
 <p>As opposed to symmetric encryption, asymmetric encryption does not rely on a single key shared across parties. Instead, a Key Pair, consisting of a Public and a Private Key which are mathematically linked, is generated by each party, then the public keys are shared. The public key is used to encrypt the message and only the linked Private Key can decrypt it.</p>
+<p>Digital Signatures used the same principle in reverse, the Private Key is used to encrypt and the Public Key to decrypt, this does not provide privacy but guarantees that a message has not been tampered with.</p>
 <p>For serialization and persistance Key Pairs can be stored in disk using the PEM format, for security reasons the Private Key PEM file is saved encrypted with symmetric encryption and hence requires a passphrase.</p>
 <p>Asymmetric Encryption is mostly used as part of a bigger technology called Certificates which provides not only access to the Public Key needed to encrypt the message but also information about the subject, the issuer and a digital signature (among other fields). Certificates could be self-signed (insecure or only suitable for testing) or signed by a trusted third party called Certificate Authority.</p>
-<p>The most widely used algorithm for Public Key Encryption is RSA and for Certificate Based Comunication is X.509</p>
+<p>The most widely used algorithm for Public Key Encryption and Digital Signatures is RSA and for Certificate Based Comunication is X.509</p>
 <hr class="footnotes docutils" />
 <dl class="footnote brackets">
-<dt class="label" id="id4"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
+<dt class="label" id="id5"><span class="brackets"><a class="fn-backref" href="#id1">1</a></span></dt>
 <dd><p>Digital signature is the topic of the next chapter</p>
 </dd>
 </dl>
@@ -810,10 +1203,10 @@ JlOpviMRN+utnVGw5ZzcUXJ3YOdnn+SLwfwCyDiDhREEwVYxwqyPHgQipnTBroRB
             <p class="prev-next-title">Symmetric Encryption</p>
         </div>
     </a>
-    <a class='right-next' id="next-link" href="08_JSON_Web_Token.html" title="next page">
+    <a class='right-next' id="next-link" href="08_Input_Sanitization.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">&lt;no title&gt;</p>
+        <p class="prev-next-title">Input Sanitization</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

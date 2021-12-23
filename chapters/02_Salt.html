@@ -146,6 +146,52 @@
 </ul>
 <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
+  Threats
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="08_Input_Sanitization.html">
+   Input Sanitization
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="09_Common_Threats.html">
+   Common Threats
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Applications
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="10_JSON_Web_Tokens.html">
+   JSON Web Tokens (JWT)
+  </a>
+ </li>
+ <li class="toctree-l1">
+  <a class="reference internal" href="19_Blockchain.html">
+   BlockChain
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
+  Additional Material
+ </span>
+</p>
+<ul class="nav bd-sidenav">
+ <li class="toctree-l1">
+  <a class="reference internal" href="80_Additional_Resources.html">
+   Additional Resources
+  </a>
+ </li>
+</ul>
+<p aria-level="2" class="caption" role="heading">
+ <span class="caption-text">
   Appendices
  </span>
 </p>
@@ -382,8 +428,8 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Original: b&#39;Hello World!&#39;
-     Hashed: 0412105f8acc95edcae871e0cf4990bf74da8cac60c1c476ff4c513fffe6cd0aad0534de9487a22def92f1cd22e10e11008750831692a106608d499e36eb491b
-Salt+Hashed: 45d0e98d1ec77d78de9e:0412105f8acc95edcae871e0cf4990bf74da8cac60c1c476ff4c513fffe6cd0aad0534de9487a22def92f1cd22e10e11008750831692a106608d499e36eb491b
+     Hashed: c25cecd270f41b032dfdb9bfdc0eaefa99896d7a73d8f5bf174a74a4ae7782a3dd592b74f616c20a6d0f5e3f3fb3bc9859be25027c20767c70a9075d8db97910
+Salt+Hashed: 9e70f2d50968cbfddd0d:c25cecd270f41b032dfdb9bfdc0eaefa99896d7a73d8f5bf174a74a4ae7782a3dd592b74f616c20a6d0f5e3f3fb3bc9859be25027c20767c70a9075d8db97910
 </pre></div>
 </div>
 </div>
@@ -408,7 +454,7 @@ Salt+Hashed: 45d0e98d1ec77d78de9e:0412105f8acc95edcae871e0cf4990bf74da8cac60c1c4
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n+r+pSalt+Hashed: 64$8$1$5a5cd385e37863b9bac8$f9ec75ca8afc303d1bddee073aeb1d6b5fc14926d8fed45c2f089cd9d6b6348b6dfeda1c24cc9ece4cb55a3e057c4ccd0922752f654aeba0598c3a093a521554
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n+r+pSalt+Hashed: 64$8$1$082fe639c864db5f6c0f$2eba8d91ce3203083223bf52a06b32ca01e0fa9fb0b97b715721cc09b3c800f9d32b23c5af11e4c3026b3a9b41fe50b9b83ab5eb87003f8217b361e230c8ea22
 </pre></div>
 </div>
 </div>
@@ -441,7 +487,7 @@ Salt+Hashed: 45d0e98d1ec77d78de9e:0412105f8acc95edcae871e0cf4990bf74da8cac60c1c4
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: c0c52c0bb9cf7644db88:2b580088
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 310ee2ca1de011b7a9dc:017dfd15
 </pre></div>
 </div>
 </div>
@@ -459,7 +505,7 @@ Salt+Hashed: 45d0e98d1ec77d78de9e:0412105f8acc95edcae871e0cf4990bf74da8cac60c1c4
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: a7af7dd3d29916246b25:6da202448734559c991db3d7802031fd
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 1b52509621213ae48271:bfdea858ba84e1997f07663c2040765c
 </pre></div>
 </div>
 </div>
@@ -477,7 +523,7 @@ Salt+Hashed: 45d0e98d1ec77d78de9e:0412105f8acc95edcae871e0cf4990bf74da8cac60c1c4
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 06c453571e6b1e8622a7:bd7a23fd023d4bb1bf4a905f4e52121c5e6891749c7ecb3cf82c5a97b7b365ef6c43446bb8edd5e4fa56ea405364a6e84956f464d8c6eb1c471f746d6830c985
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 4e14457fdcee09c3f0fe:c725823acc49ce78005ad5ab6a8040b6462b7a79e3c2878af5de16f1b705573925481dec27db6d3c07d3610c77711a51864184b8101fa5a6a228c0204228b89a
 </pre></div>
 </div>
 </div>
@@ -529,7 +575,7 @@ Salt+Hashed: 45d0e98d1ec77d78de9e:0412105f8acc95edcae871e0cf4990bf74da8cac60c1c4
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>240 µs ± 9.41 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>216 µs ± 84.9 ns per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </pre></div>
 </div>
 </div>
@@ -544,7 +590,7 @@ Salt+Hashed: 45d0e98d1ec77d78de9e:0412105f8acc95edcae871e0cf4990bf74da8cac60c1c4
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.9 ms ± 174 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12 ms ± 8.11 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
@@ -559,7 +605,7 @@ Salt+Hashed: 45d0e98d1ec77d78de9e:0412105f8acc95edcae871e0cf4990bf74da8cac60c1c4
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>52 ms ± 1.63 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>52 ms ± 503 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre></div>
 </div>
 </div>
