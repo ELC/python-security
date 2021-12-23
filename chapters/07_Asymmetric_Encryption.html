@@ -508,7 +508,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 52a643e71a32707517fd5ba144de0a4a53ad2c74b0a6d1569ade22b1237619acf646eed8fc3703b1f3e0ebf0c6fa62a42d88ba0fe61815904a81e50c0e16999d0dcf0f00ad6724bc5c40d2a7109da8c4e2f7f0c887201ed150439b21ca7a0d4dc4c6bfca7c4b6f3909b439951af10918fd4464af5dac0d90cf4531a3df85808fd266947d3ca653db713a6b8092c24861f04d9d11ab64340b1f50cad40aba16225c5d9af06025ccda6cb0d3a1b618333d0f16f1af059203f84a5c17566f76e1d15120451d6ce0a1966c47f7f8090c178602e37f42d9f912a3cfc0dfb6409edf2cac8006d010ba1a6158a84ac7e5036a046c10f03bdbba7a6e9f5e8a7e0a940508
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: a3a9926fcdca5ca082c475dde5b58da3ff00802c6b1fb2fbb2ff7339777126cc3cbff9d7860b795bc380fb5c8183e15615adeb87d697bedbb78b05e6baad7eb5edcc2ab93b70c9064cae8cf09b6e84c94c5c0abf92c1e29d0aa2e05ad2711bf3846aee36a4d2788e7eee6123b150d475d931927cd54ba76b1d3fc63d329fe11b3d6251399e9d5c66f771544c4c4bbd4d58f9bd88f42ecd2672caf6b7257c831cefb86fa9bef9b238597085b7127186cfd9186a2eb1efa5d74f20894138afc2af7e511e471e8f960fa9e89f127d990c0f97950663f0acc7c50ea1e3a16fb852ede8c6c7adceafe24c894bebf52d2f5f507a3612ddf394eabfa9ec328ea8363bec
 </pre></div>
 </div>
 </div>
@@ -584,16 +584,16 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----BEGIN ENCRYPTED PRIVATE KEY-----
-MIIFLTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIOmcnePGVUgkCAggA
-MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBB+ac/2DQgW64toFlxGQbf0BIIE
-0MRARXl0T3SAzEh1IzmrYfGHZDJXv8dVunjRVTbCky8IuCzztHLsP06YQnM/KEnW
+MIIFLTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIZggdsG6EWHQCAggA
+MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBAbar9ImIoa6soRJ1EQWbduBIIE
+0Lh7XpETsju888PYrgqcF4u7fDEUdafgorerqLPGhmwWm9KLVgAZi6ohB/yhwRYI
 
      TRUNCATED CONTENT TO REMIND THIS SHOULD NOT BE SHARED
 
-yAD4jKkUo5ypvtXbsAXy0DssarPHQSkOKgziItRAb3au7gjgBkZN5BT1MNvaBpHg
-oOknekFchNR+Y/FmiDX7Pcw80fBoeI8dn2QgpCA6vTeiLCYRGnnl10wkakyF/Pl/
-vYMvXFDh6nCOE6vUkQs6m46l3ZJkluTXGRsQYn4bJwhG+6ONhYvJ7k0IJgDKLRmm
-VY3UT9mP/sk1q8WmW1+qhbI/CFS/Raq7Stfc/fxLb8E7
+hpqxGOZOiga6Ptq810axKYVgITgmU0+HQqgYVOiEXTDKIHiy6xIGIsypFG8vv/Wr
+HTInIZY7f3veZ41lSL0XbDLaZV5bfnrvKgTYMpWZ0F/JZTgDr3IKxl8neiUd25B5
+XqyEP5WsPBK584/efgQyQnoaNnvAuuEX8f45XlTDv1zIiWHbNLcuHfX00AhgylAR
+jgnpwBMqiwO5MZwN62dKWfN0iLJRvnwUpv//kdhc8Qoo
 -----END ENCRYPTED PRIVATE KEY-----
 </pre></div>
 </div>
@@ -608,7 +608,7 @@ VY3UT9mP/sk1q8WmW1+qhbI/CFS/Raq7Stfc/fxLb8E7
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
 
 <span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">public_key</span><span class="o">.</span><span class="n">public_bytes</span><span class="p">(</span>
-   <span class="n">encoding</span><span class="o">=</span><span class="n">encoding</span><span class="p">,</span>
+   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
    <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PublicFormat</span><span class="o">.</span><span class="n">SubjectPublicKeyInfo</span><span class="p">,</span>
 <span class="p">)</span>
 
@@ -623,13 +623,13 @@ VY3UT9mP/sk1q8WmW1+qhbI/CFS/Raq7Stfc/fxLb8E7
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA3jq5qPmNS+wMFp1Lhu7K
-yBm/9IgKa0aO8QlT2ZgkJZTzqxcliswQzuQEpZzZEzOkEbUEfGRPAWTSJuu4KnfK
-J+6Kn47X3d/YoUq6N2rZEP03mJSqEf3tC1in8bwWO/3IPNv0R28FZIwdRxZxhvvs
-VcTc6LRLu9i8t7A5zq41sBNetUEY4SObv4UBatz6/+SlDO2hJWCN6wx1b2OS4pxy
-COWQtgV1KqPyozBuX6wdLMWk1/yGRd7WHPXZKx07smltkxzu7FII/JYj4Nfoh77Q
-ujHI3a6IvQWIu+Mihj7QdHgzFfN0lJHm+nqwlz8+dqdXGbEgcjX5dn559dSkrUMn
-4QIDAQAB
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAyBgroNXlUpd1GUs1pRqh
+4UIw/XyUxVs48QSLH0ZBcA8sAnv5zhqMXbpuHidAqrU6GsYoGucAaBux6lDilPoA
+LOVgaTpDMqPCgN5Z4h6AEk7Ufc8FjZnOwKFqNS80cY7fg8Z6/NDUckRGKBu85ByV
+63wKsaiI2iIn/JBjjNR6pmBcYxQF1ATYjFAG7Mta4/LuBXQiwuz99k9nBd4uYZRn
+8sow+U5XFxc0YpX1/KwshTJNZ/c+vQUeXPlhc7FBPCcyfRJEYx/KhhRQXZzq7LHh
+JlOpviMRN+utnVGw5ZzcUXJ3YOdnn+SLwfwCyDiDhREEwVYxwqyPHgQipnTBroRB
+8wIDAQAB
 -----END PUBLIC KEY-----
 </pre></div>
 </div>
@@ -723,7 +723,7 @@ ujHI3a6IvQWIu+Mihj7QdHgzFfN0lJHm+nqwlz8+dqdXGbEgcjX5dn559dSkrUMn
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 3849a8acc1ab3ed9ad7c4f7a2af60616943254a2d85e6e1420c080f77234026f6895cf845ab7c04a096727d3ab8420ac16641c2917d0ba6189552dd0a8fe24c56d8af039dd4f3a9faa17393a584bbc9a1f5dbe7765dc45376e31ba33dcb1caa0e549d0df7070857548680023c1a03b70340ef3fa1cdb2e9b25769476b7fbdcaa285b6da0a4f8b0b4dbadc833204ea23cdc68a7b0f2b74f315071d08b92aa6098b996f74d49888d19bb78174d843943ccb0d2a6d0fe018d4de38f15829b1b624ad5d6fe50f2ccfecfc848b23f1fbfeee1c756b8a5e9e042576f27b26ad2fb7ae79481821326e71fe3f023f5d53cca795a7917a3cda2b790bcb513e7f2a7a758ea
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 0e46bef7b588cdad3998ffe321fa33a19177a4f664bbf6e6959412590ad1a23953eb00dc2f2f955278467dbca2d5a1a6ed24e4070a22dd8f3cbf9b6b858965158fb6d640ad757415b1f886f97546e8e5861f1e8f862d6f1716ed23427f1464bd701338f7b3fd082d7143fdb121d0f6335f7513e14e8c48375083e456da6e57dbcad7518b1f08eee9c6166538ceff1b380c3bfc97854a8e7183cd0a70a807a3e0b5cc68521f01938bc41a9a73595e18e3f784a779aa127a2309f1222fd90a564ed68378416ba1de5d74a05b81de505032a948fad63b34d4c952c0bd34a09f9102e156d6aa191285f9284f8cbc10310f1f5849e7d6bba726b63d8dddea5c288e8d
 </pre></div>
 </div>
 </div>
