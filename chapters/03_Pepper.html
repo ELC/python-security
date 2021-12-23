@@ -103,7 +103,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_Hash_Introduction.html">
-   Introduction to Hash Functions
+   Hash Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -152,12 +152,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="08_Input_Sanitization.html">
-   Input Sanitization
+   Input Sanitization - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="09_Common_Threats.html">
-   Common Threats
+   Common Threats - Under Construction
   </a>
  </li>
 </ul>
@@ -169,12 +169,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="10_JSON_Web_Tokens.html">
-   JSON Web Tokens (JWT)
+   JSON Web Tokens (JWT) - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="19_Blockchain.html">
-   BlockChain
+   BlockChain - Under Construction
   </a>
  </li>
 </ul>
@@ -204,11 +204,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="92_Base64.html">
    Appendix: Base64 encoding
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="93_URLSafe.html">
-   Appendix: URLSafe
   </a>
  </li>
 </ul>
@@ -323,6 +318,11 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#caveats">
+   Caveats
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#examples">
    Examples
   </a>
@@ -369,6 +369,15 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="pepper">
 <h1>Pepper<a class="headerlink" href="#pepper" title="Permalink to this headline">¶</a></h1>
+<p><strong>ToDo</strong>:</p>
+<ul class="simple">
+<li><p>Add illustration for the salting process - Similar to <a class="reference external" href="https://thehavok.com/wp-content/uploads/2020/11/for_engineers.064-1-1024x576.jpeg">this</a>.</p></li>
+<li><p>Add reference to libraries compatible with peppers.</p></li>
+<li><p>Add appendix regarding how to store environment variables in <code class="docutils literal notranslate"><span class="pre">.env</span></code> files.</p></li>
+<li><p>Add appendix regarding read/write hashes to database.</p></li>
+<li><p>Add relevant resources at the end</p></li>
+</ul>
+<hr class="docutils" />
 <p>Pepper is the name given to an array of random bytes added to the data before hashing it, it is analogous to salts with some key differences:</p>
 <ul class="simple">
 <li><p>Peppers are secret</p></li>
@@ -385,6 +394,10 @@
 <p>Secret Peppers are fast and don’t have major impact on performance, but they require an external medium to store them, moreover, if they are leaked, the security is the same as it would have been with salts alone. On the other hand, re-discovered peppers can be used without any storage but they penalized performance because of the actual search, they cannot be leaked because the system do not know their values and a different one is used each time.</p>
 <p>When using the secret approach, the pepper is usually quite long whereas when using the re-discovered approach the pepper is usually quite short to minimize the performance penalty.</p>
 <p>An example for each is provided below</p>
+<div class="section" id="caveats">
+<h2>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline">¶</a></h2>
+<p>Even though the algorithm used in this chapter is <code class="docutils literal notranslate"><span class="pre">scrypt</span></code>, it should be noted that it was not thought for handling peppers natively. There is no other algorithm available in the standard library so be mindful and only consider this code for educational purposes.</p>
+</div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
 <div class="section" id="common-code">
@@ -440,7 +453,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;ecbd2da450980e79e02116d1aa4d4bf8a464867e3476e88b893ba16d955c0c23:7c25dc78eb4d24874a4f6b27d8e632da7e5d983f571a00c33e2a3d5ce0af351aec6542940f94ac9bd26a73f064baafa62937e5d8e77241a3d35345c7e95bb6ff&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;49b7cb70f49e796723a6b4e3f88ad57d1befb13db40ab020c4bb66467fe98904:76b3633df2cdcdf02b59f455e3ad1399ce8a028cc197a63c0d6be61f2d0ff2b0424a91a23c31c23dbdb3f58a4d98d515bf3c3e7e83bedf28bd309496f4b8ab9f&#39;}
 </pre></div>
 </div>
 </div>
@@ -511,7 +524,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;95f9fabcf358fb3084d90542c183ed738fccfebfca6dcb9802ccbf2588a79a6a:90d7c724dc796e4dff080be1592cced16c12ec7fe380edac4275f5c6b8a5d0e0b9e2e5c89dbf69c168de1d310fa756b71afba0b1607ad01434788e7389e18e55&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;bb688fda816d7d3bc163e3faa0ac1bd82e2015d0a4e811f46a020c8e755e8cad:fae7fda00e5df665f048e47411643e97a9e9b3d02fea9cad4a24f8d816db0888fabc055674001a1361ec912a2ff42440c67d2bd769d2843d783a20a2d9bd1f1a&#39;}
 </pre></div>
 </div>
 </div>
@@ -550,7 +563,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>257 µs ± 7.33 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>219 µs ± 6.57 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </pre></div>
 </div>
 </div>
@@ -601,7 +614,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;2d3134f12fc7d0918d67d9dbec027b6fd83eb486fb67a431c5fa3135b635d5fe:02ab4bc05f139aa4d2a238dc36e453fc79f60ead73f069d60a63a7b5f716585128cde154d7fd5805c829ab46ec769e30e90c27075361185b3cb3c249c951a7ac&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;33d835d4a178bd50fec8a9a23477fee83f73ab15ce0fa955f3fff247bfb594dd:771097781d7372aa509084c9993f4973d77ba8dea148ea963d5ffc7e7437902961ca55cf90b6cf2184a993ea9f93b44b6d1074378d62712de14344461c4d1e25&#39;}
 </pre></div>
 </div>
 </div>
@@ -640,7 +653,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>36.8 ms ± 1.78 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>32.8 ms ± 1.95 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre></div>
 </div>
 </div>

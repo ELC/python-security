@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Introduction to Hash Functions &#8212; Python Security</title>
+    <title>Hash Functions &#8212; Python Security</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -103,7 +103,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Introduction to Hash Functions
+   Hash Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -152,12 +152,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="08_Input_Sanitization.html">
-   Input Sanitization
+   Input Sanitization - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="09_Common_Threats.html">
-   Common Threats
+   Common Threats - Under Construction
   </a>
  </li>
 </ul>
@@ -169,12 +169,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="10_JSON_Web_Tokens.html">
-   JSON Web Tokens (JWT)
+   JSON Web Tokens (JWT) - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="19_Blockchain.html">
-   BlockChain
+   BlockChain - Under Construction
   </a>
  </li>
 </ul>
@@ -204,11 +204,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="92_Base64.html">
    Appendix: Base64 encoding
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="93_URLSafe.html">
-   Appendix: URLSafe
   </a>
  </li>
 </ul>
@@ -370,8 +365,18 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="introduction-to-hash-functions">
-<h1>Introduction to Hash Functions<a class="headerlink" href="#introduction-to-hash-functions" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="hash-functions">
+<h1>Hash Functions<a class="headerlink" href="#hash-functions" title="Permalink to this headline">¶</a></h1>
+<p><strong>ToDo</strong>:</p>
+<ul class="simple">
+<li><p>Add illustration for Hash Functions (HashTables) - Similar to <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7d/Hash_table_3_1_1_0_1_0_0_SP.svg/1200px-Hash_table_3_1_1_0_1_0_0_SP.svg.png">this</a>.</p></li>
+<li><p>Add illustration for Cryptographic Hash Functions - Similar to <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/thumb/2/2b/Cryptographic_Hash_Function.svg/1200px-Cryptographic_Hash_Function.svg.png">this</a>.</p></li>
+<li><p>Add a comparison table for the different Hash Functions.</p></li>
+<li><p>Show a benchmark comparing execution times.</p></li>
+<li><p>Add appendix regarding read/write hashes to database.</p></li>
+<li><p>Add relevant resources at the end</p></li>
+</ul>
+<hr class="docutils" />
 <p>Hashes are mathematical functions with certain properties:</p>
 <ul class="simple">
 <li><p>They map an variable length input to a fixed length output.</p></li>
@@ -398,7 +403,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-5222136879362498061
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6791124557515888322
 </pre></div>
 </div>
 </div>
@@ -443,7 +448,7 @@ Does 1 have the same hash as 1.0? True
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>md4, sha3_256, sha256, md5-sha1, sha224, sha3_224, ripemd160, shake_128, sha512, md5, sha512_256, sha3_384, blake2b, blake2s, sha384, sha3_512, sm3, shake_256, sha1, sha512_224, whirlpool
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>shake_128, sha1, ripemd160, sha256, sha3_512, blake2s, blake2b, md5, sha3_224, md4, shake_256, md5-sha1, sha384, sha3_384, sm3, sha512_224, sha224, sha3_256, sha512, whirlpool, sha512_256
 </pre></div>
 </div>
 </div>

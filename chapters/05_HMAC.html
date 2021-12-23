@@ -103,7 +103,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_Hash_Introduction.html">
-   Introduction to Hash Functions
+   Hash Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -152,12 +152,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="08_Input_Sanitization.html">
-   Input Sanitization
+   Input Sanitization - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="09_Common_Threats.html">
-   Common Threats
+   Common Threats - Under Construction
   </a>
  </li>
 </ul>
@@ -169,12 +169,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="10_JSON_Web_Tokens.html">
-   JSON Web Tokens (JWT)
+   JSON Web Tokens (JWT) - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="19_Blockchain.html">
-   BlockChain
+   BlockChain - Under Construction
   </a>
  </li>
 </ul>
@@ -204,11 +204,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="92_Base64.html">
    Appendix: Base64 encoding
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="93_URLSafe.html">
-   Appendix: URLSafe
   </a>
  </li>
 </ul>
@@ -362,12 +357,12 @@
      Correct Message and Key
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#conclusion">
-     Conclusion
-    </a>
-   </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
  </li>
 </ul>
 
@@ -382,6 +377,12 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="hmac">
 <h1>HMAC<a class="headerlink" href="#hmac" title="Permalink to this headline">¶</a></h1>
+<p><strong>ToDo</strong>:</p>
+<ul class="simple">
+<li><p>Add illustration for HMAC - Similar to <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/SHAhmac.svg/1200px-SHAhmac.svg.png">this</a>.</p></li>
+<li><p>Add relevant resources at the end.</p></li>
+</ul>
+<hr class="docutils" />
 <p>Checksums provides control for <strong>data integrity</strong> but not for <strong>authentication</strong>, that is why they are vulnerable to <a class="reference external" href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man in the middle attacks</a>. A similar method that provides both features is called <a class="reference external" href="https://en.wikipedia.org/wiki/Message_authentication_code">message authentication code (MAC)</a>, not to be confused with <a class="reference external" href="https://en.wikipedia.org/wiki/MAC_address">media access control address (MAC address)</a> used in communications and networking. In this material MAC will always refer to the former.</p>
 <p>MACs provides both <strong>integrity</strong> and <strong>authentication</strong> using a <strong>key</strong>. There are different ways to implement this mechanism:</p>
 <ul class="simple">
@@ -439,6 +440,7 @@
 </div>
 <div class="section" id="verifying-a-message">
 <h2>Verifying a Message<a class="headerlink" href="#verifying-a-message" title="Permalink to this headline">¶</a></h2>
+<p><strong>Note</strong>: the <code class="docutils literal notranslate"><span class="pre">hmac.compare_digest</span></code> is exactly the same as <code class="docutils literal notranslate"><span class="pre">secrets.compare_digest</span></code>. The latter is an alias of the former.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="n">received_message</span><span class="p">,</span> <span class="n">received_hmac</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
@@ -511,10 +513,10 @@
 </div>
 </div>
 </div>
-<div class="section" id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
-<p>HMACs are a sequence of bytes that can only be produced with a given input and a password/key, the input message is generally public and the HMAC serves as means of integrity, without requiring a secure channel. The drawback is that the passwrod/key itself should be delivered by a secure channel to begin with.</p>
 </div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>HMACs are a sequence of bytes that can only be produced with a given input and a password/key, the input message is generally public and the HMAC serves as means of integrity, without requiring a secure channel. The drawback is that the passwrod/key itself should be delivered by a secure channel to begin with.</p>
 </div>
 </div>
 

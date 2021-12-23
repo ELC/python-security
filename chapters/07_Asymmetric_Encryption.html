@@ -55,7 +55,7 @@
     <link rel="canonical" href="https://elc.github.com/python-security/chapters/07_Asymmetric_Encryption.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="next" title="Input Sanitization" href="08_Input_Sanitization.html" />
+    <link rel="next" title="Input Sanitization - Under Construction" href="08_Input_Sanitization.html" />
     <link rel="prev" title="Symmetric Encryption" href="06_Symmetric_Encryption.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
@@ -103,7 +103,7 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_Hash_Introduction.html">
-   Introduction to Hash Functions
+   Hash Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -152,12 +152,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="08_Input_Sanitization.html">
-   Input Sanitization
+   Input Sanitization - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="09_Common_Threats.html">
-   Common Threats
+   Common Threats - Under Construction
   </a>
  </li>
 </ul>
@@ -169,12 +169,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="10_JSON_Web_Tokens.html">
-   JSON Web Tokens (JWT)
+   JSON Web Tokens (JWT) - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="19_Blockchain.html">
-   BlockChain
+   BlockChain - Under Construction
   </a>
  </li>
 </ul>
@@ -204,11 +204,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="92_Base64.html">
    Appendix: Base64 encoding
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="93_URLSafe.html">
-   Appendix: URLSafe
   </a>
  </li>
 </ul>
@@ -523,6 +518,15 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="asymmetric-encryption">
 <h1>Asymmetric Encryption<a class="headerlink" href="#asymmetric-encryption" title="Permalink to this headline">¶</a></h1>
+<p><strong>ToDo</strong>:</p>
+<ul class="simple">
+<li><p>Add illustration for Asymmetric Encryption - Similar to <a class="reference external" href="https://lh3.googleusercontent.com/proxy/dCTxllT1M9nTQYlyzWcAG-svygYYNiFpD29S4s_rfdfiDAMF20YPOKR8hkoQmqx1kWPBHHnnxP5_uwYEL4Hgt4tmka6a-LfI80w">this</a> and <a class="reference external" href="http://scientopia.org/img-archive/goodmath/img_340.png">this</a>.</p></li>
+<li><p>Add illustration for digital signature - Similar to <a class="reference external" href="http://www.zytrax.com/tech/survival/signature.png">this</a> and <a class="reference external" href="https://www.researchgate.net/publication/339696424/figure/fig1/AS:865416696057857&#64;1583342827835/A-Bitcoin-digital-signature-diagram.png">this</a> and <a class="reference external" href="https://blog.mailfence.com/wp-content/uploads/2016/12/800px-Digital_Signature_diagram.svg.png">this</a></p></li>
+<li><p>Explain the SSL Handshake - Similar to <a class="reference external" href="https://www.101computing.net/wp/wp-content/uploads/SSL-Handshake.png">this</a></p></li>
+<li><p>Add appendix using <code class="docutils literal notranslate"><span class="pre">requests</span></code> to show self-signed warnings.</p></li>
+<li><p>Add relevant resources at the end.</p></li>
+</ul>
+<hr class="docutils" />
 <p>Asymmetric encryption does not have passwords or keys like symmetric but rather it splits the security into a pair of keys, one used to encrypt (usually called Public Key) and another used to decrypt (usually call Private Key). As the name implies one can be shared publicly and the other should be kept secret. This method is also known as <a class="reference external" href="https://en.wikipedia.org/wiki/Public-key_cryptography"><strong>Public-key cryptography</strong></a>.</p>
 <p>The keys are sequences of bytes generated together and are mathematically linked, they are also called “Key Pair”. Each party in the communication should have its own key pair and have their Public Keys shared. This means that there is no need for a “secure channel” to exchange keys as in symmetric encryption since the Public key are by design sharable.</p>
 <p>This type of encryption is used nowadays in many applications, ranging from the commonplace SSH protocol to the trendy Bitcoin transactions.</p>
@@ -665,7 +669,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 5dc6ed8498c91907872929eb3b0f257808daa9417b2d36e351b3af50719c3480b018d8956848195d8ee6a1f38997c5d119430c1348f93bd5f3ea4cefcb7f84a01cfb4069669688540f0bbfdeddf58b4c89164b6a308ea5355f3b1d019c95622f2977d210036b11d1fa70d4e01312a410ad1b316f428eeb491f1746d8407bbee24e63eacf2c6d10a3581b3733caf1f6b9376c9120797c145c639fadf95a31a700e09d5d2e6ee6483282c464a5370e888252dffd0477bd42b0fe2733401507edde0a4b535ce9b2039c3133c49d9ab80ff45dbb9ad7f1794021bab27a020a03c52276f70c6b1432104211756ccd30ff276f675c8e2124dfe6bc9e82fbbdfa22f7e9
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 8b4be2e55debafa0902534828483c69660eaf8ab172e4857812f7d57726c4802b0681ec063cf6a2078fe14fe4b4a3e15b25d8b1af4ea50585808194c637e8774db6cfef4cc4a4e0c053b28f98aa0eeba821297393fdce35a7088a732d37d05b30a447d981eecc81c973b2efc762a31ff4785d93aae63932b26bf8a40d765787bacdb8622fc43522bbe8af1a3d2b3e9ddf257b918bf1d9328fec5a40edabbfc8a2c004cd807e7fb07344a56190ead932046b9cd1fa8c7766c5b7036caabceb2acfa886aac2799806b1693be193b72cfa4249b9081678e9a1b08c5fcf6cf29238f2cbcc5b1c4c3bbd4c8a3aeacc4b3ce177127cdadd81cd93191e63c27bbad786b
 </pre></div>
 </div>
 </div>
@@ -780,7 +784,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Digital Signature: 5e9b28e58bb7902013f4021228256067362111aad9059fec1e5424b37eaf55b24fcdd351d175d82261d7f2554e44bef8e0f6fbd9145e8d81e22cf00d26a125d891b8843c58c840b1ca2236c66850c8094ef74b18af786d38aaac71ee51eaaf029fda0797243370777a1ed87625f08e7cc46e5dc40e623de446ebba1ab45182b6547b10163eddff6be9fb5e31135af95a7eb8d60a085b80bda8f0a485b2a24e55875d17578923d371623d45476d64d1ab0bf7c6ad8d29bc8f2cc23c377e150c2d6939bb02a975db43cde80eadc6dfb5befbc82f8c999db17e2b4667be0367dbebb17e26d1d174a5b825e0de70b0db50858e79d34a2fa13f5276bfc7d6f87cd732
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Digital Signature: 375eceab0bb9e857466156e713dc8a29b338211000228d217e25a4e89374e73adcbda6d15d6ad77cab7c230c569f1472f2764ae02bdeb5e1f8608e5615aeb6fa5bbc45a0d60842c2d41fa1134d3546c381733fb4c5a270c87cf736553f4bb0db9f3745aa4e09c59403c86f40c5ffa772791a7ffbba27f1332275578e74c018ce164345815ec101d0d4abd3974cb42dcd39ffbc025ed43d224929b23e0201351159bcb6d2f32335f4878709e9bd51db211d9439582aaab69484c728160f2713e3a17b540dd338322da042ba70fc4e2e7630b36970d7b0c54b19819b165311f88d00d2d74513dad57bd7bce3212ae1916e7fd0e61d08cf21743e0f235ff9a92483
 </pre></div>
 </div>
 </div>
@@ -944,16 +948,16 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----BEGIN ENCRYPTED PRIVATE KEY-----
-MIIFLTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQIzw+u/N4PHLsCAggA
-MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBD+ibSMaWLwhQLUHJDjSSjpBIIE
-0FSmqPc6mdk4KjmeH6EVFqzQnGZXsOr1W1ToR0Ip3wUQaOsQ5AayBthhBkbRTRIQ
+MIIFLTBXBgkqhkiG9w0BBQ0wSjApBgkqhkiG9w0BBQwwHAQI4kwJSoHkjr4CAggA
+MAwGCCqGSIb3DQIJBQAwHQYJYIZIAWUDBAEqBBCJ3E6P82t00bRxkuzVE79nBIIE
+0EOwxf9cgMxmr4cBIgPaqqVGGpH/33DzcvrL4npcr/mWL90G25wnvrLtX3WfhWV8
 
      TRUNCATED CONTENT TO REMIND THIS SHOULD NOT BE SHARED
 
-KkrvAVUglYoGbn3LYyxZNRCFh5niv48mNwF27JA/6earbz8eN7PlRLiG0t1Vb0Ek
-vD/Ak4DqmYiMj4c3SS12D0x3ys6DD5gNcSx1jC+GoFfGws1D+3jrcd/UdhIFZ0R7
-RQ/N1Bm4UWQs3UxvDJc6E5Ck16WVenJyG6V16/mSL+HbRrGRe855KpeIeyCi7Yvt
-EYZsBxiDX7idaQbvlVpdYlsdbYQvxXNAhWrneeXvVniu
+i3yiJwoHCtmYxJYWQoGmsBPcMTPfsdNPqxoPTl7elpncSFUjjZNpdyyssoRW74Mb
+3NVVNeMmO/JoJjO/MkRmyQxpWz8Zy/GgcyfMeuK4xBPU5vIdK1yrQ9z+gj8/nliF
+Zh1wQm9LXkNmpDJk5qjfb4noFfv3IXLGDENblbXOCfLyK1fss+y+fpO0oRThsnpK
+0h+HEGVZvFi1D17u5oyKLhEOROjdva7gfua39+pzfrN3
 -----END ENCRYPTED PRIVATE KEY-----
 </pre></div>
 </div>
@@ -983,13 +987,13 @@ EYZsBxiDX7idaQbvlVpdYlsdbYQvxXNAhWrneeXvVniu
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>-----BEGIN PUBLIC KEY-----
-MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA5jUwgQHJH+t8LvgN+E/w
-oiQ1qF73hRtjab8tEdualDWUGOAHYIEEmgo9sCwFwyq2B/3ANuu0gyfc9uMtw0rc
-GhA8nn7CUAcE7gNgTIeFusPspVgqYzE4NVrTWemTxkvInSokHu4i/EzNfFI3X2Xo
-1zT9Sw2iKexp0MxAV5mj0HZpTc6VfbdRM8f4hv32RlocQRbFNkdM69bS2TNmr3Ul
-G6d3k62pwmuRI7oC1Lg/ISeBVnzFvDVuTON8mQNLqCGqf3i/wqgICbYCTm4VdM6Y
-ljGhwhPF1doV6rEp/HwYYQik86ojSm6H1fjXwi7z1ZhGaALAocuE50NZd/T99uEE
-YQIDAQAB
+MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAseFuStFX4hXc36DYjEO4
+qYGdkRPCmbED4Ri+xXOJ9yslmh4f/EOeFV356vESAXnpfbKVtcmVMIDJZk42aKJm
+f9UhilLNS+KpMuzA6v96ynOLnLRs6ANrrPYoudguQGa+vXoukv0WrI4WmR2H+J6N
+HB3uHqELX5pYoy2QeTujVNSD28myB3Ci9tJPqnjdV4zoL5yUOXlTRwRdcyaXqXuX
+RlKxrB85RJ2FK6qMfTx3+nOWoTLqRGLD/+KNVuPN+473W4MqNBOxooWHx+S0WaJQ
+6Gcumj5yZo29SFXlIZ+PEVApH2PcqQW1HJloUJbI16oaL2zTxku2jqJ6bXbffxT2
+8wIDAQAB
 -----END PUBLIC KEY-----
 </pre></div>
 </div>
@@ -1076,7 +1080,7 @@ YQIDAQAB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: a8f6ab337b5460578e12166e550659d9ea23781e12941b173f8a578f8666476fea56b6cfb984e0c6b5077e31c7f599a7c6e109329f7fd6f09166b045618d12e7296a1e190dc1da801607c8e217cd58812e19c4bab8f17c379bb00438098c455bd6796820b361c2408af55801c881f4385481c9629736b1b43debe42dfe9b3202fc6dd4dd92bacba0e72d9f4fa4956924d30d7b232b38c8b8b534b9f7ac297c328fdfee516f6ad66ff80b28fabc25d1817f1c5ddc35991dfea7c13a244f31f56fe5de8b23081cd94253a038a9f1f9da9a424f54cd4a760244c8168f743a89b08c558b7cf8ffbe5fde441ba86de59183a6ecfd42cf744b4bbe33628a252008c6a4
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Encrypted Text: 115996b4490114c65c5feb41f5af0066adeb1a2fe9816c823edd4df9b9f16b56c9c644f6ec85c717d318b002e57308c5c2020122a6a3652615b24431aad0dc062c1207271ea741bfb8b287bc5981aaa042972fb9ed5f0594c7077829d5365c9d7194d22a9cb2b53847b1994a313a47426baa07b5f2bcd03320e789d7f67d0bb25f9a538af8e42e519928a9a4e7781a453a7fd4a1da65a28c18d59f5026c701c7c45098d7ce5595e2009c6106b1b4f59d145bab823434fc9ad1e22607d631c4103c929e694266b1a8041330c46ebb3dc803bf93e1fc18916baae3f2e09a95c042a2765fdfe92360b69780a6962e996a8580542de7a4bc0ffd20c4fdc72724b601
 </pre></div>
 </div>
 </div>
@@ -1130,7 +1134,7 @@ YQIDAQAB
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Digital Signature: d6e56ccd9f8e419a6a070a1bee74631e011cf346b535ac5bff28c341b09a2e30c4c20e5169aacd92bc53e1e2a49362ce421fee76b79a80dd3aed665b859e9afd3f6f1ae6bbd750990787cc7285c1f5b79aa80adf0c0b40f250dacf30b9ea32382855946ba7e3cd84be12a68f73defdbe80b8791fb0bc37983e9f8976c07d4f22363c655a1eed04a213ead191c850ee44b25e30cde06bea08056094d4c3c5f08c8dcae94cc91f1b39f6a41f5fa071a0dffca21de73f11e6844f4eaba9373acdddb3b5852219df7f951a23c0f78ed7cdccbba7a4c770d42493ec8f945b63f2d11cb4f5814fc778d4ee6ee732415eb9c894fc8755afe2864a84ba08d656e00eedde
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Digital Signature: 02a94a7e09564bab5e11bf88270f413675bb150736a0778fb31d4ef9742c72b15955630b19833f3f0cce42fab9d8ce2530e1f7da6179553a65aab21bc6baabbaab4f270f670e2a3e14122400cccb345a3d135bda94d3c3c8fd3ef18e73620240ac24813f80ef39708132b4af194c24ada038e9086832b179eb22c2e17d2edb2fe35134cb09145947acfcb640ac9666dda77789821b619682914159d2b80d6873a9e7968da83f7d9a66200e13487c212dda3f9d3c7c0d5225b25acea129cac316323c96cc5a1e3f33d39c39fdf09fe7b7c272b96f180a66ef2fbf7db7dbe4cf487099ee5bdbb4fffce6e8bd9611d96831511c4fa45c463f3e064f0b395f75a01a
 </pre></div>
 </div>
 </div>
@@ -1208,7 +1212,7 @@ YQIDAQAB
     <a class='right-next' id="next-link" href="08_Input_Sanitization.html" title="next page">
     <div class="prev-next-info">
         <p class="prev-next-subtitle">next</p>
-        <p class="prev-next-title">Input Sanitization</p>
+        <p class="prev-next-title">Input Sanitization - Under Construction</p>
     </div>
     <i class="fas fa-angle-right"></i>
     </a>

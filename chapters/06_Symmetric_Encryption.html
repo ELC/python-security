@@ -103,7 +103,7 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_Hash_Introduction.html">
-   Introduction to Hash Functions
+   Hash Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -152,12 +152,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="08_Input_Sanitization.html">
-   Input Sanitization
+   Input Sanitization - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="09_Common_Threats.html">
-   Common Threats
+   Common Threats - Under Construction
   </a>
  </li>
 </ul>
@@ -169,12 +169,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="10_JSON_Web_Tokens.html">
-   JSON Web Tokens (JWT)
+   JSON Web Tokens (JWT) - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="19_Blockchain.html">
-   BlockChain
+   BlockChain - Under Construction
   </a>
  </li>
 </ul>
@@ -204,11 +204,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="92_Base64.html">
    Appendix: Base64 encoding
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="93_URLSafe.html">
-   Appendix: URLSafe
   </a>
  </li>
 </ul>
@@ -442,6 +437,14 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="symmetric-encryption">
 <h1>Symmetric Encryption<a class="headerlink" href="#symmetric-encryption" title="Permalink to this headline">¶</a></h1>
+<p><strong>ToDo</strong>:</p>
+<ul class="simple">
+<li><p>Add illustration for Symmetric Encryption - Similar to <a class="reference external" href="https://miro.medium.com/max/1400/1*mnyITCNnRdeLfauh3Psmlw.png">this</a>.</p></li>
+<li><p>Add illustration for authenticated vs non-autenticated encryption.</p></li>
+<li><p>Explain difference between EtM, E&amp;M and MtE - See <a class="reference external" href="https://en.wikipedia.org/wiki/Authenticated_encryption#Approaches_to_authenticated_encryption">this</a>.</p></li>
+<li><p>Add relevant resources at the end.</p></li>
+</ul>
+<hr class="docutils" />
 <p>Encryption is the process of transforming a message, usually called cyphered message, in such a way that only the intended parties can reverse it. The process of reversing encryption is called decryption. This implies that, as opposed to hashes, encryption is <strong>reversible</strong>.</p>
 <p>There are two main types of encryption, symmetric and asymmetric, this chapter will cover symmetric encryption.</p>
 <p>In symmetric encryption, the message to be sent is encrypted using a single <strong>secret</strong> password, also called key. Anyone with that secret key and decrypt the message and see the original content.</p>
@@ -520,9 +523,9 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 767377546810137d5caf0b93b2eb2609886bb8ca5b4f844bdba5e122ab471f85
-Public Initialization Vector: 55c4ed369d845c0ac2713f2b36c0b0c5
-Encrypted Message: f08a22e74c2a4dc3e1195680
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: ca676dafe65e2ff8896765c6638bbb1a7d1ca267c41b07f0acb7bc0e6db0818c
+Public Initialization Vector: 5f1bfb82bf6fe7e88833c959c22cd0ac
+Encrypted Message: 4aa37e427b5c8346bf200afc
 </pre></div>
 </div>
 </div>
@@ -549,7 +552,7 @@ Encrypted Message: f08a22e74c2a4dc3e1195680
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Decrypted Message: b&#39;\xe9k#\xca\x11\x02&lt;E?o\xb8\xa3&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Decrypted Message: b&#39;\x9dm\xc9\x9b\x0b0\xf7|\xe0in\x8c&#39;
 </pre></div>
 </div>
 </div>
@@ -610,9 +613,9 @@ Encrypted Message: f08a22e74c2a4dc3e1195680
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 0fb0238bc47eb3505eeb62862460d64b37eb4ca9e71a351628ad3e45c40b0e10
-Public Nonce: c96f6cc92291cff77552b59b6ed282a198ba5b0e438b00fc
-Encrypted Message: c96f6cc92291cff77552b59b6ed282a198ba5b0e438b00fc:d9423aba1db36f963d957ec338761c7523a19edf7ea83b6f98998489
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 5dde01fcb14f41b7a1b8d2d96c4d31bd6f7825750a2fa9346d0c4ae7ee79f234
+Public Nonce: 3896a0cf5779f51de8e11ebd6df7c27d52db227cddd90764
+Encrypted Message: 3896a0cf5779f51de8e11ebd6df7c27d52db227cddd90764:7f1918d84eb1c4fca03cd333eafe3941850db1bfb06ea5e35d40e50b
 </pre></div>
 </div>
 </div>
@@ -713,8 +716,8 @@ Encrypted Message: c96f6cc92291cff77552b59b6ed282a198ba5b0e438b00fc:d9423aba1db3
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 2d334f5850374e5058676c59556848336d546551334c62556a7263504e75745f5f4a674d7a30745a7054513d
-Encrypted Message: 6741414141414268784a316c6f48335f4b5143764553484c5f2d47316b4c656b65426f3176636b344966625f796e5f4e345a7331784b767759364d756f694b546f5757477969586e6f412d456d4e4e464b43737a494e37534f6279474b36376851773d3d
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Secret Key: 6556334871464144424a656667425a5747686c616355717a447832487341702d495647446e78356e4a70553d
+Encrypted Message: 6741414141414268784e364d78576771424b754966645769755048512d446c56694b68755f50665647695246367243754f31686761686b783159495f636471717645734779596c50345a41626971685559566264564f7172545370454341795862773d3d
 </pre></div>
 </div>
 </div>

@@ -103,7 +103,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_Hash_Introduction.html">
-   Introduction to Hash Functions
+   Hash Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -152,12 +152,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="08_Input_Sanitization.html">
-   Input Sanitization
+   Input Sanitization - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="09_Common_Threats.html">
-   Common Threats
+   Common Threats - Under Construction
   </a>
  </li>
 </ul>
@@ -169,12 +169,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="10_JSON_Web_Tokens.html">
-   JSON Web Tokens (JWT)
+   JSON Web Tokens (JWT) - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="19_Blockchain.html">
-   BlockChain
+   BlockChain - Under Construction
   </a>
  </li>
 </ul>
@@ -204,11 +204,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="92_Base64.html">
    Appendix: Base64 encoding
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="93_URLSafe.html">
-   Appendix: URLSafe
   </a>
  </li>
 </ul>
@@ -377,8 +372,8 @@
     </a>
    </li>
    <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#hash-calculation">
-     Hash Calculation
+    <a class="reference internal nav-link" href="#hash-as-checksums">
+     Hash as Checksums
     </a>
    </li>
   </ul>
@@ -398,12 +393,12 @@
      Runs
     </a>
    </li>
-   <li class="toc-h3 nav-item toc-entry">
-    <a class="reference internal nav-link" href="#conclusion">
-     Conclusion
-    </a>
-   </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
  </li>
 </ul>
 
@@ -418,6 +413,14 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="checksum">
 <h1>Checksum<a class="headerlink" href="#checksum" title="Permalink to this headline">¶</a></h1>
+<p><strong>ToDo</strong>:</p>
+<ul class="simple">
+<li><p>Add illustration for computing checksums - Similar to <a class="reference external" href="https://media.geeksforgeeks.org/wp-content/uploads/detect13.jpg">this</a>.</p></li>
+<li><p>Add one example using pure bitwise operations.</p></li>
+<li><p>Add appendix on error correction codes - For instance <a class="reference external" href="https://en.wikipedia.org/wiki/Hamming_code?oldformat=true">Hamming Codes</a>.</p></li>
+<li><p>Add relevant resources at the end.</p></li>
+</ul>
+<hr class="docutils" />
 <p>Even though hashes provide cryptographic features, they are computational intensive and in some use cases, only <strong>data integrity</strong> is desired, e.g. to check that a dowloaded file is exactly the one hosted on a server. Checksums are non-reversible.</p>
 <p>For that purpose there are functions called <a class="reference external" href="https://en.wikipedia.org/wiki/Checksum"><strong>checksums</strong></a>, they are not hashes and hence not suitable for security purposes. That means that the sender should either make the checksum public or send it along with the original data. If the latter, one should notice that this is vulnerable to <a class="reference external" href="https://en.wikipedia.org/wiki/Man-in-the-middle_attack">man in the middle attacks</a>.</p>
 <p>The most common methods are called <a class="reference external" href="https://en.wikipedia.org/wiki/Cyclic_redundancy_check">CRC32</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Adler-32">Adler32</a>. Both are similar in but the latter is faster. The Python standard library exposes functions for both under the <a class="reference external" href="https://docs.python.org/3/library/zlib.html"><code class="docutils literal notranslate"><span class="pre">zlib</span></code> module</a>.</p>
@@ -594,7 +597,7 @@ Checksum: 474547262
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1693</span><span class="o">/</span><span class="mf">3499109848.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1880</span><span class="o">/</span><span class="mf">3499109848.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> 
 <span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">message_crc</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
@@ -628,8 +631,8 @@ Checksum: 474547262
 </div>
 </div>
 </div>
-<div class="section" id="hash-calculation">
-<h3>Hash Calculation<a class="headerlink" href="#hash-calculation" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="hash-as-checksums">
+<h3>Hash as Checksums<a class="headerlink" href="#hash-as-checksums" title="Permalink to this headline">¶</a></h3>
 <p>Some systems may use MD5, a legacy and vulnerable hash algorithm, or SHA1 to checksum files. Even though MD5 and SHA1 are cryptographic functions, <strong>they are stil subjected to the same Man in the middle attack</strong>, the advantage of using them lies in the <strong>collision avoidance</strong> and <strong>big changes in output due to small changes in input</strong>.</p>
 <p>When using hashes, the output will be a hexadecimal, instead of an integer. It can be converted to integer although it might produce overflow in legacy systems that cannot handle arbitrary long integers depending on the precise hash function used.</p>
 <div class="cell docutils container">
@@ -733,10 +736,10 @@ Checksum Adler32: 208 ms ± 18.9 ms per loop (mean ± std. dev. of 7 runs, 1 loo
 </div>
 </div>
 </div>
-<div class="section" id="conclusion">
-<h3>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h3>
-<p>Checksum functions provide less guarantees than hashes but they are useful to provide integrity. In particular Adler32 is around three times faster than CRC32, and if cryptographic features are not needed, and speed is paramount, using checksum functions over hashes seems to be a good option. Many systems use hashes as checksums for compatibility reasons. In order to give true integrity, the checksum should be public or delivered by a secure channel to avoid man in the middle attacks.</p>
 </div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>Checksum functions provide less guarantees than hashes but they are useful to provide integrity. In particular Adler32 is around three times faster than CRC32, and if cryptographic features are not needed, and speed is paramount, using checksum functions over hashes seems to be a good option. Many systems use hashes as checksums for compatibility reasons. In order to give true integrity, the checksum should be public or delivered by a secure channel to avoid man in the middle attacks.</p>
 </div>
 </div>
 

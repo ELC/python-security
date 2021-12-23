@@ -17,25 +17,23 @@ Traceback (most recent call last):
     raise CellExecutionError.from_cell_and_msg(cell, exec_reply_content)
 nbclient.exceptions.CellExecutionError: An error occurred while executing the following cell:
 ------------------
-data = "Hello World!"
-data_bytes = data.encode("utf-8")
-data_decoded = data_bytes.decode("utf-8")
-data_hashed = hashlib.sha256(data_bytes).hexdigest()
-print(f"Original: {data}")
-print(f" Encoded: {data_bytes}")
-print(f" Decoded: {data_decoded}")
-print(f"  Hashed: {data_hashed}")
+print(f"{'Comparing Lenghts':>40}")
+print(f"              Data size in bytes: {size} bytes")
+print(f" Representation in bits (base 2): {size * 8} characters")
+print(f" Representation in hex (base 16): {len(data.hex())} characters")
+print(f"        Representation in base64: {len(data_base64)} characters")
+print(f"Representation in base64 URLSafe: {len(data_base64_urlsafe)} characters")
 ------------------
 
 [0;31m---------------------------------------------------------------------------[0m
 [0;31mNameError[0m                                 Traceback (most recent call last)
-[0;32m/tmp/ipykernel_1857/2909934302.py[0m in [0;36m<module>[0;34m[0m
-[1;32m      2[0m [0mdata_bytes[0m [0;34m=[0m [0mdata[0m[0;34m.[0m[0mencode[0m[0;34m([0m[0;34m"utf-8"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      3[0m [0mdata_decoded[0m [0;34m=[0m [0mdata_bytes[0m[0;34m.[0m[0mdecode[0m[0;34m([0m[0;34m"utf-8"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0;32m----> 4[0;31m [0mdata_hashed[0m [0;34m=[0m [0mhashlib[0m[0;34m.[0m[0msha256[0m[0;34m([0m[0mdata_bytes[0m[0;34m)[0m[0;34m.[0m[0mhexdigest[0m[0;34m([0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[0m[1;32m      5[0m [0mprint[0m[0;34m([0m[0;34mf"Original: {data}"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
-[1;32m      6[0m [0mprint[0m[0;34m([0m[0;34mf" Encoded: {data_bytes}"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m/tmp/ipykernel_2065/767956913.py[0m in [0;36m<module>[0;34m[0m
+[1;32m      1[0m [0mprint[0m[0;34m([0m[0;34mf"{'Comparing Lenghts':>40}"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0;32m----> 2[0;31m [0mprint[0m[0;34m([0m[0;34mf"              Data size in bytes: {size} bytes"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[0m[1;32m      3[0m [0mprint[0m[0;34m([0m[0;34mf" Representation in bits (base 2): {size * 8} characters"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      4[0m [0mprint[0m[0;34m([0m[0;34mf" Representation in hex (base 16): {len(data.hex())} characters"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
+[1;32m      5[0m [0mprint[0m[0;34m([0m[0;34mf"        Representation in base64: {len(data_base64)} characters"[0m[0;34m)[0m[0;34m[0m[0;34m[0m[0m
 
-[0;31mNameError[0m: name 'hashlib' is not defined
-NameError: name 'hashlib' is not defined
+[0;31mNameError[0m: name 'size' is not defined
+NameError: name 'size' is not defined
 

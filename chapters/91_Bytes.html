@@ -103,7 +103,7 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_Hash_Introduction.html">
-   Introduction to Hash Functions
+   Hash Functions
   </a>
  </li>
  <li class="toctree-l1">
@@ -152,12 +152,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="08_Input_Sanitization.html">
-   Input Sanitization
+   Input Sanitization - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="09_Common_Threats.html">
-   Common Threats
+   Common Threats - Under Construction
   </a>
  </li>
 </ul>
@@ -169,12 +169,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="10_JSON_Web_Tokens.html">
-   JSON Web Tokens (JWT)
+   JSON Web Tokens (JWT) - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="19_Blockchain.html">
-   BlockChain
+   BlockChain - Under Construction
   </a>
  </li>
 </ul>
@@ -204,11 +204,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="92_Base64.html">
    Appendix: Base64 encoding
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="93_URLSafe.html">
-   Appendix: URLSafe
   </a>
  </li>
 </ul>
@@ -355,7 +350,17 @@
      Example with Custom objects
     </a>
    </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#example-with-mixins">
+     Example with Mixins
+    </a>
+   </li>
   </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#special-case-files">
+   Special Case: Files
+  </a>
  </li>
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#random-bytes">
@@ -380,6 +385,11 @@
    </li>
   </ul>
  </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
 </ul>
 
             </nav>
@@ -393,10 +403,16 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="appendix-the-bytes-data-type">
 <h1>Appendix: The Bytes Data Type<a class="headerlink" href="#appendix-the-bytes-data-type" title="Permalink to this headline">¶</a></h1>
-<p>The functions in the hashlib module requires <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes-objects">Bytes</a> objects. In the case of strings, the [encode] and [decode] methods can be used, however for custom objects, two possible ways are:</p>
+<p><strong>ToDo</strong>:</p>
+<ul class="simple">
+<li><p>Add an illustration and explain the concept of UTF-8, Unicode, Bytes, ASCII - Similar to <a class="reference external" href="https://blog.finxter.com/wp-content/uploads/2020/06/byte-1024x576.jpg">this</a></p></li>
+<li><p>Add relevant resources at the end</p></li>
+</ul>
+<hr class="docutils" />
+<p>Most cryptographic functions require <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes-objects">Bytes</a> objects. In the case of strings, the <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#str.encode"><code class="docutils literal notranslate"><span class="pre">encode</span></code></a> and <a class="reference external" href="https://docs.python.org/3/library/stdtypes.html#bytes.decode"><code class="docutils literal notranslate"><span class="pre">decode</span></code></a> methods can be used, however for custom objects, two possible ways are:</p>
 <ol class="simple">
-<li><p>Converting the object to json and then the json string to bytes</p></li>
-<li><p>Implementing a __bytes__ method</p></li>
+<li><p>Converting the object to JSON and then convert the JSON string to bytes</p></li>
+<li><p>Implementing a <code class="docutils literal notranslate"><span class="pre">__bytes__</span></code> method</p></li>
 </ol>
 <p>However, usually hashes are used with plain types like strings which are easily convertible to bytes.</p>
 <div class="section" id="data-conversions">
@@ -430,7 +446,7 @@ From Bytes to String: Hello World!
 <div class="section" id="using-the-binascii-module">
 <h3>Using the <code class="docutils literal notranslate"><span class="pre">binascii</span></code> module<a class="headerlink" href="#using-the-binascii-module" title="Permalink to this headline">¶</a></h3>
 <p>The <a class="reference external" href="https://docs.python.org/3/library/binascii.html">binascii module</a> exposes two utility functions, one to convert from bytes to hex called <a class="reference external" href="https://docs.python.org/3/library/binascii.html#binascii.hexlify">hexlify</a> and another to do the reverse conversion called <a class="reference external" href="https://docs.python.org/3/library/binascii.html#binascii.unhexlify">unhexlify</a></p>
-<p><strong>Important note:</strong> the hexilify function returns a bytes object whereas the .hex() method of bytes returns a string.</p>
+<p><strong>Important note:</strong> the hexlify function returns a bytes object whereas the .hex() method of bytes returns a string. See the <code class="docutils literal notranslate"><span class="pre">b</span></code> before the <code class="docutils literal notranslate"><span class="pre">'</span></code></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">binascii</span>
@@ -460,6 +476,13 @@ From String to Bytes: b&#39;Hello World!&#39;
 </div>
 <div class="section" id="examples">
 <h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hashlib</span>
+</pre></div>
+</div>
+</div>
+</div>
 <div class="section" id="example-with-plain-strings">
 <h3>Example with plain strings<a class="headerlink" href="#example-with-plain-strings" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
@@ -476,16 +499,10 @@ From String to Bytes: b&#39;Hello World!&#39;
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1857</span><span class="o">/</span><span class="mf">2909934302.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="n">data_bytes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">data_decoded</span> <span class="o">=</span> <span class="n">data_bytes</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">4</span> <span class="n">data_hashed</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">6</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded: </span><span class="si">{</span><span class="n">data_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="ne">NameError</span>: name &#39;hashlib&#39; is not defined
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original: Hello World!
+ Encoded: b&#39;Hello World!&#39;
+ Decoded: Hello World!
+  Hashed: 7f83b1657ff1fc53b92dc18148a1d65dfc2d4b1fa3d677284addd200126d9069
 </pre></div>
 </div>
 </div>
@@ -503,6 +520,10 @@ From String to Bytes: b&#39;Hello World!&#39;
     <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
     <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span>
     
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    
     <span class="k">def</span> <span class="fm">__bytes__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">dictionary_representation</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
         <span class="n">json_representation</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dictionary_representation</span><span class="p">)</span>
@@ -519,20 +540,108 @@ From String to Bytes: b&#39;Hello World!&#39;
 <span class="n">person_decoded</span> <span class="o">=</span> <span class="n">Person</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">person_bytes</span><span class="p">)</span>
 <span class="n">person_hashed</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">person_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original: </span><span class="si">{</span><span class="n">person</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded: </span><span class="si">{</span><span class="n">person_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Decoded: </span><span class="si">{</span><span class="n">person_decoded</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Hashed: </span><span class="si">{</span><span class="n">person_hashed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Original: </span><span class="si">{</span><span class="n">person</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Encoded: </span><span class="si">{</span><span class="n">person_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Decoded: </span><span class="si">{</span><span class="n">person_decoded</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Full Name: </span><span class="si">{</span><span class="n">person_decoded</span><span class="o">.</span><span class="n">fullname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Hashed: </span><span class="si">{</span><span class="n">person_hashed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original: Person(first_name=&#39;John&#39;, last_name=&#39;Doe&#39;)
- Encoded: b&#39;{&quot;first_name&quot;: &quot;John&quot;, &quot;last_name&quot;: &quot;Doe&quot;}&#39;
- Decoded: Person(first_name=&#39;John&#39;, last_name=&#39;Doe&#39;)
-  Hashed: fee485b19074e0b0b2856ae5f27fcdd67ff12204cbff73c5eaa10b1aac887042
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Original: Person(first_name=&#39;John&#39;, last_name=&#39;Doe&#39;)
+  Encoded: b&#39;{&quot;first_name&quot;: &quot;John&quot;, &quot;last_name&quot;: &quot;Doe&quot;}&#39;
+  Decoded: Person(first_name=&#39;John&#39;, last_name=&#39;Doe&#39;)
+Full Name: Doe, John
+   Hashed: fee485b19074e0b0b2856ae5f27fcdd67ff12204cbff73c5eaa10b1aac887042
 </pre></div>
 </div>
+</div>
+</div>
+</div>
+<div class="section" id="example-with-mixins">
+<h3>Example with Mixins<a class="headerlink" href="#example-with-mixins" title="Permalink to this headline">¶</a></h3>
+<p>In bigger projects, it may be against best practice to duplicate the <code class="docutils literal notranslate"><span class="pre">__bytes__</span></code> and <code class="docutils literal notranslate"><span class="pre">from_bytes</span></code> methods. A <a class="reference external" href="https://en.wikipedia.org/wiki/Mixin?oldformat=true">Mixin</a> class can be used and then inherit from. Mixins are special class, similar to a <a class="reference external" href="https://www.python.org/dev/peps/pep-0544/">Protocol</a> which define methods to be used in child classes. Mixins as opposed to Interfaces or Abstract Classes are meant to be incomplete and it should not make sense to instanciate them directly.</p>
+<p><strong>Note</strong>: In this case, it would have been possible to make <code class="docutils literal notranslate"><span class="pre">PersonBase</span></code> inherit from <code class="docutils literal notranslate"><span class="pre">ByteConvertibleMixin</span></code> and thus avoiding the multiple-inheritance. However, if the bytes conversion is desirable only to a subset of children classes of <code class="docutils literal notranslate"><span class="pre">PersonBase</span></code>, then the multiple-inheritance approach is the most idiomatic in Python.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">abc</span> <span class="kn">import</span> <span class="n">ABC</span>
+<span class="kn">from</span> <span class="nn">dataclasses</span> <span class="kn">import</span> <span class="n">dataclass</span><span class="p">,</span> <span class="n">asdict</span>
+<span class="kn">import</span> <span class="nn">json</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">ByteConvertibleMixin</span><span class="p">(</span><span class="n">ABC</span><span class="p">):</span>
+    <span class="k">def</span> <span class="fm">__bytes__</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="n">dictionary_representation</span> <span class="o">=</span> <span class="n">asdict</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span>
+        <span class="n">json_representation</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">dictionary_representation</span><span class="p">)</span>
+        <span class="k">return</span> <span class="n">json_representation</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    
+    <span class="nd">@classmethod</span>
+    <span class="k">def</span> <span class="nf">from_bytes</span><span class="p">(</span><span class="bp">cls</span><span class="p">,</span> <span class="n">bytes_object</span><span class="p">):</span>
+        <span class="n">string_representation</span> <span class="o">=</span> <span class="n">bytes_object</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+        <span class="n">dictionary_representation</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">string_representation</span><span class="p">)</span>
+        <span class="k">return</span> <span class="bp">cls</span><span class="p">(</span><span class="o">**</span><span class="n">dictionary_representation</span><span class="p">)</span>
+
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">PersonBase</span><span class="p">:</span>  <span class="c1"># Name changed to avoid overwriting</span>
+    <span class="n">first_name</span><span class="p">:</span> <span class="nb">str</span>
+    <span class="n">last_name</span><span class="p">:</span> <span class="nb">str</span>
+    
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">fullname</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">last_name</span><span class="si">}</span><span class="s2">, </span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">first_name</span><span class="si">}</span><span class="s2">&quot;</span>
+    
+<span class="nd">@dataclass</span>
+<span class="k">class</span> <span class="nc">Customer</span><span class="p">(</span><span class="n">PersonBase</span><span class="p">,</span> <span class="n">ByteConvertibleMixin</span><span class="p">):</span>  <span class="c1"># Multiple-Inheritance</span>
+    <span class="n">address</span><span class="p">:</span> <span class="nb">str</span>
+    
+<span class="n">customer</span> <span class="o">=</span> <span class="n">Customer</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;Doe&quot;</span><span class="p">,</span> <span class="s2">&quot;Neverland 10&quot;</span><span class="p">)</span>
+<span class="n">customer_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="p">(</span><span class="n">customer</span><span class="p">)</span>
+<span class="n">customer_decoded</span> <span class="o">=</span> <span class="n">Customer</span><span class="o">.</span><span class="n">from_bytes</span><span class="p">(</span><span class="n">customer_bytes</span><span class="p">)</span>
+<span class="n">customer_hashed</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">(</span><span class="n">customer_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Original: </span><span class="si">{</span><span class="n">customer</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Encoded: </span><span class="si">{</span><span class="n">customer_bytes</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;  Decoded: </span><span class="si">{</span><span class="n">customer_decoded</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Full Name: </span><span class="si">{</span><span class="n">customer_decoded</span><span class="o">.</span><span class="n">fullname</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Hashed: </span><span class="si">{</span><span class="n">customer_hashed</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Original: Customer(first_name=&#39;John&#39;, last_name=&#39;Doe&#39;, address=&#39;Neverland 10&#39;)
+  Encoded: b&#39;{&quot;first_name&quot;: &quot;John&quot;, &quot;last_name&quot;: &quot;Doe&quot;, &quot;address&quot;: &quot;Neverland 10&quot;}&#39;
+  Decoded: Customer(first_name=&#39;John&#39;, last_name=&#39;Doe&#39;, address=&#39;Neverland 10&#39;)
+Full Name: Doe, John
+   Hashed: 4a23851a4c1d84ccd1b5b9c520325436c162b823a998feceeb87f7fb107876bc
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="special-case-files">
+<h2>Special Case: Files<a class="headerlink" href="#special-case-files" title="Permalink to this headline">¶</a></h2>
+<p>When working with files, it is possible to work in bytes format out of the box. The easiest way is through the <a class="reference external" href="https://docs.python.org/3/library/pathlib.html#pathlib.Path.read_bytes"><code class="docutils literal notranslate"><span class="pre">read_bytes</span></code></a> method of the <a class="reference external" href="https://docs.python.org/3/library/pathlib.html"><code class="docutils literal notranslate"><span class="pre">pathlib</span></code></a> module.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+
+<span class="n">image_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../_static/images/certificate_details_dns.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+<span class="n">image_bytes</span> <span class="o">=</span> <span class="n">image_bytes</span><span class="p">[:</span><span class="mi">150</span><span class="p">]</span>  <span class="c1"># Trimmed to improve display</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Byte Representation: </span><span class="se">\n</span><span class="si">{</span><span class="n">image_bytes</span><span class="si">}</span><span class="se">\n</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Hex Representation: </span><span class="se">\n</span><span class="si">{</span><span class="n">image_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Byte Representation: 
+b&#39;\x89PNG\r\n\x1a\n\x00\x00\x00\rIHDR\x00\x00\x04\xe1\x00\x00\x02\x0f\x08\x02\x00\x00\x00\xba\xd9]t\x00\x00\x00\x01sRGB\x00\xae\xce\x1c\xe9\x00\x00\x00\x04gAMA\x00\x00\xb1\x8f\x0b\xfca\x05\x00\x00\x00\tpHYs\x00\x00\x0e\xc3\x00\x00\x0e\xc3\x01\xc7o\xa8d\x00\x00\xb9}IDATx^\xed\xfd\x7f\xace\xc7u\xe7\x8b\xf5\xfb#x\xf93\xc8\x1f\x1e\xc0\x7f\xbdI\x10\xc0\x80\x9d\xf1\x1f\xf2C@\xe5\xe5\x0f\x033H\x9cA\x0c? \x99\x18\xcc@Q@\xe5\x8e\x07\x03\xd9\x83\x17@\x8e&#39;
+
+Hex Representation: 
+89504e470d0a1a0a0000000d49484452000004e10000020f0802000000bad95d74000000017352474200aece1ce90000000467414d410000b18f0bfc6105000000097048597300000ec300000ec301c76fa8640000b97d49444154785eedfd7fac65c775e78bf5fb2378f933c81f1ec07fbd4910c0809df11ff24340e5e50f0333489c410c3f209918cc405140e58e0703d98317408e
+</pre></div>
 </div>
 </div>
 </div>
@@ -549,19 +658,24 @@ From String to Bytes: b&#39;Hello World!&#39;
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">secrets</span>
-
-<span class="n">lenght</span> <span class="o">=</span> <span class="mi">15</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">lenght</span> <span class="o">=</span> <span class="mi">15</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;              Secure Random Bytes: </span><span class="si">{</span><span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="n">lenght</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;        Secure Random Bytes (Hex): </span><span class="si">{</span><span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="n">lenght</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Secure Random Bytes (Hex URLSafe): </span><span class="si">{</span><span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="n">lenght</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span> <span class="c1"># See URLSafe Chapter</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Secure Random Bytes (Hex URLSafe): </span><span class="si">{</span><span class="n">secrets</span><span class="o">.</span><span class="n">token_urlsafe</span><span class="p">(</span><span class="n">lenght</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              Secure Random Bytes: b&#39;\xf8J\x96\x89\xa50\xb0\xf5;c=\x84DZ\x03&#39;
-        Secure Random Bytes (Hex): d5dc04032cc6028e220917821c3922
-Secure Random Bytes (Hex URLSafe): 5exkWi2QSTfWPKwWt3BA
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>              Secure Random Bytes: b&#39;\x1f\xe8\xf3e\xa8\xbbY\x15\xce@\xfdR\x1a \xe1&#39;
+        Secure Random Bytes (Hex): 4e5761162084aa0998012c9f01a61a
+Secure Random Bytes (Hex URLSafe): lBCpfdZ2yJZPBGgOw41P
 </pre></div>
 </div>
 </div>
@@ -569,13 +683,11 @@ Secure Random Bytes (Hex URLSafe): 5exkWi2QSTfWPKwWt3BA
 </div>
 <div class="section" id="comparing-secrets">
 <h3>Comparing Secrets<a class="headerlink" href="#comparing-secrets" title="Permalink to this headline">¶</a></h3>
-<p>To avoid <a class="reference external" href="https://www.wikiwand.com/en/Timing_attack">timming attacks</a>, it is important to <strong>NOT</strong> use <code class="docutils literal notranslate"><span class="pre">==</span></code> when comparing secrets. For that the <code class="docutils literal notranslate"><span class="pre">secrets</span></code> module exposes a method <a class="reference external" href="https://docs.python.org/3/library/secrets.html#secrets.compare_digest"><code class="docutils literal notranslate"><span class="pre">compare_digest</span></code></a> which is actually a wrapper of the <a class="reference external" href="https://docs.python.org/3/library/hmac.htm"><code class="docutils literal notranslate"><span class="pre">hmac</span></code></a> module <a class="reference external" href="https://docs.python.org/3/library/hmac.html#hmac.compare_digest">analogous method</a>.</p>
+<p>To avoid <a class="reference external" href="https://www.wikiwand.com/en/Timing_attack">timming attacks</a>, it is important to <strong>NOT</strong> use <code class="docutils literal notranslate"><span class="pre">==</span></code> when comparing secrets. For that the <code class="docutils literal notranslate"><span class="pre">secrets</span></code> module exposes a method <a class="reference external" href="https://docs.python.org/3/library/secrets.html#secrets.compare_digest"><code class="docutils literal notranslate"><span class="pre">compare_digest</span></code></a> which is actually an alias of the <a class="reference external" href="https://docs.python.org/3/library/hmac.htm"><code class="docutils literal notranslate"><span class="pre">hmac</span></code></a> module <a class="reference external" href="https://docs.python.org/3/library/hmac.html#hmac.compare_digest">homonymous method</a>.</p>
 <p>For a demonstration of this type of attack, see this <a class="reference external" href="https://www.youtube.com/watch?v=XThL0LP3RjY">demo</a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">secrets</span>
-
-<span class="c1"># Excesively large lenght for better illustration</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># Excesively large lenght for better illustration</span>
 <span class="n">lenght</span> <span class="o">=</span> <span class="mi">1000</span>
 <span class="n">real_token</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="n">lenght</span><span class="p">)</span>
 <span class="n">guess_token_all_wrong</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="n">lenght</span><span class="p">)</span>
@@ -596,6 +708,11 @@ Is real guess the real? True
 </div>
 </div>
 </div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>To avoid duplicated work, it is important to work with standards, in the case of security and encryption, that standard is the Bytes format. All methods and algorithms work with bytes objects and therefore it is important to know how to handle them while programming.</p>
+<p>Python has several tools like <code class="docutils literal notranslate"><span class="pre">bytes</span></code>, <code class="docutils literal notranslate"><span class="pre">binascii</span></code> and <code class="docutils literal notranslate"><span class="pre">secrets</span></code> to work, generate and convert bytes. It is also possible to define conversion for custom objects through the <code class="docutils literal notranslate"><span class="pre">__bytes__</span></code> magic method. The <code class="docutils literal notranslate"><span class="pre">pathlib</span></code> module also allows to read files as bytes out of the box.</p>
 </div>
 </div>
 

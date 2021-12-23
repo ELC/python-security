@@ -56,7 +56,7 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Pepper" href="03_Pepper.html" />
-    <link rel="prev" title="Introduction to Hash Functions" href="01_Hash_Introduction.html" />
+    <link rel="prev" title="Hash Functions" href="01_Hash_Introduction.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -103,7 +103,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="01_Hash_Introduction.html">
-   Introduction to Hash Functions
+   Hash Functions
   </a>
  </li>
  <li class="toctree-l1 current active">
@@ -152,12 +152,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="08_Input_Sanitization.html">
-   Input Sanitization
+   Input Sanitization - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="09_Common_Threats.html">
-   Common Threats
+   Common Threats - Under Construction
   </a>
  </li>
 </ul>
@@ -169,12 +169,12 @@
 <ul class="nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="10_JSON_Web_Tokens.html">
-   JSON Web Tokens (JWT)
+   JSON Web Tokens (JWT) - Under Construction
   </a>
  </li>
  <li class="toctree-l1">
   <a class="reference internal" href="19_Blockchain.html">
-   BlockChain
+   BlockChain - Under Construction
   </a>
  </li>
 </ul>
@@ -204,11 +204,6 @@
  <li class="toctree-l1">
   <a class="reference internal" href="92_Base64.html">
    Appendix: Base64 encoding
-  </a>
- </li>
- <li class="toctree-l1">
-  <a class="reference internal" href="93_URLSafe.html">
-   Appendix: URLSafe
   </a>
  </li>
 </ul>
@@ -323,6 +318,11 @@
             <nav id="bd-toc-nav" aria-label="Page">
                 <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#scrypt">
+   Scrypt
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#scrypt-disadvantages">
    Scrypt Disadvantages
   </a>
@@ -401,8 +401,19 @@
                 
   <div class="tex2jax_ignore mathjax_ignore section" id="salt">
 <h1>Salt<a class="headerlink" href="#salt" title="Permalink to this headline">¶</a></h1>
+<p><strong>ToDo</strong>:</p>
+<ul class="simple">
+<li><p>Add illustration for the salting process - Similar to <a class="reference external" href="https://www.php.net/manual/es/images/2a34c7f2e658f6ae74f3869f2aa5886f-crypt-text-rendered.svg">this</a> and <a class="reference external" href="https://forum.huawei.com/enterprise/en/data/attachment/forum/201901/21/003213sdbhypkqzdbdplfp.png?cf490-password_hashing.png">this</a>.</p></li>
+<li><p>Explain the concept of Key Derivation Function - Similar to <a class="reference external" href="https://en.bitcoinwiki.org/upload/en/images/0/0e/Keyderivationfuncion.gif">this</a> and <a class="reference external" href="https://i.stack.imgur.com/z37E4.png">this</a>.</p></li>
+<li><p>Add resources to other salt compatible algorithms - Argon2 for instance.</p></li>
+<li><p>Add appendix regarding read/write hashes to database.</p></li>
+<li><p>Add relevant resources at the end</p></li>
+</ul>
+<hr class="docutils" />
 <p>In the case of data that tend to be similar for different users (e.g. common used passwords), if the database with all hashes is compromised, an attacker could see if any of the hashes corresponds with a hash from a pre-computed table, examples of this are <a class="reference external" href="https://en.wikipedia.org/wiki/Rainbow_table">Rainbow Attacks</a> and <a class="reference external" href="https://en.wikipedia.org/wiki/Dictionary_attack">Dictionary Attacks</a>.</p>
 <p>If a random array of bytes is added to the data to be hashed, then the results will not match any pre-computed table attackers might have. This also implies the array of random bytes should be provided along with the hash in order to validate the hash is correct. These bytes are called <strong>salt</strong> and they are not secret (i.e. they can be store in plain text). Even though one might think that salts should be kept secret, there are other vulnerabilities associated with <em>secret salts</em>, such as <a class="reference external" href="https://www.wikiwand.com/en/Length_extension_attack">Length Extension Attacks</a></p>
+<div class="section" id="scrypt">
+<h2>Scrypt<a class="headerlink" href="#scrypt" title="Permalink to this headline">¶</a></h2>
 <p>The hashlib module has the function <a class="reference external" href="https://docs.python.org/3/library/hashlib.html#hashlib.scrypt"><code class="docutils literal notranslate"><span class="pre">scrypt</span></code></a>, which provides a convinient interface to add salts to hashes. This function is an implementation of the <a class="reference external" href="https://datatracker.ietf.org/doc/html/rfc7914.html">RFC 7914</a>, it was designed to be memory-intensive and prevent GPU, ASIC and FPGA attacks.</p>
 <p><strong>Note:</strong> Salt could be of any lenght, however a minimum of 128bits (10 bytes) is recommended.</p>
 <div class="cell docutils container">
@@ -428,9 +439,10 @@
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>   Original: b&#39;Hello World!&#39;
-     Hashed: 3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d8e02b60e3b95d77f9ce90c451b41806c73cb93912c6aa62159cd1a0c52f6745abba47bf555f5fe30d5
-Salt+Hashed: 250aa9e3f859f0cee0e0:3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d8e02b60e3b95d77f9ce90c451b41806c73cb93912c6aa62159cd1a0c52f6745abba47bf555f5fe30d5
+     Hashed: d09db64c1c74e2d9491fb3ca8ed6a342594fa9fa4fc81713f586b8a4098686a0067ca576e70397c6a7047d408bfa46dfb6aa8d2468873e6a821a4ee2a2c9053a
+Salt+Hashed: e3f6d30eb18253dcab57:d09db64c1c74e2d9491fb3ca8ed6a342594fa9fa4fc81713f586b8a4098686a0067ca576e70397c6a7047d408bfa46dfb6aa8d2468873e6a821a4ee2a2c9053a
 </pre></div>
+</div>
 </div>
 </div>
 </div>
@@ -454,7 +466,7 @@ Salt+Hashed: 250aa9e3f859f0cee0e0:3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n+r+pSalt+Hashed: 64$8$1$2a1e57dd1557361e3f38$85c58f6c1766b9e094a0c19427dbfc9058e8a98493251ce784357dc24e74be371f8ced1c1b6597f45a7a6e51279bd09917305293cb41aebf3246d3ce4bba4bcf
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>n+r+pSalt+Hashed: 64$8$1$39f9f4f33308675723f9$780c7253eb879199411f37024e31170f2078bf97afd1530b75d4d6c844c6e492a06c2ce95cdb21a585d249a5238017172fb4d4bfa01219afdb40615ff8d73795
 </pre></div>
 </div>
 </div>
@@ -487,7 +499,7 @@ Salt+Hashed: 250aa9e3f859f0cee0e0:3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 39a714d82b88d32c7053:65704fd1
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: efdd8310cf0d737c9443:1c9184ff
 </pre></div>
 </div>
 </div>
@@ -505,7 +517,7 @@ Salt+Hashed: 250aa9e3f859f0cee0e0:3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 9ebd1bc2a9aa9cd56aef:63bddf7f6f03326c85971e10df2ddacc
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 12948e23de37305885d5:823c709541fa61785dcc33c6e533e1f9
 </pre></div>
 </div>
 </div>
@@ -523,7 +535,7 @@ Salt+Hashed: 250aa9e3f859f0cee0e0:3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: 7cbae9091318badfb2c3:f68333863fd8fc74a31f2fe49de31a45092630b5dc83f5cf24155b6eff381c179978a9730fcb858b365fb0b3125f969588b3639100df5e9817b126e6e2d80554
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Salt+Hashed: ee3e57a7197633bf0347:63909a6aa51a9c7d44aa1be3e1385ffebdc0648bae80154088ddee3fda3e092b56283435c2b30a2de061b4aa7188a7ae759c131fb6b5d260e7f88959f35b51ee
 </pre></div>
 </div>
 </div>
@@ -575,7 +587,7 @@ Salt+Hashed: 250aa9e3f859f0cee0e0:3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>244 µs ± 5.7 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>222 µs ± 10.5 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </pre></div>
 </div>
 </div>
@@ -590,7 +602,7 @@ Salt+Hashed: 250aa9e3f859f0cee0e0:3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>13.4 ms ± 198 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>12.3 ms ± 428 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
@@ -605,7 +617,7 @@ Salt+Hashed: 250aa9e3f859f0cee0e0:3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>56.8 ms ± 2.45 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>47.9 ms ± 2.13 ms per loop (mean ± std. dev. of 7 runs, 10 loops each)
 </pre></div>
 </div>
 </div>
@@ -764,7 +776,7 @@ Salt+Hashed: 250aa9e3f859f0cee0e0:3305ec33ed2e8323644fb24467616d5e37d736eb5eed3d
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Introduction to Hash Functions</p>
+            <p class="prev-next-title">Hash Functions</p>
         </div>
     </a>
     <a class='right-next' id="next-link" href="03_Pepper.html" title="next page">
