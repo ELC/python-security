@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Appendix: Base64 encoding &#8212; Python Security</title>
+    <title>Base64 Encoding &#8212; Python Security</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -57,7 +57,7 @@
     <link rel="canonical" href="https://elc.github.com/python-security/chapters/92_Base64.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
-    <link rel="prev" title="Appendix: The Bytes Data Type" href="91_Bytes.html" />
+    <link rel="prev" title="Bytes Data Type" href="91_Bytes.html" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="docsearch:language" content="None">
     
@@ -199,12 +199,12 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1">
   <a class="reference internal" href="91_Bytes.html">
-   Appendix: The Bytes Data Type
+   Bytes Data Type
   </a>
  </li>
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   Appendix: Base64 encoding
+   Base64 Encoding
   </a>
  </li>
 </ul>
@@ -385,8 +385,8 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="appendix-base64-encoding">
-<h1>Appendix: Base64 encoding<a class="headerlink" href="#appendix-base64-encoding" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="base64-encoding">
+<h1>Base64 Encoding<a class="headerlink" href="#base64-encoding" title="Permalink to this headline">¶</a></h1>
 <p><strong>ToDo</strong>:</p>
 <ul class="simple">
 <li><p>Add Example with temporary zip files using the <code class="docutils literal notranslate"><span class="pre">tempfile</span></code> module</p></li>
@@ -421,6 +421,7 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../_static/images/certificate_details_dns.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
 <span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">111</span><span class="p">:</span><span class="mi">122</span><span class="p">]</span>  <span class="c1"># To improve display</span>
+<span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 
 <span class="n">data_base64</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">standard_b64encode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
 <span class="n">data_base64_string</span> <span class="o">=</span> <span class="n">data_base64</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
@@ -477,18 +478,11 @@ Representation in base64 URLSafe: wH-9SRDAgJ3xH_I=
 </div>
 <div class="cell_output docutils container">
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>                       Comparing Lenghts
-</pre></div>
-</div>
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">NameError</span><span class="g g-Whitespace">                                 </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2065</span><span class="o">/</span><span class="mf">767956913.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="g g-Whitespace">      </span><span class="mi">1</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Comparing Lenghts&#39;</span><span class="si">:</span><span class="s2">&gt;40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="ne">----&gt; </span><span class="mi">2</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;              Data size in bytes: </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2"> bytes&quot;</span><span class="p">)</span>
-<span class="nn">      3 print(f&quot; Representation</span> in <span class="ni">bits </span><span class="nt">(base 2): {size * 8} characters&quot;)</span>
-<span class="nn">      4 print(f&quot; Representation</span> in <span class="ni">hex (base 16): {len(data.hex</span><span class="nt">())} characters&quot;)</span>
-<span class="nn">      5 print(f&quot;        Representation</span> in <span class="ni">base64: {len</span><span class="nt">(data_base64)} characters&quot;)</span>
-
-<span class="ne">NameError</span>: name &#39;size&#39; is not defined
+              Data size in bytes: 11 bytes
+ Representation in bits (base 2): 88 characters
+ Representation in hex (base 16): 22 characters
+        Representation in base64: 16 characters
+Representation in base64 URLSafe: 16 characters
 </pre></div>
 </div>
 </div>
@@ -635,7 +629,7 @@ Decoded from Standard: c07fbd4910c0809df11ff2
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
             <p class="prev-next-subtitle">previous</p>
-            <p class="prev-next-title">Appendix: The Bytes Data Type</p>
+            <p class="prev-next-title">Bytes Data Type</p>
         </div>
     </a>
 </div>
