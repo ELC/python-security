@@ -434,15 +434,15 @@
 <h3>Practical Example<a class="headerlink" href="#practical-example" title="Permalink to this headline">¶</a></h3>
 <p>This particular site has <strong>HTTPS</strong> with a certificate signed by <a class="reference external" href="https://www.digicert.com/">DigiCert</a>, one of many Certificate Authorities.</p>
 <center>
-<img src="images/certificate_CA_example.png">
+<img src="../static_/images/certificate_CA_example.png">
 </center>
 <p>When opened, some details are shown</p>
 <center>
-<img src="images/certificate_details.png">
+<img src="../static_/images/certificate_details.png">
 </center>
 <p>However, something might draw special attention, it says “<strong>Issued to</strong>: www.github.com” but the site is <a class="reference external" href="https://elc.github.io/"><strong>elc.github.io</strong></a>. If we inspect the details, we can see that the <strong>Issuer</strong> is the CA, the <strong>Subject</strong> is Github and the there is an special field called <strong>Subject Alternative Name</strong>, there one of the DNS Names is <strong>*.github.io</strong> which is compatible which this site URL. Therefore, the browser knows the certificate is from Github, validated by DigiCert and even though the URL is not Github’s it is under one of the registered alternative names.</p>
 <center>
-<img src="images/certificate_details_dns.png">
+<img src="../static_/images/certificate_details_dns.png">
 </center></div>
 <div class="section" id="using-certificates-implementation-considerations">
 <h3>Using Certificates - Implementation Considerations<a class="headerlink" href="#using-certificates-implementation-considerations" title="Permalink to this headline">¶</a></h3>
@@ -466,17 +466,6 @@
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
 <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span><span class="p">,</span> <span class="n">padding</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1777</span><span class="o">/</span><span class="mf">758462445.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span><span class="p">,</span> <span class="n">padding</span>
-
-<span class="ne">ModuleNotFoundError</span>: No module named &#39;cryptography&#39;
 </pre></div>
 </div>
 </div>
