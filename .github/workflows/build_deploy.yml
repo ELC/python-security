@@ -22,8 +22,7 @@ jobs:
 
     - name: Install dependencies
       run: |
-        pip install wheel
-        pip install jupyter-book
+        pip install wheel jupyter-book cryptography
 
     - name: Build the book
       run: jb build .

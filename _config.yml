@@ -3,7 +3,7 @@ copyright: '2021, Ezequiel Leonardo Castaño'
 author: Ezequiel Leonardo Castaño
 
 execute:
-  execute_notebooks: "off"
+  execute_notebooks: "force"
 
 html:
   use_edit_page_button : true
