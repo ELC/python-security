@@ -461,7 +461,7 @@
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1851</span><span class="o">/</span><span class="mf">758462445.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1800</span><span class="o">/</span><span class="mf">758462445.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">hashes</span>
 <span class="g g-Whitespace">      </span><span class="mi">2</span> <span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span><span class="p">,</span> <span class="n">padding</span>
 
@@ -558,6 +558,7 @@
 <h4>Saving Private Key<a class="headerlink" href="#saving-private-key" title="Permalink to this headline">¶</a></h4>
 <p>The PEM file for the private key <strong>should be kept secret</strong> and never shared, the <strong>whole asymmetric encryption depends on it being hidden</strong>.</p>
 <p>Because the <a class="reference external" href="https://en.wikipedia.org/wiki/PKCS_8">Public-Key Cryptography Standards (PKCS) #8 (<code class="docutils literal notranslate"><span class="pre">PKCS8</span></code>)</a> is used as the serialization format, the private key is not stored in raw bytes but rather it is encrypted using symmetric encryption. The symmetric algorithm used is <a class="reference external" href="https://en.wikipedia.org/wiki/PBKDF2">PBKDF2</a>. Therefore, in theory there should not be any risks if the files is leaked, that being said, sharing private key files is against all good practices.</p>
+<p><strong>Note: NEVER upload private key files to source control, make sure to add the file to your <code class="docutils literal notranslate"><span class="pre">.gitignore</span></code></strong></p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">password</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;my secret&quot;</span>
