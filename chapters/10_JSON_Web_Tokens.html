@@ -768,8 +768,8 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Signature: b8ffe85ccabcc385c102723d3f57bf9f4134567c73ffb3f9d43a0b821559b164
- Encoded Signature: uP_oXMq8w4XBAnI9P1e_n0E0Vnxz_7P51DoLghVZsWQ=
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Signature: 88bdbed5fee6d14121620aa7fd1934249ada907ce3e8f2a0c418d4ef750b757d
+ Encoded Signature: iL2-1f7m0UEhYgqn_Rk0JJrakHzj6PKgxBjU73ULdX0=
 </pre></div>
 </div>
 </div>
@@ -785,7 +785,7 @@
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9.uP_oXMq8w4XBAnI9P1e_n0E0Vnxz_7P51DoLghVZsWQ=
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9.iL2-1f7m0UEhYgqn_Rk0JJrakHzj6PKgxBjU73ULdX0=
 </pre></div>
 </div>
 </div>
@@ -939,73 +939,19 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 <div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">jose</span><span class="p">[</span><span class="n">cryptography</span><span class="p">]</span>
 </pre></div>
 </div>
-<p>The following cell will install the library with the cryptography backend</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install python-jose<span class="o">[</span>cryptography<span class="o">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jose</span> <span class="kn">import</span> <span class="n">jwt</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting python-jose[cryptography]
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Downloading python_jose-3.3.0-py2.py3-none-any.whl (33 kB)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting pyasn1
-  Downloading pyasn1-0.4.8-py2.py3-none-any.whl (77 kB)
-?25l
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
+<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2112</span><span class="o">/</span><span class="mf">492425300.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">jose</span> <span class="kn">import</span> <span class="n">jwt</span>
 
-     |████▎                           | 10 kB 20.0 MB/s eta 0:00:01
-     |████████▌                       | 20 kB 23.6 MB/s eta 0:00:01
-     |████████████▊                   | 30 kB 28.3 MB/s eta 0:00:01
-     |█████████████████               | 40 kB 33.0 MB/s eta 0:00:01
-     |█████████████████████▎          | 51 kB 36.9 MB/s eta 0:00:01
-     |█████████████████████████▌      | 61 kB 38.2 MB/s eta 0:00:01
-     |█████████████████████████████▊  | 71 kB 40.9 MB/s eta 0:00:01
-     |████████████████████████████████| 77 kB 11.7 MB/s            
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>?25hCollecting ecdsa!=0.15
-  Downloading ecdsa-0.17.0-py2.py3-none-any.whl (119 kB)
-?25l
-
-     |██▊                             | 10 kB 38.8 MB/s eta 0:00:01
-     |█████▌                          | 20 kB 42.9 MB/s eta 0:00:01
-     |████████▎                       | 30 kB 52.1 MB/s eta 0:00:01
-     |███████████                     | 40 kB 47.7 MB/s eta 0:00:01
-     |█████████████▊                  | 51 kB 44.5 MB/s eta 0:00:01
-     |████████████████▌               | 61 kB 44.5 MB/s eta 0:00:01
-     |███████████████████▏            | 71 kB 46.6 MB/s eta 0:00:01
-     |██████████████████████          | 81 kB 49.7 MB/s eta 0:00:01
-     |████████████████████████▊       | 92 kB 52.1 MB/s eta 0:00:01
-     |███████████████████████████▌    | 102 kB 54.6 MB/s eta 0:00:01
-     |██████████████████████████████▏ | 112 kB 54.6 MB/s eta 0:00:01
-     |████████████████████████████████| 119 kB 54.6 MB/s            
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>?25hCollecting rsa
-  Downloading rsa-4.8-py3-none-any.whl (39 kB)
-Requirement already satisfied: cryptography&gt;=3.4.0 in /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages (from python-jose[cryptography]) (36.0.1)
-Requirement already satisfied: cffi&gt;=1.12 in /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages (from cryptography&gt;=3.4.0-&gt;python-jose[cryptography]) (1.15.0)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Requirement already satisfied: six&gt;=1.9.0 in /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages (from ecdsa!=0.15-&gt;python-jose[cryptography]) (1.16.0)
-Requirement already satisfied: pycparser in /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages (from cffi&gt;=1.12-&gt;cryptography&gt;=3.4.0-&gt;python-jose[cryptography]) (2.21)
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: pyasn1, rsa, ecdsa, python-jose
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successfully installed ecdsa-0.17.0 pyasn1-0.4.8 python-jose-3.3.0 rsa-4.8
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jose</span> <span class="kn">import</span> <span class="n">jwt</span>
+<span class="ne">ModuleNotFoundError</span>: No module named &#39;jose&#39;
 </pre></div>
 </div>
 </div>
@@ -1020,7 +966,7 @@ Requirement already satisfied: pycparser in /opt/hostedtoolcache/Python/3.8.12/x
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;A128CBC-HS256, A192CBC-HS384, ES512, dir, HS512, A192GCM, RSA1_5, RSA-OAEP, A128KW, HS256, A128GCM, RS384, A256CBC-HS512, RS512, ES384, A192KW, RS256, HS384, RSA-OAEP-256, A256GCM, ES256, A256KW&#39;
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;RSA1_5, RSA-OAEP, HS512, A128GCM, RS512, A128CBC-HS256, HS384, A192GCM, ES384, RSA-OAEP-256, HS256, A192KW, ES256, A256KW, dir, ES512, A256CBC-HS512, A256GCM, A128KW, A192CBC-HS384, RS256, RS384&#39;
 </pre></div>
 </div>
 </div>
@@ -1057,7 +1003,7 @@ Requirement already satisfied: pycparser in /opt/hostedtoolcache/Python/3.8.12/x
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.E6HBjzHDS3JGglsyQtLSmbPwobZ2oB2ZbBebp1ejAEI
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.fyZRwcbCyBLHy0mctRHJmNqQuuQing1BzIrzqGjP0Tg
 </pre></div>
 </div>
 </div>
@@ -1286,8 +1232,8 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Signature: 8d9ccfe983bbbae4b96c71113fc9cc69635f4c192ca91e28e89422ad776090b5e2370231c0965cfdf8a5c832ba4fe4caccfe63d800ccbf3a451550211ec3f290ddfa2e7cee1f0ef5b94c6ca72bcacabbe15d96a4854fdb293c0d936eac7f5e8524bfa416ca3dc2fbcf04945ced86cb1ed61f7de7082d9ffeebc5fbcf7acdcb2d1b7d4fff58e43ce8c689c0098c3a830cf2d44d7ed9e36e8743d98743addc8aa5a6b605c3c9c2a913e427cc1b93ac77f21ac44999509a7e4505037e81522a8bf0680f6974c34420308f564bf9bd0c690ee615d5e5ae6e65c4ca37c73bcf33ddfe4cc3a60d03e930ab25f909afd0559cc0117125a00d28568ebe9174d1925031f1
- Encoded Signature: jZzP6YO7uuS5bHERP8nMaWNfTBksqR4o6JQirXdgkLXiNwIxwJZc_filyDK6T-TKzP5j2ADMvzpFFVAhHsPykN36LnzuHw71uUxspyvKyrvhXZakhU_bKTwNk26sf16FJL-kFso9wvvPBJRc7YbLHtYffecILZ_-68X7z3rNyy0bfU__WOQ86MaJwAmMOoMM8tRNftnjbodD2YdDrdyKpaa2BcPJwqkT5CfMG5Osd_IaxEmZUJp-RQUDfoFSKovwaA9pdMNEIDCPVkv5vQxpDuYV1eWubmXEyjfHO88z3f5Mw6YNA-kwqyX5Ca_QVZzAEXEloA0oVo6-kXTRklAx8Q==
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Signature: 509cf9776ecf79de4425cd6abf0628eb0e193300f89e44b35e38fcc7873aa3ff8c7aa71bdf1a07790432718d1715dff234e779d0b7170248d256d48d2f34d094e7bf6205d5d0bfd649d81bc8620854f75e5c4017b6c89a274b7c07aba3784588b321d0d832bd7f79901b4ec37671af5e971bc42e1b29d159577b05563283023a4d2d956b20693f754309874a3717b72a5b156edc7a8f3d68b28bd7eab11ceb14b6d01dc09d61f03459d091b30e1de13637050cbfbe1e9b04dd683bd58712d918fd68c082839765238f9dc39382ce52c08ad378c26d4ee608bcf9ca91b6cd9337cf8661db22455848210fcb5c12f2b2d425f21f33b2ed8dbbdb4c1eba6c5872a5
+ Encoded Signature: UJz5d27Ped5EJc1qvwYo6w4ZMwD4nkSzXjj8x4c6o_-Meqcb3xoHeQQycY0XFd_yNOd50LcXAkjSVtSNLzTQlOe_YgXV0L_WSdgbyGIIVPdeXEAXtsiaJ0t8B6ujeEWIsyHQ2DK9f3mQG07DdnGvXpcbxC4bKdFZV3sFVjKDAjpNLZVrIGk_dUMJh0o3F7cqWxVu3HqPPWiyi9fqsRzrFLbQHcCdYfA0WdCRsw4d4TY3BQy_vh6bBN1oO9WHEtkY_WjAgoOXZSOPncOTgs5SwIrTeMJtTuYIvPnKkbbNkzfPhmHbIkVYSCEPy1wS8rLUJfIfM7LtjbvbTB66bFhypQ==
 </pre></div>
 </div>
 </div>
@@ -1304,7 +1250,7 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiAiUlMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9.jZzP6YO7uuS5bHERP8nMaWNfTBksqR4o6JQirXdgkLXiNwIxwJZc_filyDK6T-TKzP5j2ADMvzpFFVAhHsPykN36LnzuHw71uUxspyvKyrvhXZakhU_bKTwNk26sf16FJL-kFso9wvvPBJRc7YbLHtYffecILZ_-68X7z3rNyy0bfU__WOQ86MaJwAmMOoMM8tRNftnjbodD2YdDrdyKpaa2BcPJwqkT5CfMG5Osd_IaxEmZUJp-RQUDfoFSKovwaA9pdMNEIDCPVkv5vQxpDuYV1eWubmXEyjfHO88z3f5Mw6YNA-kwqyX5Ca_QVZzAEXEloA0oVo6-kXTRklAx8Q==
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiAiUlMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9.UJz5d27Ped5EJc1qvwYo6w4ZMwD4nkSzXjj8x4c6o_-Meqcb3xoHeQQycY0XFd_yNOd50LcXAkjSVtSNLzTQlOe_YgXV0L_WSdgbyGIIVPdeXEAXtsiaJ0t8B6ujeEWIsyHQ2DK9f3mQG07DdnGvXpcbxC4bKdFZV3sFVjKDAjpNLZVrIGk_dUMJh0o3F7cqWxVu3HqPPWiyi9fqsRzrFLbQHcCdYfA0WdCRsw4d4TY3BQy_vh6bBN1oO9WHEtkY_WjAgoOXZSOPncOTgs5SwIrTeMJtTuYIvPnKkbbNkzfPhmHbIkVYSCEPy1wS8rLUJfIfM7LtjbvbTB66bFhypQ==
 </pre></div>
 </div>
 </div>
@@ -1372,7 +1318,7 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.OB1W7j2Yn2kQwIg76iKwIcS-MjgUSO7PXGfTI0p0lGbEJ5bHQZMPJRLyg6OjbtmL74EX2qzhegTe-ye4iB5RPfFFjKd1s2LiZW0LPAyC8Nj-cXvX-TEekrb9TXLX70thpxAz1-YBcATUBxtcgvxfMynEVE7HFwpGEaPHiONwm-8cBc22e3e9RmY-io2Uqc_6eKDxfkcvT7Kr87oA2zBZntSJTyMzw5UBLnRwbPBLVifvBD--7x3xkZ4Ieso3gINKYWnrLK9khF6WFbZI2wn-ld2ERUJhY9W7vpBwjZB4IDnWDCws0M4uHD8J-xa_MQq3R9MTJfqnIJWLUK34_Kelyg
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.Izuzzvy3mVSgbOxA3OT5Xnh7LvFeFvR6st7pA8UG88IgUfyJmJm8nnIIL9xmNQSYNz-P4rvvcF1hI3XX-LBwAPUZWncDjsgVDLtlnziMoXXrzDBP572PiRRxqfxZGnOy0CO2Ubdht71iuZDm9MQJK30gwQ4iVjnrLPGTV0Iam60edWqxRQ70iXT4xNiMKOnLndMLL7wb_Jv8z3Nt_JE_n60_otGtdeTw0E7BNN1x63UCuP00Pf0ijVOS8Mdgdx4VopOYXfPm_yrPEl9_0-p9MsFd7WGc6EzEYkIVN0Don2cRdIGL4IQm_Jl_by5NhBxbfYx1oz-mpr1-7iHHRvzPqw
 </pre></div>
 </div>
 </div>
@@ -1595,21 +1541,24 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Native:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="o">%</span><span class="k">timeit</span> create_token_native(headers, payload, secret)
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Native: 28.7 µs ± 534 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="o">%</span><span class="k">timeit</span> create_token_jose(headers, payload, secret)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Native: 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>15 µs ± 172 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
-  Jose: 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>61.2 µs ± 1.28 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Jose: 87.6 µs ± 3.06 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
 </pre></div>
 </div>
 </div>
@@ -1628,21 +1577,24 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Native:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="o">%</span><span class="k">timeit</span> verify(token, secret)
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Native: 12.8 µs ± 458 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="o">%</span><span class="k">timeit</span> verify_jose(token, secret)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Native: 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.53 µs ± 123 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
-  Jose: 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11.6 µs ± 246 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Jose: 24.7 µs ± 459 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
 </pre></div>
 </div>
 </div>
@@ -1657,21 +1609,24 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cryptography:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="o">%</span><span class="k">timeit</span> create_token_rsa_cryptography(headers, payload, private_key)
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Python Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cryptography: 1.93 ms ± 55.1 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Python Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="o">%</span><span class="k">timeit</span> create_token_rsa_jose(headers, payload, private_pem_bytes)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cryptography: 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>817 µs ± 44.8 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
- Python Jose: 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.28 ms ± 190 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Python Jose: 12.4 ms ± 202 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
 </pre></div>
 </div>
 </div>
@@ -1690,21 +1645,24 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cryptography:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="o">%</span><span class="k">timeit</span> verify_rsa_cryptography(token, public_key)
-
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Python Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cryptography: 125 µs ± 4.04 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Python Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
 <span class="o">%</span><span class="k">timeit</span> verify_rsa_jose(token, public_pem_bytes)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cryptography: 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>60.7 µs ± 1.85 µs per loop (mean ± std. dev. of 7 runs, 10000 loops each)
- Python Jose: 
-</pre></div>
-</div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>204 µs ± 5.86 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span> Python Jose: 314 µs ± 10.4 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
 </pre></div>
 </div>
 </div>

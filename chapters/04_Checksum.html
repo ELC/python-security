@@ -586,7 +586,7 @@ Checksum: 474547262
 <h3>Checksum Calculation<a class="headerlink" href="#checksum-calculation" title="Permalink to this headline">¶</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
 
 <span class="n">message_crc</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
 
@@ -595,37 +595,7 @@ Checksum: 474547262
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
-<span class="ne">FileNotFoundError</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_1699</span><span class="o">/</span><span class="mf">3499109848.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
-<span class="ne">----&gt; </span><span class="mi">1</span> <span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
-<span class="g g-Whitespace">      </span><span class="mi">2</span> 
-<span class="g g-Whitespace">      </span><span class="mi">3</span> <span class="n">message_crc</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
-<span class="g g-Whitespace">      </span><span class="mi">4</span> 
-<span class="g g-Whitespace">      </span><span class="mi">5</span> <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum (Adler32): </span><span class="si">{</span><span class="n">message_crc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/pathlib.py</span> in <span class="ni">read_bytes</span><span class="nt">(self)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1227</span>         <span class="n">Open</span> <span class="n">the</span> <span class="n">file</span> <span class="ow">in</span> <span class="nb">bytes</span> <span class="n">mode</span><span class="p">,</span> <span class="n">read</span> <span class="n">it</span><span class="p">,</span> <span class="ow">and</span> <span class="n">close</span> <span class="n">the</span> <span class="n">file</span><span class="o">.</span>
-<span class="g g-Whitespace">   </span><span class="mi">1228</span>         <span class="s2">&quot;&quot;&quot;</span>
-<span class="ne">-&gt; </span><span class="mi">1229</span><span class="s2">         with self.open(mode=&#39;rb&#39;) as f:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1230</span><span class="s2">             return f.read()</span>
-<span class="g g-Whitespace">   </span><span class="mi">1231</span><span class="s2"> </span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/pathlib.py</span> in <span class="ni">open</span><span class="nt">(self, mode, buffering, encoding, errors, newline)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1220</span><span class="s2">         if self._closed:</span>
-<span class="g g-Whitespace">   </span><span class="mi">1221</span><span class="s2">             self._raise_closed()</span>
-<span class="ne">-&gt; </span><span class="mi">1222</span><span class="s2">         return io.open(self, mode, buffering, encoding, errors, newline,</span>
-<span class="g g-Whitespace">   </span><span class="mi">1223</span><span class="s2">                        opener=self._opener)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1224</span><span class="s2"> </span>
-
-<span class="nn">/opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/pathlib.py</span> in <span class="ni">_opener</span><span class="nt">(self, name, flags, mode)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1076</span><span class="s2">     def _opener(self, name, flags, mode=0o666):</span>
-<span class="g g-Whitespace">   </span><span class="mi">1077</span><span class="s2">         # A stub for the opener argument to built-in open()</span>
-<span class="ne">-&gt; </span><span class="mi">1078</span><span class="s2">         return self._accessor.open(self, flags, mode)</span>
-<span class="g g-Whitespace">   </span><span class="mi">1079</span><span class="s2"> </span>
-<span class="g g-Whitespace">   </span><span class="mi">1080</span><span class="s2">     def _raw_open(self, flags, mode=0o777):</span>
-
-<span class="ne">FileNotFoundError</span>: [Errno 2] No such file or directory: &#39;README.md&#39;
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Checksum (Adler32): 3529090815
 </pre></div>
 </div>
 </div>
@@ -638,38 +608,36 @@ Checksum: 474547262
 <div class="cell docutils container">
 <div class="cell_input docutils container">
 <div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hashlib</span>
+
+<span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
-
-<span class="n">message_crc</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message_crc</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum (MD5): </span><span class="si">{</span><span class="n">message_crc</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Checksum (MD5): 85dd52993d63cb5dc0f6ea4f9dcedcc4
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Checksum (MD5): a63e9794301a39aa9a412fd2f1a812fa
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
-
-<span class="n">message_crc</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message_crc</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
 
 <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum (SHA1): </span><span class="si">{</span><span class="n">message_crc</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Checksum (SHA1): 5c721db225aea8436b3f473a24fc910b665f28de
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Checksum (SHA1): 839289fd566b1fd11e6751dda679d00101af9403
 </pre></div>
 </div>
 </div>
@@ -691,7 +659,7 @@ Checksum: 474547262
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
 
 <span class="c1"># Make it artificially bigger</span>
 <span class="k">while</span> <span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">500</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">:</span>
@@ -702,7 +670,7 @@ Checksum: 474547262
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Checksum for a file of 544 MB
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Checksum for a file of 872 MB
 </pre></div>
 </div>
 </div>
@@ -727,10 +695,22 @@ Checksum: 474547262
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Checksum CRC32: 645 ms ± 22.4 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
-Checksum Adler32: 208 ms ± 18.9 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
-    Checksum MD5: 856 ms ± 32 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
-   Checksum SHA1: 921 ms ± 16.1 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Checksum CRC32: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>728 ms ± 12.8 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+Checksum Adler32: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>333 ms ± 3.53 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+    Checksum MD5: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.41 s ± 10.7 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
+   Checksum SHA1: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.02 s ± 51.9 ms per loop (mean ± std. dev. of 7 runs, 1 loop each)
 </pre></div>
 </div>
 </div>
