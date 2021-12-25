@@ -5,7 +5,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JSON Web Tokens (JWT) - Under Construction &#8212; Python Security</title>
+    <title>JSON Web Tokens (JWT) &#8212; Python Security</title>
     
   <link href="../_static/css/theme.css" rel="stylesheet">
   <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
@@ -169,7 +169,7 @@
 <ul class="current nav bd-sidenav">
  <li class="toctree-l1 current active">
   <a class="current reference internal" href="#">
-   JSON Web Tokens (JWT) - Under Construction
+   JSON Web Tokens (JWT)
   </a>
  </li>
  <li class="toctree-l1">
@@ -312,6 +312,339 @@
         <!-- Table of contents -->
         <div class="d-none d-md-block col-md-2 bd-toc show">
             
+            <div class="tocsection onthispage pt-5 pb-3">
+                <i class="fas fa-list"></i> Contents
+            </div>
+            <nav id="bd-toc-nav" aria-label="Page">
+                <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implementation-using-native-python">
+   Implementation using Native Python
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data">
+     Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#headers">
+     Headers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#payload">
+     Payload
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#signature">
+     Signature
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#token">
+     Token
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#verify">
+     Verify
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#changing-headers">
+     Changing Headers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#changing-payload">
+     Changing Payload
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#changing-signature">
+     Changing Signature
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#changing-two-parts">
+     Changing Two Parts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-original-token-parts">
+     Using Original Token Parts
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#implementation-using-a-library">
+   Implementation using a Library
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#supported-algorithms">
+     Supported Algorithms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generating-token">
+     Generating Token
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#verifing-token">
+     Verifing Token
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Changing Headers
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Changing Payload
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Changing Signature
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id5">
+       Changing Two Parts
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id6">
+       Using Original Token Parts
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-rsa">
+   Using RSA
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#common-data">
+     Common Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-cryptography-alone">
+     Using Cryptography alone
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       Signature
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#encoding-headers-and-payload">
+         Encoding Headers and Payload
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#signing">
+         Signing
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       Token
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#verify-token">
+       Verify Token
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#tampering-scenarios">
+         Tampering Scenarios
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-python-jose">
+     Using Python JOSE
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#generating-the-token">
+       Generating the Token
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#verify-the-token">
+       Verify the Token
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#native-vs-library">
+   Native vs Library
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cross-compatibility">
+     Cross Compatibility
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-hmac">
+     Using HMAC
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encode-with-native-decode-with-library">
+       Encode with Native decode with Library
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encode-with-library-decode-with-native">
+       Encode with Library decode with Native
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id9">
+     Using RSA
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encode-with-cryptography-decode-with-python-jose">
+       Encode with Cryptography decode with Python JOSE
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encode-with-python-jose-decode-with-cryptography">
+       Encode with Python JOSE decode with Cryptography
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hmac-time-benchmark">
+     HMAC Time Benchmark
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id10">
+       Generating the token
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#verifying-the-token">
+       Verifying the token
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rsa-time-benchmark">
+     RSA Time Benchmark
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id11">
+       Generating the token
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id12">
+       Verifying the token
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#benchmark-conclusion">
+     Benchmark Conclusion
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-user-authentication">
+   Example: User Authentication
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#auxiliary-functions">
+     Auxiliary Functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sign-up">
+     Sign Up
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#log-in">
+     Log In
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#not-enough-priviliges">
+       Not Enough Priviliges
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tampering-priviliges">
+       Tampering Priviliges
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#having-enough-priviliges">
+       Having Enough Priviliges
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#caveats">
+       Caveats
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#additional-resources">
+   Additional Resources
+  </a>
+ </li>
+</ul>
+
+            </nav>
         </div>
     </div>
 </div>
@@ -320,16 +653,1287 @@
         
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="json-web-tokens-jwt-under-construction">
-<h1>JSON Web Tokens (JWT) - Under Construction<a class="headerlink" href="#json-web-tokens-jwt-under-construction" title="Permalink to this headline">¶</a></h1>
+  <div class="tex2jax_ignore mathjax_ignore section" id="json-web-tokens-jwt">
+<h1>JSON Web Tokens (JWT)<a class="headerlink" href="#json-web-tokens-jwt" title="Permalink to this headline">¶</a></h1>
 <p><strong>ToDo</strong>:</p>
 <ul class="simple">
-<li><p>Show basic example of JWT usage with <a class="reference external" href="https://github.com/mpdavis/python-jose">Jose</a></p></li>
-<li><p>Show example using HMAC</p></li>
-<li><p>Show example using RSA</p></li>
+<li><p>Add diagram about how JWT is used - Similar to <a class="reference external" href="https://eldevsin.site/content/images/2020/05/JWT_flow.png">this</a></p></li>
 <li><p>Add relevant resources at the end</p></li>
 </ul>
 <hr class="docutils" />
+<p><a class="reference external" href="https://en.wikipedia.org/wiki/JSON_Web_Token">JSON Web Tokens (JWT)</a> is a concrete implementation of many concepts covered so far. It is basically a sequence of bytes (i.e. a token) which contains three parts:</p>
+<ol class="simple">
+<li><p>Header: Contains standard fields such as the algorithm (<code class="docutils literal notranslate"><span class="pre">alg</span></code>) to be used and the token type (<code class="docutils literal notranslate"><span class="pre">typ</span></code>).</p></li>
+<li><p>Payload: <a class="reference external" href="https://en.wikipedia.org/wiki/Payload_(computing)">Payload</a> is a name used in communications to refer to the “actual message”, anything that is not control, header, redundancy, the actual data being transmitted. There are standards fields such as the timestamp (<code class="docutils literal notranslate"><span class="pre">iat</span></code>), unique ID (<code class="docutils literal notranslate"><span class="pre">jti</span></code>) or expiration time (<code class="docutils literal notranslate"><span class="pre">exp</span></code>). However custom fields could be added as well.</p></li>
+<li><p>Signature: the digital signature signed by the party generating the JWT (usually a server), it is base64 encoded and could either use HMAC or RSA, as specified in the <code class="docutils literal notranslate"><span class="pre">alg</span></code> header.</p></li>
+</ol>
+<p>There are <a class="reference external" href="https://en.wikipedia.org/wiki/JSON_Web_Token?oldformat=true#Standard_fields">standard fields</a> both for the header and the payload but new user-defined fields can be added to the payload. Since the data in the payload is not necessarily true (i.e. one has to verify the signature first) the payload fields are usually refered to as “claims”. This is consistent with the concept of <a class="reference external" href="https://en.wikipedia.org/wiki/Claims-based_identity">Claims-based identity</a>.</p>
+<p>When dealing with a single server, it might not be as useful because the party reading the claims will be the one who generated it. However, on microservices or multi service architecture, it would be possible to have claims generated by one service being verified by another service. For instance, if you logged in as Admin in the ERP module, you would also have admin access in the CRM module. Another example could be: a user logged as admin in the Client Module is not granted admin access to the Audit Module. This way services can all speak the same language (JWT), and verify the identity of the user and avoiding redundant look ups to databases, repetitive log ins or several implementations of security layers in different services.</p>
+<p>To generate the token, the three parts are base64urlsafe (see <a class="reference internal" href="92_Base64.html"><span class="doc std std-doc">Base64 Appendix</span></a>) encoded can concatenate together using <code class="docutils literal notranslate"><span class="pre">.</span></code> as separators.</p>
+<p>An example of a JWT:</p>
+<p><code class="docutils literal notranslate"><span class="pre">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c</span></code></p>
+<p>The <code class="docutils literal notranslate"><span class="pre">Header</span></code> and the <code class="docutils literal notranslate"><span class="pre">Payload</span></code> are both <code class="docutils literal notranslate"><span class="pre">unencrypted</span></code> and simply encoded in base64. The <code class="docutils literal notranslate"><span class="pre">Signature</span></code> (either HMAC based or RSA based), once computed, is also base64 encoded and concatenated with the other two encoded parts.</p>
+<p>This gives JWTs the following features:</p>
+<ul class="simple">
+<li><p>It supports symmetric and asymmetric signatures (via HMAC and RSA respectively).</p></li>
+<li><p>It allows a user to have all the system related information centralized in one token.</p></li>
+<li><p>It provides a standarized way to authenticate and communicate between applications.</p></li>
+</ul>
+<div class="section" id="implementation-using-native-python">
+<h2>Implementation using Native Python<a class="headerlink" href="#implementation-using-native-python" title="Permalink to this headline">¶</a></h2>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">secrets</span>
+<span class="kn">import</span> <span class="nn">base64</span>
+<span class="kn">import</span> <span class="nn">json</span>
+<span class="kn">import</span> <span class="nn">hmac</span>
+<span class="kn">import</span> <span class="nn">hashlib</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="data">
+<h3>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
+<span class="p">}</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
+<span class="p">}</span>
+
+<span class="n">secret</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="headers">
+<h3>Headers<a class="headerlink" href="#headers" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">header_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">encoded_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">header_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original Headers: </span><span class="si">{</span><span class="n">headers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded Headers: </span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Headers: {&#39;alg&#39;: &#39;HS256&#39;, &#39;typ&#39;: &#39;JWT&#39;}
+ Encoded Headers: eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="payload">
+<h3>Payload<a class="headerlink" href="#payload" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original Payload: </span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded Payload: </span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John Doe&#39;, &#39;iat&#39;: 1516239022}
+ Encoded Payload: eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="signature">
+<h3>Signature<a class="headerlink" href="#signature" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+
+<span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original Signature: </span><span class="si">{</span><span class="n">signature_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded Signature: </span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Signature: d9cb61539059ea94bd48692547debc2a37dde05e1793bb2134129fe8aef6fb83
+ Encoded Signature: 2cthU5BZ6pS9SGklR968Kjfd4F4Xk7shNBKf6K72-4M=
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="token">
+<h3>Token<a class="headerlink" href="#token" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JWT: </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9.2cthU5BZ6pS9SGklR968Kjfd4F4Xk7shNBKf6K72-4M=
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="verify">
+<h3>Verify<a class="headerlink" href="#verify" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="n">encoded_header</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    
+    <span class="n">computed_signature</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+    
+    <span class="n">padding_correction</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="p">((</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">encoded_signature</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">received_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">encoded_signature</span> <span class="o">+</span> <span class="n">padding_correction</span><span class="p">)</span>
+
+    <span class="k">if</span> <span class="n">hmac</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">computed_signature</span><span class="p">,</span> <span class="n">received_signature</span><span class="p">):</span>
+        <span class="k">return</span> <span class="s2">&quot;The token is Valid&quot;</span>
+    <span class="k">return</span> <span class="s2">&quot;The token is NOT Valid&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="changing-headers">
+<h3>Changing Headers<a class="headerlink" href="#changing-headers" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tampered_headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;extra&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="n">tampered_headers_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">tampered_headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">encoded_tampered_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">tampered_headers_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_tampered_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+
+<span class="n">verification</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The token is NOT Valid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="changing-payload">
+<h3>Changing Payload<a class="headerlink" href="#changing-payload" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tampered_payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
+<span class="p">}</span>
+
+<span class="n">tampered_payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">tampered_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">encoded_tampered_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">tampered_payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">encoded_header</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_tampered_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+
+<span class="n">verification</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The token is NOT Valid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="changing-signature">
+<h3>Changing Signature<a class="headerlink" href="#changing-signature" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess_secret</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;admin&quot;</span>
+
+<span class="n">encoded_header</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">guess_secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+<span class="n">encoded_tampered_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_tampered_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+
+<span class="n">verification</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The token is NOT Valid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="changing-two-parts">
+<h3>Changing Two Parts<a class="headerlink" href="#changing-two-parts" title="Permalink to this headline">¶</a></h3>
+<p>Changing a single part is enough for the token to be invalid, having changed two or more would have thrown the same errors.</p>
+<p>The secret the verfier will use to verify the token is extremely likely (yet not impossible) to differ from the one a potential attacker might use. The only possibility to alter the JWT is by having the correct secret beforehand.</p>
+</div>
+<div class="section" id="using-original-token-parts">
+<h3>Using Original Token Parts<a class="headerlink" href="#using-original-token-parts" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verification</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">decoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">encoded_payload</span><span class="p">)</span>
+<span class="n">decoded_payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">decoded_payload</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decoded Payload: </span><span class="si">{</span><span class="n">decoded_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Payload Type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">decoded_payload</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The token is Valid
+Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John Doe&#39;, &#39;iat&#39;: 1516239022}
+   Payload Type: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="implementation-using-a-library">
+<h2>Implementation using a Library<a class="headerlink" href="#implementation-using-a-library" title="Permalink to this headline">¶</a></h2>
+<p>The <a class="reference external" href="https://github.com/mpdavis/python-jose">Python JOSE</a> library has support for many JWT algorithms, including HMAC and RSA versions. It also handle many edge cases that would be otherwise complicated to handle with a from scratch implementation.</p>
+<p>It is possible to use it with different backends:</p>
+<ul class="simple">
+<li><p><a class="reference external" href="https://github.com/pyca/cryptography">PyCA Cryptography</a></p></li>
+<li><p><a class="reference external" href="https://github.com/Legrandin/pycryptodome">PyCryptodome</a></p></li>
+<li><p>Native (uses <a class="reference external" href="https://github.com/sybrenstuvel/python-rsa">Python RSA</a> and <a class="reference external" href="https://github.com/tlsfuzzer/python-ecdsa">Python ECDSA</a>)</p></li>
+</ul>
+<p>The Cryptography library was the one used for the Symmetric and Asymmetric chapters and is the most popular one, therefore it will be the one used in this chapter.</p>
+<p>To install Python JOSE simply run</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pip</span> <span class="n">install</span> <span class="n">python</span><span class="o">-</span><span class="n">jose</span><span class="p">[</span><span class="n">cryptography</span><span class="p">]</span>
+</pre></div>
+</div>
+<p>The following cell will install the library with the cryptography backend</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">!</span>pip install python-jose<span class="o">[</span>cryptography<span class="o">]</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting python-jose[cryptography]
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Downloading python_jose-3.3.0-py2.py3-none-any.whl (33 kB)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Collecting pyasn1
+  Downloading pyasn1-0.4.8-py2.py3-none-any.whl (77 kB)
+?25l
+
+     |████▎                           | 10 kB 38.6 MB/s eta 0:00:01
+     |████████▌                       | 20 kB 23.5 MB/s eta 0:00:01
+     |████████████▊                   | 30 kB 16.8 MB/s eta 0:00:01
+     |█████████████████               | 40 kB 14.6 MB/s eta 0:00:01
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     |█████████████████████▎          | 51 kB 5.1 MB/s eta 0:00:01 
+     |█████████████████████████▌      | 61 kB 6.0 MB/s eta 0:00:01 
+     |█████████████████████████████▊  | 71 kB 6.9 MB/s eta 0:00:01 
+     |████████████████████████████████| 77 kB 5.0 MB/s             
+?25hCollecting ecdsa!=0.15
+  Downloading ecdsa-0.17.0-py2.py3-none-any.whl (119 kB)
+?25l
+
+     |██▊                             | 10 kB 54.1 MB/s eta 0:00:01
+     |█████▌                          | 20 kB 31.3 MB/s eta 0:00:01
+     |████████▎                       | 30 kB 40.9 MB/s eta 0:00:01
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>     |███████████                     | 40 kB 25.2 MB/s eta 0:00:01
+     |█████████████▊                  | 51 kB 12.7 MB/s eta 0:00:01
+     |████████████████▌               | 61 kB 14.6 MB/s eta 0:00:01
+     |███████████████████▏            | 71 kB 16.4 MB/s eta 0:00:01
+     |██████████████████████          | 81 kB 18.3 MB/s eta 0:00:01
+     |████████████████████████▊       | 92 kB 20.1 MB/s eta 0:00:01
+     |███████████████████████████▌    | 102 kB 16.8 MB/s eta 0:00:01
+     |██████████████████████████████▏ | 112 kB 16.8 MB/s eta 0:00:01
+     |████████████████████████████████| 119 kB 16.8 MB/s            
+?25hCollecting rsa
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Downloading rsa-4.8-py3-none-any.whl (39 kB)
+Requirement already satisfied: cryptography&gt;=3.4.0 in /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages (from python-jose[cryptography]) (36.0.1)
+Requirement already satisfied: cffi&gt;=1.12 in /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages (from cryptography&gt;=3.4.0-&gt;python-jose[cryptography]) (1.15.0)
+Requirement already satisfied: six&gt;=1.9.0 in /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages (from ecdsa!=0.15-&gt;python-jose[cryptography]) (1.16.0)
+Requirement already satisfied: pycparser in /opt/hostedtoolcache/Python/3.8.12/x64/lib/python3.8/site-packages (from cffi&gt;=1.12-&gt;cryptography&gt;=3.4.0-&gt;python-jose[cryptography]) (2.21)
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Installing collected packages: pyasn1, rsa, ecdsa, python-jose
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successfully installed ecdsa-0.17.0 pyasn1-0.4.8 python-jose-3.3.0 rsa-4.8
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jose</span> <span class="kn">import</span> <span class="n">jwt</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="supported-algorithms">
+<h3>Supported Algorithms<a class="headerlink" href="#supported-algorithms" title="Permalink to this headline">¶</a></h3>
+<p>This is the list of all supported algorithms in Python JOSE</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">jwt</span><span class="o">.</span><span class="n">ALGORITHMS</span><span class="o">.</span><span class="n">SUPPORTED</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;RSA1_5, HS256, ES384, A256KW, A192KW, RS256, HS512, A192GCM, A192CBC-HS384, ES512, A128GCM, RSA-OAEP-256, A128KW, A128CBC-HS256, RSA-OAEP, RS384, HS384, A256CBC-HS512, dir, A256GCM, RS512, ES256&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id1">
+<h3>Data<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
+<span class="p">}</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
+<span class="p">}</span>
+
+<span class="n">secret</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="generating-token">
+<h3>Generating Token<a class="headerlink" href="#generating-token" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JWT: </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.P1Cpj_K4plUADo767gTZtfqcGeeRM4H4dAxO7gkuQIA
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="verifing-token">
+<h3>Verifing Token<a class="headerlink" href="#verifing-token" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jose.exceptions</span> <span class="kn">import</span> <span class="n">JWTError</span>
+
+<span class="k">def</span> <span class="nf">verify_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;HS256&quot;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot;The token is Valid&quot;</span>
+    <span class="k">except</span> <span class="n">JWTError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;The token is NOT valid&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id2">
+<h4>Changing Headers<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tampered_headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;extra&quot;</span><span class="p">:</span> <span class="mi">1</span>
+<span class="p">}</span>
+
+<span class="n">tampered_headers_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">tampered_headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">encoded_tampered_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">tampered_headers_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">_</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_tampered_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+
+<span class="n">verification</span> <span class="o">=</span> <span class="n">verify_jose</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The token is NOT valid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id3">
+<h4>Changing Payload<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tampered_payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
+<span class="p">}</span>
+
+<span class="n">tampered_payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">tampered_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">encoded_tampered_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">tampered_payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">encoded_header</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_tampered_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+
+<span class="n">verification</span> <span class="o">=</span> <span class="n">verify_jose</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The token is NOT valid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id4">
+<h4>Changing Signature<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess_secret</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;admin&quot;</span>
+
+<span class="n">encoded_header</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">guess_secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+
+<span class="n">encoded_tampered_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_tampered_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+
+<span class="n">verification</span> <span class="o">=</span> <span class="n">verify_jose</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The token is NOT valid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id5">
+<h4>Changing Two Parts<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h4>
+<p>Same considerations apply as above</p>
+</div>
+<div class="section" id="id6">
+<h4>Using Original Token Parts<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verification</span> <span class="o">=</span> <span class="n">verify_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+
+<span class="n">decoded_payload</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;HS256&quot;</span><span class="p">])</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decoded Payload: </span><span class="si">{</span><span class="n">decoded_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Payload Type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">decoded_payload</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The token is Valid
+Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John Doe&#39;, &#39;iat&#39;: 1516239022}
+   Payload Type: &lt;class &#39;dict&#39;&gt;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="using-rsa">
+<h2>Using RSA<a class="headerlink" href="#using-rsa" title="Permalink to this headline">¶</a></h2>
+<p>Since Python does not have native support for Asymmetric encryption only library based solutions will be used. One using Cryptography alone and the other using Python JOSE.</p>
+<div class="section" id="common-data">
+<h3>Common Data<a class="headerlink" href="#common-data" title="Permalink to this headline">¶</a></h3>
+<p>Both Cryptography based and Python JOSE Based will use the same headers, payloads and Key Pair to compare the resulting JWTs.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_key_pair</span><span class="p">():</span>
+    <span class="n">key_size</span> <span class="o">=</span> <span class="mi">2048</span>  <span class="c1"># Should be at least 2048</span>
+
+    <span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span>
+        <span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span>  <span class="c1"># Do not change</span>
+        <span class="n">key_size</span><span class="o">=</span><span class="n">key_size</span><span class="p">,</span>
+    <span class="p">)</span>
+
+    <span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
+    <span class="k">return</span> <span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;RS256&quot;</span><span class="p">,</span>  <span class="c1"># Changed to use RSA</span>
+  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
+<span class="p">}</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
+<span class="p">}</span>
+
+<span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span> <span class="o">=</span> <span class="n">generate_key_pair</span><span class="p">()</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="using-cryptography-alone">
+<h3>Using Cryptography alone<a class="headerlink" href="#using-cryptography-alone" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">serialization</span><span class="p">,</span> <span class="n">hashes</span>
+<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">padding</span>
+<span class="kn">from</span> <span class="nn">cryptography.exceptions</span> <span class="kn">import</span> <span class="n">InvalidSignature</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="id7">
+<h4>Signature<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+<div class="section" id="encoding-headers-and-payload">
+<h5>Encoding Headers and Payload<a class="headerlink" href="#encoding-headers-and-payload" title="Permalink to this headline">¶</a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">header_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">encoded_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">header_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="signing">
+<h5>Signing<a class="headerlink" href="#signing" title="Permalink to this headline">¶</a></h5>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span>
+                      <span class="n">message</span><span class="p">,</span>
+                      <span class="n">padding</span><span class="o">.</span><span class="n">PKCS1v15</span><span class="p">(),</span>
+                      <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+                  <span class="p">)</span>
+
+<span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original Signature: </span><span class="si">{</span><span class="n">signature_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded Signature: </span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Signature: 48b162e1385012b746df6b456248fc812fb82575838a4f6560b36d19fbe59f9e370053f9d840967aff736b7e16f151499458325660a0f90e34ad685127c92137cd5f6ea93bed5a9e696f17d5e0ef2f2c7536407ea8415514f40bc15710d5f435d67c37eb250e1a4aba963193e0ffb6417e7916e4614c2747eea34ca7bf53d04fdbad9ce81901b276cb911891b2d336ad3a54ba451cba7d9455c35bd61576de55433a727dfa6e1ba24d077fa475f95d99cede23a1319abf1fc4a23619f88e8bee31400e53dd09f0e5b58f0d14eaa86c5b74f4337d467579b5d97b3d3e0b26295743b9bc3c20e7deb1942ebe00e82503e274e6f4344adc0db7aceb1e8665da7752
+ Encoded Signature: SLFi4ThQErdG32tFYkj8gS-4JXWDik9lYLNtGfvln543AFP52ECWev9za34W8VFJlFgyVmCg-Q40rWhRJ8khN81fbqk77VqeaW8X1eDvLyx1NkB-qEFVFPQLwVcQ1fQ11nw36yUOGkq6ljGT4P-2QX55FuRhTCdH7qNMp79T0E_brZzoGQGydsuRGJGy0zatOlS6RRy6fZRVw1vWFXbeVUM6cn36bhuiTQd_pHX5XZnO3iOhMZq_H8SiNhn4jovuMUAOU90J8OW1jw0U6qhsW3T0M31GdXm12Xs9PgsmKVdDubw8IOfesZQuvgDoJQPidOb0NErcDbes6x6GZdp3Ug==
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id8">
+<h4>Token<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JWT: </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiAiUlMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9.SLFi4ThQErdG32tFYkj8gS-4JXWDik9lYLNtGfvln543AFP52ECWev9za34W8VFJlFgyVmCg-Q40rWhRJ8khN81fbqk77VqeaW8X1eDvLyx1NkB-qEFVFPQLwVcQ1fQ11nw36yUOGkq6ljGT4P-2QX55FuRhTCdH7qNMp79T0E_brZzoGQGydsuRGJGy0zatOlS6RRy6fZRVw1vWFXbeVUM6cn36bhuiTQd_pHX5XZnO3iOhMZq_H8SiNhn4jovuMUAOU90J8OW1jw0U6qhsW3T0M31GdXm12Xs9PgsmKVdDubw8IOfesZQuvgDoJQPidOb0NErcDbes6x6GZdp3Ug==
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="verify-token">
+<h4>Verify Token<a class="headerlink" href="#verify-token" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify_rsa_cryptography</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key</span><span class="p">):</span>
+    <span class="n">encoded_header</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+    
+    <span class="n">padding_correction</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="p">((</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">encoded_signature</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
+    <span class="n">received_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">encoded_signature</span> <span class="o">+</span> <span class="n">padding_correction</span><span class="p">)</span>
+    
+    <span class="n">received_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">public_key</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span>
+            <span class="n">received_signature</span><span class="p">,</span>
+            <span class="n">received_message</span><span class="p">,</span>
+            <span class="n">padding</span><span class="o">.</span><span class="n">PKCS1v15</span><span class="p">(),</span>
+            <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
+        <span class="p">)</span>
+        <span class="k">return</span> <span class="s2">&quot;The token is Valid&quot;</span>
+    <span class="k">except</span> <span class="n">InvalidSignature</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;The token is NOT Valid&quot;</span>   
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verify_rsa_cryptography</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The token is Valid&#39;
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="tampering-scenarios">
+<h5>Tampering Scenarios<a class="headerlink" href="#tampering-scenarios" title="Permalink to this headline">¶</a></h5>
+<p>The same tampering experiments as above could be tested: changing the headers, changing the payload or changing the signature. Since the code would be exactly the same, those cases are not shown for the RSA based JWT.</p>
+</div>
+</div>
+</div>
+<div class="section" id="using-python-jose">
+<h3>Using Python JOSE<a class="headerlink" href="#using-python-jose" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="generating-the-token">
+<h4>Generating the Token<a class="headerlink" href="#generating-the-token" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_pem_bytes</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">private_bytes</span><span class="p">(</span>
+   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
+   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PrivateFormat</span><span class="o">.</span><span class="n">PKCS8</span><span class="p">,</span>
+   <span class="n">encryption_algorithm</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">NoEncryption</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">private_pem_bytes</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;RS256&#39;</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JWT: </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.pCBJ4aaGmNUnCHHeIaikn8FP_4WUChe09lSFz_gMnNbkzf8Ts0Ok8MpJHhJhM57rSl1L9UnzLM3QAdtB_9FqywPkE8tyDrZPO_f_ogjx-4qht7HAfMo5EAnIYRyJh8s_iQr0hgErmUFpFtEXXyaPvfXoaTNeadgWWHoOfEI2xm7tnFg5DlUk-N3Q2iJtR3KI9VJb_5tk3ThAeiwmVVOGLu-USomPupNTlE_MVOv85YsSWOTji05Cyd25tB4ZKZvkXqmmhyGcobLnRMp9-cIyOOzuEbiKxrCMqv30wnRY2JG0RS6PAne1oDucgBUjCfwjWcTevhNaBeqi9-NDoX0q5A
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="verify-the-token">
+<h4>Verify the Token<a class="headerlink" href="#verify-the-token" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify_rsa_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">):</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RS256&#39;</span><span class="p">])</span>
+        <span class="k">return</span> <span class="s2">&quot;The token is Valid&quot;</span>
+    <span class="k">except</span> <span class="n">JWTError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;The token is NOT valid&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">public_key</span><span class="o">.</span><span class="n">public_bytes</span><span class="p">(</span>
+   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
+   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PublicFormat</span><span class="o">.</span><span class="n">SubjectPublicKeyInfo</span><span class="p">,</span>
+<span class="p">)</span>
+
+<span class="n">verification</span> <span class="o">=</span> <span class="n">verify_rsa_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_pem_bytes</span><span class="p">)</span>
+<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>The token is Valid
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="native-vs-library">
+<h2>Native vs Library<a class="headerlink" href="#native-vs-library" title="Permalink to this headline">¶</a></h2>
+<p>It is <strong>NOT</strong> recommended to use any native implementation for anything security related. Instead, always used time proved, well tested libraries.</p>
+<p>This is because there might be new vulnerabilities discovered and the library will likely get a patch or an update quick enough, whereas in the case of the native implementation, it is hard to update already-running-in-production solutions.</p>
+<p>That being said and just for completeness, a time benchmark is shown below.</p>
+<div class="section" id="cross-compatibility">
+<h3>Cross Compatibility<a class="headerlink" href="#cross-compatibility" title="Permalink to this headline">¶</a></h3>
+</div>
+<div class="section" id="using-hmac">
+<h3>Using HMAC<a class="headerlink" href="#using-hmac" title="Permalink to this headline">¶</a></h3>
+<p>It is possible to encode with the native implementation and decode with the library and the other way around, that is because the JWT is a standard.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_token_native</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="n">header_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">encoded_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">header_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    
+    <span class="n">payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    
+    <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+
+    <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">create_token_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
+<span class="p">}</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
+<span class="p">}</span>
+
+<span class="n">secret</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="encode-with-native-decode-with-library">
+<h4>Encode with Native decode with Library<a class="headerlink" href="#encode-with-native-decode-with-library" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_native</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="n">verify_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The token is Valid&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="encode-with-library-decode-with-native">
+<h4>Encode with Library decode with Native<a class="headerlink" href="#encode-with-library-decode-with-native" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<span class="n">verify</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The token is Valid&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id9">
+<h3>Using RSA<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h3>
+<p>When dealing with RSA, there is also cross compatibility between Cryptography and Python JOSE. This is non-trivial since Python JOSE does not use Cryptography as backend for RSA.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_token_rsa_cryptography</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_key</span><span class="p">):</span>
+    <span class="n">header_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">encoded_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">header_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="n">payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">padding</span><span class="o">.</span><span class="n">PKCS1v15</span><span class="p">(),</span> <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">())</span>
+
+    <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+
+
+<span class="k">def</span> <span class="nf">create_token_rsa_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_pem_bytes</span><span class="p">):</span>
+    <span class="k">return</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">private_pem_bytes</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;RS256&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;RS256&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
+<span class="p">}</span>
+
+<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
+  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
+<span class="p">}</span>
+
+<span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span> <span class="o">=</span> <span class="n">generate_key_pair</span><span class="p">()</span>
+
+<span class="n">private_pem_bytes</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">private_bytes</span><span class="p">(</span>
+   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
+   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PrivateFormat</span><span class="o">.</span><span class="n">PKCS8</span><span class="p">,</span>
+   <span class="n">encryption_algorithm</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">NoEncryption</span><span class="p">()</span>
+<span class="p">)</span>
+
+<span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">public_key</span><span class="o">.</span><span class="n">public_bytes</span><span class="p">(</span>
+   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
+   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PublicFormat</span><span class="o">.</span><span class="n">SubjectPublicKeyInfo</span><span class="p">,</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="encode-with-cryptography-decode-with-python-jose">
+<h4>Encode with Cryptography decode with Python JOSE<a class="headerlink" href="#encode-with-cryptography-decode-with-python-jose" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_rsa_cryptography</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_key</span><span class="p">)</span>
+<span class="n">verify_rsa_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_pem_bytes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The token is Valid&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="encode-with-python-jose-decode-with-cryptography">
+<h4>Encode with Python JOSE decode with Cryptography<a class="headerlink" href="#encode-with-python-jose-decode-with-cryptography" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_rsa_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_pem_bytes</span><span class="p">)</span>
+<span class="n">verify_rsa_cryptography</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>&#39;The token is Valid&#39;
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="hmac-time-benchmark">
+<h3>HMAC Time Benchmark<a class="headerlink" href="#hmac-time-benchmark" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id10">
+<h4>Generating the token<a class="headerlink" href="#id10" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Native:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> create_token_native(headers, payload, secret)
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> create_token_jose(headers, payload, secret)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Native: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>14.3 µs ± 130 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+  Jose: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>49.6 µs ± 200 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="verifying-the-token">
+<h4>Verifying the token<a class="headerlink" href="#verifying-the-token" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Native:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> verify(token, secret)
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> verify_jose(token, secret)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Native: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>6.21 µs ± 32.9 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+  Jose: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>11.6 µs ± 214 ns per loop (mean ± std. dev. of 7 runs, 100000 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="rsa-time-benchmark">
+<h3>RSA Time Benchmark<a class="headerlink" href="#rsa-time-benchmark" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="id11">
+<h4>Generating the token<a class="headerlink" href="#id11" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cryptography:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> create_token_rsa_cryptography(headers, payload, private_key)
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Python Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> create_token_rsa_jose(headers, payload, private_pem_bytes)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cryptography: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>830 µs ± 3.46 µs per loop (mean ± std. dev. of 7 runs, 1000 loops each)
+ Python Jose: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>5.7 ms ± 85 µs per loop (mean ± std. dev. of 7 runs, 100 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="id12">
+<h4>Verifying the token<a class="headerlink" href="#id12" title="Permalink to this headline">¶</a></h4>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_rsa_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_pem_bytes</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cryptography:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> verify_rsa_cryptography(token, public_key)
+
+<span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Python Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="o">%</span><span class="k">timeit</span> verify_rsa_jose(token, public_pem_bytes)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Cryptography: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>55.8 µs ± 300 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+ Python Jose: 
+</pre></div>
+</div>
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>159 µs ± 759 ns per loop (mean ± std. dev. of 7 runs, 10000 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="benchmark-conclusion">
+<h3>Benchmark Conclusion<a class="headerlink" href="#benchmark-conclusion" title="Permalink to this headline">¶</a></h3>
+<p>Regardless of the particular implementation, RSA based JWT was much slower than HMAC based. This corresponds to symmetric encryption being much faster than asymmetric.</p>
+<p>Even though the Native implementation was faster than the Python JOSE one, it is <strong>NOT</strong> recommended to use any custom solution for security related problems. The sames applies to the comparison between Cryptography and Python JOSE.</p>
+<p>Python JOSE is a library specifically developed for JWT manipulation and therefore should be the go to approach. However, other JWT libraries could also be used if they are time proved and well tested.</p>
+</div>
+</div>
+<div class="section" id="example-user-authentication">
+<h2>Example: User Authentication<a class="headerlink" href="#example-user-authentication" title="Permalink to this headline">¶</a></h2>
+<p>The following example showcases how JWTs can be used to securely login users. <strong>This example is based on the Salt Chapter’s</strong>.</p>
+<p>The scenario is having two tables: <code class="docutils literal notranslate"><span class="pre">users</span></code> and <code class="docutils literal notranslate"><span class="pre">roles</span></code>. Each user will have its password hashed with salt and then on other unencrypted table, each user will have a role. There is a site to which only users with the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role can access. In this example the authorization to that site is handled by JWTs. The main advantage is that once the JWT was generated, all relevant (non-secret) information of the user is saved there, meaning that JWT is specially useful for stateless APIs).</p>
+<p>This example uses HMAC but the same could be achieved using RSA.</p>
+<p><strong>Note: Remember that this code is not suitable for any production use-case.</strong></p>
+<div class="section" id="auxiliary-functions">
+<h3>Auxiliary Functions<a class="headerlink" href="#auxiliary-functions" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SECRET_JWT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+
+<span class="k">def</span> <span class="nf">generate_hash</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">salt</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+    <span class="n">data_bytes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    <span class="n">data_hashed</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">scrypt</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">,</span> <span class="n">salt</span><span class="o">=</span><span class="n">salt</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
+    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">salt</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">data_hashed</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
+
+
+<span class="k">def</span> <span class="nf">sign_up</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">database_</span><span class="p">):</span>
+    <span class="n">database</span> <span class="o">=</span> <span class="n">database_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
+    <span class="n">random_bytes</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+    <span class="n">database</span><span class="p">[</span><span class="n">email</span><span class="p">]</span> <span class="o">=</span> <span class="n">generate_hash</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">random_bytes</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully Singed Up: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">database</span>
+
+
+<span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">roles</span><span class="p">):</span>
+    <span class="k">if</span> <span class="n">email</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">database</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: User </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2"> not in Database&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+
+    <span class="n">expected_password</span> <span class="o">=</span> <span class="n">database</span><span class="p">[</span><span class="n">email</span><span class="p">]</span>
+    <span class="n">salt</span><span class="p">,</span> <span class="n">hashed</span> <span class="o">=</span> <span class="n">expected_password</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
+    <span class="n">salt_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">salt</span><span class="p">)</span>
+    <span class="n">calculated_hash</span> <span class="o">=</span> <span class="n">generate_hash</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">salt_bytes</span><span class="p">)</span>
+    <span class="n">passwords_matched</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">expected_password</span><span class="p">,</span> <span class="n">calculated_hash</span><span class="p">)</span> 
+    
+    <span class="k">if</span> <span class="ow">not</span> <span class="n">passwords_matched</span><span class="p">:</span>
+        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: Incorrect Password for: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+        <span class="k">return</span>
+        
+    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
+      <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
+    <span class="p">}</span>
+
+    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
+      <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span>
+      <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="n">roles</span><span class="p">[</span><span class="n">email</span><span class="p">],</span>
+      <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
+    <span class="p">}</span>
+
+    <span class="n">secret</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SECRET_JWT&quot;</span><span class="p">)</span>
+
+    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully Logged in: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+    <span class="k">return</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
+    
+    
+<span class="k">def</span> <span class="nf">access_restricted_site</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
+    <span class="n">secret</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SECRET_JWT&quot;</span><span class="p">)</span>
+    <span class="k">try</span><span class="p">:</span>
+        <span class="n">payload</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;HS256&quot;</span><span class="p">])</span>
+        <span class="n">role</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]</span>
+        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;admin&quot;</span><span class="p">:</span>
+            <span class="k">return</span> <span class="s2">&quot;Access Granted&quot;</span>
+        <span class="k">return</span> <span class="s2">&quot;You are logged in but you do not have access to this site&quot;</span>
+    <span class="k">except</span> <span class="n">JWTError</span><span class="p">:</span>
+        <span class="k">return</span> <span class="s2">&quot;Your token is invalid, log in first&quot;</span>
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="sign-up">
+<h3>Sign Up<a class="headerlink" href="#sign-up" title="Permalink to this headline">¶</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">roles</span> <span class="o">=</span> <span class="p">{</span>
+    <span class="s2">&quot;johndoe@example.com&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
+    <span class="s2">&quot;alicedoe@example.com&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
+<span class="p">}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;johndoe@example.com&quot;</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;password123&quot;</span>
+<span class="n">user_database</span> <span class="o">=</span> <span class="p">{}</span>
+
+<span class="n">user_database</span> <span class="o">=</span> <span class="n">sign_up</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_database</span><span class="p">)</span>
+
+<span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;alicedoe@example.com&quot;</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;adminadmin&quot;</span>
+<span class="n">user_database</span> <span class="o">=</span> <span class="n">sign_up</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_database</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successfully Singed Up: johndoe@example.com
+Successfully Singed Up: alicedoe@example.com
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="log-in">
+<h3>Log In<a class="headerlink" href="#log-in" title="Permalink to this headline">¶</a></h3>
+<div class="section" id="not-enough-priviliges">
+<h4>Not Enough Priviliges<a class="headerlink" href="#not-enough-priviliges" title="Permalink to this headline">¶</a></h4>
+<p>John logs in and tries to access the restricted site.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;johndoe@example.com&quot;</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;password123&quot;</span>
+
+<span class="n">john_jwt_token</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_database</span><span class="p">,</span> <span class="n">roles</span><span class="p">)</span>
+
+<span class="n">authentication_message</span> <span class="o">=</span> <span class="n">access_restricted_site</span><span class="p">(</span><span class="n">john_jwt_token</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">authentication_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successfully Logged in: johndoe@example.com
+You are logged in but you do not have access to this site
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="tampering-priviliges">
+<h4>Tampering Priviliges<a class="headerlink" href="#tampering-priviliges" title="Permalink to this headline">¶</a></h4>
+<p>John can decode his token and see that the <code class="docutils literal notranslate"><span class="pre">role</span></code> he was assigned is <code class="docutils literal notranslate"><span class="pre">user</span></code> and not admin, he could try to change that and generate a new token. However as shown above, changing only the payload will invalidate the token and since John does not have the secret, it cannot update the <code class="docutils literal notranslate"><span class="pre">signature</span></code>.</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">original_header</span><span class="p">,</span> <span class="n">original_payload</span><span class="p">,</span> <span class="n">original_signature</span> <span class="o">=</span> <span class="n">john_jwt_token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+
+<span class="n">padding_correction</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="p">((</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">original_payload</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
+
+<span class="n">decoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">original_payload</span> <span class="o">+</span> <span class="n">padding_correction</span><span class="p">)</span>
+<span class="n">decoded_payload_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">decoded_payload</span><span class="p">)</span>
+<span class="n">decoded_payload_dict</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
+<span class="n">tampered_payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">decoded_payload_dict</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<span class="n">tampered_payload_encoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">tampered_payload</span><span class="p">)</span>
+
+<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">original_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">tampered_payload_encoded</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">original_signature</span><span class="si">}</span><span class="s2">&quot;</span>
+
+<span class="n">authentication_message</span> <span class="o">=</span> <span class="n">access_restricted_site</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">authentication_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Your token is invalid, log in first
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="having-enough-priviliges">
+<h4>Having Enough Priviliges<a class="headerlink" href="#having-enough-priviliges" title="Permalink to this headline">¶</a></h4>
+<p>For Alice the process is seemless and she can access without any problems</p>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;alicedoe@example.com&quot;</span>
+<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;adminadmin&quot;</span>
+
+<span class="n">alice_jwt_token</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_database</span><span class="p">,</span> <span class="n">roles</span><span class="p">)</span>
+
+<span class="n">authentication_message</span> <span class="o">=</span> <span class="n">access_restricted_site</span><span class="p">(</span><span class="n">alice_jwt_token</span><span class="p">)</span>
+
+<span class="nb">print</span><span class="p">(</span><span class="n">authentication_message</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Successfully Logged in: alicedoe@example.com
+Access Granted
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+<div class="section" id="caveats">
+<h4>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline">¶</a></h4>
+<p>If John get Alice’s JWT by any means, he could have access to the restricted site. This risk can be mitigated by using certificate based authentication or strong security measures of the JWT.</p>
+<p>The JWT is ultimately an access card, anyone who has it, can acts as if it were the user to whom it was originally given. That is why other measure such as certificates can be add to avoid misuse of JWTs.</p>
+</div>
+</div>
+</div>
+<div class="section" id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<p>JSON Web Tokens (JWT) combines several cryptography concepts in a practical way, it allows to generate tokens, that are easy to share via HTTP and that serves for authentication of users. They also allow for custom fields, giving extra flexibility.</p>
+<p>JWTs are compatible with both symmetric and asymmetric digital signatures by using HMAC and RSA respectively. When one the party generating the token should verify it, HMAC is the most convenient solution, if everone should be able to verify the signature RSA is most convenient. There are many other algorithms supported by the JWT standard but those two are the most popular ones.</p>
+<p>In this chapter a Native and a Library based implementation were shown, the native one should not be used by any means and it is only for illustration purposes.</p>
+<p>Using JWTs is becoming more and more common nowadays with the rise of Stateless API architectures and microservices. And is widely use in the <a class="reference external" href="https://en.wikipedia.org/wiki/OAuth">Open Authorization (OAuth)</a></p>
+</div>
+<div class="section" id="additional-resources">
+<h2>Additional Resources<a class="headerlink" href="#additional-resources" title="Permalink to this headline">¶</a></h2>
+<ul class="simple">
+<li><p><a class="reference external" href="https://jwt.io/">JWT.io</a>: a free online service that lets you decode, verify and generate JWT</p></li>
+<li><p>Other JWT Libraries for Python: <a class="reference external" href="https://github.com/jpadilla/pyjwt/">pyjwt</a>, <a class="reference external" href="https://github.com/latchset/jwcrypto/">jwcrypto</a> and <a class="reference external" href="https://github.com/lepture/authlib">authlib</a></p></li>
+</ul>
+</div>
 </div>
 
     <script type="text/x-thebe-config">
