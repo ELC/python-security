@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>HMAC &#8212; Python Security</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,39 +20,38 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/justify.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
     <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe,.cell"
-        const thebe_selector_input = "pre,.cell_input div.highlight"
-        const thebe_selector_output = ".output,.cell_output"
-    </script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://elc.github.com/python-security/chapters/05_HMAC.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -64,7 +65,21 @@
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +88,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
       
@@ -88,14 +104,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="00_Fundamentals.html">
-   Introduction to Security
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00_Fundamentals.html">
+                    Introduction to Security
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Hashes
  </span>
@@ -209,114 +226,245 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/chapters/05_HMAC.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ELC/python-security"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        <a class="edit-button" href="https://github.com/ELC/python-security/edit/source/chapters/05_HMAC.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/05_HMAC.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/05_HMAC.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/05_HMAC.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/05_HMAC.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ELC/python-security"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ELC/python-security/edit/source/chapters/05_HMAC.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapters/05_HMAC.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#hmac-hashes">
    HMAC != Hashes
@@ -378,17 +526,94 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>HMAC</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hmac-hashes">
+   HMAC != Hashes
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hmac-hashes-salt-pepper">
+   HMAC != Hashes + Salt (+ Pepper)
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hmac-checksums">
+   HMAC != Checksums
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#generating-hmac">
+   Generating HMAC
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-single-function">
+     Using single Function
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-builder-pattern">
+     Using Builder Pattern
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#verifying-a-message">
+   Verifying a Message
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#altered-message">
+     Altered Message
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#wrong-key">
+     Wrong Key
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#correct-message-and-key">
+     Correct Message and Key
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="hmac">
-<h1>HMAC<a class="headerlink" href="#hmac" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="hmac">
+<h1>HMAC<a class="headerlink" href="#hmac" title="Permalink to this headline">#</a></h1>
 <p><strong>ToDo</strong>:</p>
 <ul class="simple">
 <li><p>Add illustration for HMAC - Similar to <a class="reference external" href="https://upload.wikimedia.org/wikipedia/commons/thumb/7/7f/SHAhmac.svg/1200px-SHAhmac.svg.png">this</a>.</p></li>
@@ -405,43 +630,43 @@
 <p>This chapter will cover the usage of <a class="reference external" href="https://en.wikipedia.org/wiki/HMAC">HMAC</a>. Block ciphers, in particular AES, will be covered in following chapter.</p>
 <p>As with hashes, HMACs are non-reversible and only with the secret key can one produce the same hash for a given message.</p>
 <p>Since HMAC is a procedure, it does not rely on any specific hash function. Therefore different hash functions can be used, to specify exactly which, the name of the hash function is usually stated. For instance, if using SHA256 the HMAC will be called HMAC-SHA256 or HSHA256.</p>
-<div class="section" id="hmac-hashes">
-<h2>HMAC != Hashes<a class="headerlink" href="#hmac-hashes" title="Permalink to this headline">¶</a></h2>
+<section id="hmac-hashes">
+<h2>HMAC != Hashes<a class="headerlink" href="#hmac-hashes" title="Permalink to this headline">#</a></h2>
 <p>Hashes were shown to be a method to <em>hide</em> information such as passwords in a secure way, on the contrary, when using HMACs, the message is <strong>completely visible / public</strong>. The objective of HMACs is not to hide a message but to provide a way to the receipient to verify if the message has been sent by the intended party.</p>
 <p>It should be noted that <strong>anyone</strong> with the secret key can produce messages so the secret key should be exchange by a secure channel beforehand. If someone receives the message and does not have the secret key, they will be able to see the message but they will not be able to verify if its coming for the intended source.</p>
-</div>
-<div class="section" id="hmac-hashes-salt-pepper">
-<h2>HMAC != Hashes + Salt (+ Pepper)<a class="headerlink" href="#hmac-hashes-salt-pepper" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="hmac-hashes-salt-pepper">
+<h2>HMAC != Hashes + Salt (+ Pepper)<a class="headerlink" href="#hmac-hashes-salt-pepper" title="Permalink to this headline">#</a></h2>
 <p>HMAC is a method that combines a <strong>secret key</strong> and the original message in such a way that, if changing the key, the message will also change. At first, it may seem that this key is analogous to a salt or a pepper when hashing but the main difference is that the key is not simply appended/preppended to the message but rather mixed in a cryptographically secure way.</p>
 <p>Moreover salts are public whereas HMAC keys are not and pepper could be re-discovered whereas HMAC should not.</p>
-</div>
-<div class="section" id="hmac-checksums">
-<h2>HMAC != Checksums<a class="headerlink" href="#hmac-checksums" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="hmac-checksums">
+<h2>HMAC != Checksums<a class="headerlink" href="#hmac-checksums" title="Permalink to this headline">#</a></h2>
 <p>While both checksums and HMACs provides integrity, the main difference is that checksums has no password/key protection and hence a given input will always have the same output, whereas in HMACs the output depends on both the input and the password/key.</p>
-</div>
-<div class="section" id="generating-hmac">
-<h2>Generating HMAC<a class="headerlink" href="#generating-hmac" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="generating-hmac">
+<h2>Generating HMAC<a class="headerlink" href="#generating-hmac" title="Permalink to this headline">#</a></h2>
 <p>Python has the <a class="reference external" href="https://docs.python.org/3/library/hmac.html"><code class="docutils literal notranslate"><span class="pre">hmac</span></code> module</a> as part of the standard library and can be combined with the hash functions used in previous chapters.</p>
 <p>As well as with the <code class="docutils literal notranslate"><span class="pre">hashlib</span></code> it is possible to create HMACs with a single function call or with the builder pattern.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hmac</span>
-<span class="kn">import</span> <span class="nn">hashlib</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import hmac
+import hashlib
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="using-single-function">
-<h3>Using single Function<a class="headerlink" href="#using-single-function" title="Permalink to this headline">¶</a></h3>
+<section id="using-single-function">
+<h3>Using single Function<a class="headerlink" href="#using-single-function" title="Permalink to this headline">#</a></h3>
 <p>The single function approach will always return a bytes object, if the hex representation is desired, use any of the methods available (see <a class="reference internal" href="91_Bytes.html"><span class="doc std std-doc">Bytes Appendix</span></a>).</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">secret_key</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;my secret&quot;</span>
-<span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>secret_key = b&quot;my secret&quot;
+message = b&quot;Hello World!&quot;
 
-<span class="n">message_hmac_bytes</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">secret_key</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
-<span class="n">message_hmac</span> <span class="o">=</span> <span class="n">message_hmac_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
-<span class="n">message_hmac</span>
+message_hmac_bytes = hmac.digest(secret_key, message, digest=hashlib.sha256)
+message_hmac = message_hmac_bytes.hex()
+message_hmac
 </pre></div>
 </div>
 </div>
@@ -451,19 +676,19 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="using-builder-pattern">
-<h3>Using Builder Pattern<a class="headerlink" href="#using-builder-pattern" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="using-builder-pattern">
+<h3>Using Builder Pattern<a class="headerlink" href="#using-builder-pattern" title="Permalink to this headline">#</a></h3>
 <p>One change in this implementation is that the parameter is called <code class="docutils literal notranslate"><span class="pre">digestmod</span></code> instead of <code class="docutils literal notranslate"><span class="pre">digest</span></code>. For the bytes output one can use the <code class="docutils literal notranslate"><span class="pre">digest</span></code> method and for the hex output the <code class="docutils literal notranslate"><span class="pre">hexdigest</span></code> method.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">secret_key</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;my secret&quot;</span>
-<span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>secret_key = b&quot;my secret&quot;
+message = b&quot;Hello World!&quot;
 
-<span class="n">keyed_hasher</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">new</span><span class="p">(</span><span class="n">secret_key</span><span class="p">,</span> <span class="n">digestmod</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
-<span class="n">keyed_hasher</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
-<span class="n">message_hmac</span> <span class="o">=</span> <span class="n">keyed_hasher</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span>
-<span class="n">message_hmac</span>
+keyed_hasher = hmac.new(secret_key, digestmod=hashlib.sha256)
+keyed_hasher.update(message)
+message_hmac = keyed_hasher.hexdigest()
+message_hmac
 </pre></div>
 </div>
 </div>
@@ -473,33 +698,33 @@
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="verifying-a-message">
-<h2>Verifying a Message<a class="headerlink" href="#verifying-a-message" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="verifying-a-message">
+<h2>Verifying a Message<a class="headerlink" href="#verifying-a-message" title="Permalink to this headline">#</a></h2>
 <p><strong>Note</strong>: the <code class="docutils literal notranslate"><span class="pre">hmac.compare_digest</span></code> is exactly the same as <code class="docutils literal notranslate"><span class="pre">secrets.compare_digest</span></code>. The latter is an alias of the former.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="n">received_message</span><span class="p">,</span> <span class="n">received_hmac</span><span class="p">,</span> <span class="n">key</span><span class="p">):</span>
-    <span class="n">guess_hmac</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">key</span><span class="p">,</span> <span class="n">received_message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def verify(received_message, received_hmac, key):
+    guess_hmac = hmac.digest(key, received_message, digest=hashlib.sha256).hex()
     
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">hmac</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">received_hmac</span><span class="p">,</span> <span class="n">guess_hmac</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;Mismatch, either the message has been modified or key is incorrect&quot;</span>
+    if not hmac.compare_digest(received_hmac, guess_hmac):
+        return &quot;Mismatch, either the message has been modified or key is incorrect&quot;
     
-    <span class="k">return</span> <span class="s2">&quot;Match, message and the key are consistent&quot;</span>    
+    return &quot;Match, message and the key are consistent&quot;    
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="altered-message">
-<h3>Altered Message<a class="headerlink" href="#altered-message" title="Permalink to this headline">¶</a></h3>
+<section id="altered-message">
+<h3>Altered Message<a class="headerlink" href="#altered-message" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">received_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello Wrold!&quot;</span>
-<span class="n">received_hmac</span> <span class="o">=</span> <span class="s1">&#39;3262c371784a36377154bdeb0bfbfc6ebf88591a7e564dbb0c4c7ee16c273440&#39;</span>
-<span class="n">guess_key</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;my secret&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>received_message = b&quot;Hello Wrold!&quot;
+received_hmac = &#39;3262c371784a36377154bdeb0bfbfc6ebf88591a7e564dbb0c4c7ee16c273440&#39;
+guess_key = b&quot;my secret&quot;
 
-<span class="nb">print</span><span class="p">(</span><span class="n">verify</span><span class="p">(</span><span class="n">received_message</span><span class="p">,</span> <span class="n">received_hmac</span><span class="p">,</span> <span class="n">guess_key</span><span class="p">))</span>
+print(verify(received_message, received_hmac, guess_key))
 </pre></div>
 </div>
 </div>
@@ -509,16 +734,16 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="wrong-key">
-<h3>Wrong Key<a class="headerlink" href="#wrong-key" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="wrong-key">
+<h3>Wrong Key<a class="headerlink" href="#wrong-key" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">received_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
-<span class="n">received_hmac</span> <span class="o">=</span> <span class="s1">&#39;3262c371784a36377154bdeb0bfbfc6ebf88591a7e564dbb0c4c7ee16c273440&#39;</span>
-<span class="n">guess_key</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;password&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>received_message = b&quot;Hello World!&quot;
+received_hmac = &#39;3262c371784a36377154bdeb0bfbfc6ebf88591a7e564dbb0c4c7ee16c273440&#39;
+guess_key = b&quot;password&quot;
 
-<span class="nb">print</span><span class="p">(</span><span class="n">verify</span><span class="p">(</span><span class="n">received_message</span><span class="p">,</span> <span class="n">received_hmac</span><span class="p">,</span> <span class="n">guess_key</span><span class="p">))</span>
+print(verify(received_message, received_hmac, guess_key))
 </pre></div>
 </div>
 </div>
@@ -528,16 +753,16 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="correct-message-and-key">
-<h3>Correct Message and Key<a class="headerlink" href="#correct-message-and-key" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="correct-message-and-key">
+<h3>Correct Message and Key<a class="headerlink" href="#correct-message-and-key" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">received_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
-<span class="n">received_hmac</span> <span class="o">=</span> <span class="s1">&#39;3262c371784a36377154bdeb0bfbfc6ebf88591a7e564dbb0c4c7ee16c273440&#39;</span>
-<span class="n">guess_key</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;my secret&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>received_message = b&quot;Hello World!&quot;
+received_hmac = &#39;3262c371784a36377154bdeb0bfbfc6ebf88591a7e564dbb0c4c7ee16c273440&#39;
+guess_key = b&quot;my secret&quot;
 
-<span class="nb">print</span><span class="p">(</span><span class="n">verify</span><span class="p">(</span><span class="n">received_message</span><span class="p">,</span> <span class="n">received_hmac</span><span class="p">,</span> <span class="n">guess_key</span><span class="p">))</span>
+print(verify(received_message, received_hmac, guess_key))
 </pre></div>
 </div>
 </div>
@@ -547,13 +772,13 @@
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">#</a></h2>
 <p>HMACs are a sequence of bytes that can only be produced with a given input and a password/key, the input message is generally public and the HMAC serves as means of integrity, without requiring a secure channel. The drawback is that the passwrod/key itself should be delivered by a secure channel to begin with.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -577,9 +802,11 @@
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="04_Checksum.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -595,26 +822,28 @@
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Ezequiel Leonardo Castaño<br/>
-        
-            &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ezequiel Leonardo Castaño<br/>
+  
+      &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
+</p>
+        </footer>
     </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

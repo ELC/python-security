@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Pepper &#8212; Python Security</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,39 +20,38 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/justify.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
     <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe,.cell"
-        const thebe_selector_input = "pre,.cell_input div.highlight"
-        const thebe_selector_output = ".output,.cell_output"
-    </script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://elc.github.com/python-security/chapters/03_Pepper.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -64,7 +65,21 @@
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +88,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
       
@@ -88,14 +104,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="00_Fundamentals.html">
-   Introduction to Security
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00_Fundamentals.html">
+                    Introduction to Security
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Hashes
  </span>
@@ -209,114 +226,245 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/chapters/03_Pepper.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ELC/python-security"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        <a class="edit-button" href="https://github.com/ELC/python-security/edit/source/chapters/03_Pepper.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/03_Pepper.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/03_Pepper.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/03_Pepper.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/03_Pepper.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ELC/python-security"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ELC/python-security/edit/source/chapters/03_Pepper.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapters/03_Pepper.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#caveats">
    Caveats
@@ -358,17 +506,74 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Pepper</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#caveats">
+   Caveats
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#examples">
+   Examples
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#common-code">
+     Common code
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#without-using-pepper">
+       Without using Pepper
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#secret-pepper-example">
+     Secret Pepper Example
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#self-discovered-pepper-example">
+     Self-Discovered Pepper Example
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="pepper">
-<h1>Pepper<a class="headerlink" href="#pepper" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="pepper">
+<h1>Pepper<a class="headerlink" href="#pepper" title="Permalink to this headline">#</a></h1>
 <p><strong>ToDo</strong>:</p>
 <ul class="simple">
 <li><p>Add illustration for the salting process - Similar to <a class="reference external" href="https://thehavok.com/wp-content/uploads/2020/11/for_engineers.064-1-1024x576.jpeg">this</a>.</p></li>
@@ -394,77 +599,77 @@
 <p>Secret Peppers are fast and don’t have major impact on performance, but they require an external medium to store them, moreover, if they are leaked, the security is the same as it would have been with salts alone. On the other hand, re-discovered peppers can be used without any storage but they penalized performance because of the actual search, they cannot be leaked because the system do not know their values and a different one is used each time.</p>
 <p>When using the secret approach, the pepper is usually quite long whereas when using the re-discovered approach the pepper is usually quite short to minimize the performance penalty.</p>
 <p>An example for each is provided below</p>
-<div class="section" id="caveats">
-<h2>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline">¶</a></h2>
+<section id="caveats">
+<h2>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline">#</a></h2>
 <p>Even though the algorithm used in this chapter is <code class="docutils literal notranslate"><span class="pre">scrypt</span></code>, it should be noted that it was not thought for handling peppers natively. There is no other algorithm available in the standard library so be mindful and only consider this code for educational purposes.</p>
-</div>
-<div class="section" id="examples">
-<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">¶</a></h2>
-<div class="section" id="common-code">
-<h3>Common code<a class="headerlink" href="#common-code" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="examples">
+<h2>Examples<a class="headerlink" href="#examples" title="Permalink to this headline">#</a></h2>
+<section id="common-code">
+<h3>Common code<a class="headerlink" href="#common-code" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">secrets</span>
-<span class="kn">import</span> <span class="nn">hashlib</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import secrets
+import hashlib
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># https://en.wikipedia.org/wiki/List_of_the_most_common_passwords</span>
-<span class="n">most_common_passwords</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;123456&quot;</span><span class="p">,</span> <span class="s2">&quot;123456789&quot;</span><span class="p">,</span> <span class="s2">&quot;picture1&quot;</span><span class="p">,</span> <span class="s2">&quot;password&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;12345678&quot;</span><span class="p">,</span> <span class="s2">&quot;111111&quot;</span><span class="p">,</span> <span class="s2">&quot;123123&quot;</span><span class="p">,</span> <span class="s2">&quot;12345&quot;</span><span class="p">,</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;senha&quot;</span><span class="p">,</span> <span class="s2">&quot;1234567&quot;</span><span class="p">,</span> <span class="s2">&quot;qwerty&quot;</span><span class="p">,</span> <span class="s2">&quot;abc123&quot;</span><span class="p">,</span> <span class="s2">&quot;Million2&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;000000&quot;</span><span class="p">,</span> <span class="s2">&quot;1234&quot;</span><span class="p">,</span> <span class="s2">&quot;iloveyou&quot;</span><span class="p">,</span> <span class="s2">&quot;aaron431&quot;</span><span class="p">,</span> 
-    <span class="s2">&quot;password1&quot;</span><span class="p">,</span> <span class="s2">&quot;qqww1122&quot;</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># https://en.wikipedia.org/wiki/List_of_the_most_common_passwords
+most_common_passwords = {
+    &quot;123456&quot;, &quot;123456789&quot;, &quot;picture1&quot;, &quot;password&quot;,
+    &quot;12345678&quot;, &quot;111111&quot;, &quot;123123&quot;, &quot;12345&quot;, &quot;1234567890&quot;, 
+    &quot;senha&quot;, &quot;1234567&quot;, &quot;qwerty&quot;, &quot;abc123&quot;, &quot;Million2&quot;, 
+    &quot;000000&quot;, &quot;1234&quot;, &quot;iloveyou&quot;, &quot;aaron431&quot;, 
+    &quot;password1&quot;, &quot;qqww1122&quot;
+}
 
-<span class="k">def</span> <span class="nf">cracking_password</span><span class="p">(</span><span class="n">database_hashed</span><span class="p">):</span>
-    <span class="n">salt</span><span class="p">,</span> <span class="n">hashed_password</span> <span class="o">=</span> <span class="n">database_hashed</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
-    <span class="n">salt_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">salt</span><span class="p">)</span>
+def cracking_password(database_hashed):
+    salt, hashed_password = database_hashed.split(&quot;:&quot;)
+    salt_bytes = bytes.fromhex(salt)
     
-    <span class="k">for</span> <span class="n">guess</span> <span class="ow">in</span> <span class="n">most_common_passwords</span><span class="p">:</span>
-        <span class="n">guess_bytes</span> <span class="o">=</span> <span class="n">guess</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-        <span class="n">hashed_guess</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">scrypt</span><span class="p">(</span><span class="n">guess_bytes</span><span class="p">,</span> <span class="n">salt</span><span class="o">=</span><span class="n">salt_bytes</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">hashed_password</span> <span class="o">==</span> <span class="n">hashed_guess</span><span class="p">:</span>
-            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;Password Cracked: &#39;</span><span class="si">{</span><span class="n">guess</span><span class="si">}</span><span class="s2">&#39;&quot;</span>
+    for guess in most_common_passwords:
+        guess_bytes = guess.encode(&quot;utf-8&quot;)
+        hashed_guess = hashlib.scrypt(guess_bytes, salt=salt_bytes, n=64, r=8, p=1).hex()
+        if hashed_password == hashed_guess:
+            return f&quot;Password Cracked: &#39;{guess}&#39;&quot;
     
-    <span class="k">return</span> <span class="s2">&quot;Password not found in database&quot;</span>
+    return &quot;Password not found in database&quot;
 
 
-<span class="k">def</span> <span class="nf">password_generator_salt</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
-    <span class="n">password_bytes</span> <span class="o">=</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="n">salt</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
-    <span class="n">hashed_password</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">scrypt</span><span class="p">(</span><span class="n">password_bytes</span><span class="p">,</span> <span class="n">salt</span><span class="o">=</span><span class="n">salt</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">salt</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">hashed_password</span><span class="si">}</span><span class="s2">&quot;</span>
+def password_generator_salt(password):
+    password_bytes = password.encode(&quot;utf-8&quot;)
+    salt = secrets.token_bytes(32)
+    hashed_password = hashlib.scrypt(password_bytes, salt=salt, n=64, r=8, p=1).hex()
+    return f&quot;{salt.hex()}:{hashed_password}&quot;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">user_database</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;John&quot;</span><span class="p">:</span> <span class="n">password_generator_salt</span><span class="p">(</span><span class="s2">&quot;abc123&quot;</span><span class="p">)</span>
-<span class="p">}</span>
-<span class="n">user_database</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>user_database = {
+    &quot;John&quot;: password_generator_salt(&quot;abc123&quot;)
+}
+user_database
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;6ae3054b83c765e616f5b1089da9f112b9da468be1a8193c2d02d07e34cc044f:954dbf9fcf191046bc5b8e5a04647f2e93d2e5b09cdbafcd8799aac8f37f66481d56fc50e79a53e59de64d68e90ed74b56a6248f4ce28966a67c66695d9b8aed&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;bf1eb12612bea7f28f0bb003d5c3317cc8cd48830fb1055a66d637d6daa81b92:0b66356b7b98b094b440bd16d657cc983ee423de032475d780af9e7339e92f5f6ba5ba57ed713a461d76127db7bb79c430d5204a1910437586d65d5b0227b420&#39;}
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="without-using-pepper">
-<h4>Without using Pepper<a class="headerlink" href="#without-using-pepper" title="Permalink to this headline">¶</a></h4>
+<section id="without-using-pepper">
+<h4>Without using Pepper<a class="headerlink" href="#without-using-pepper" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">leaked_password</span> <span class="o">=</span> <span class="n">user_database</span><span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>leaked_password = user_database[&quot;John&quot;]
 
-<span class="n">cracking_password</span><span class="p">(</span><span class="n">leaked_password</span><span class="p">)</span>
+cracking_password(leaked_password)
 </pre></div>
 </div>
 </div>
@@ -474,156 +679,66 @@
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="secret-pepper-example">
-<h3>Secret Pepper Example<a class="headerlink" href="#secret-pepper-example" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="secret-pepper-example">
+<h3>Secret Pepper Example<a class="headerlink" href="#secret-pepper-example" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="c1"># At an earlier moment in time</span>
-<span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span># At an earlier moment in time
+import os
 
-<span class="c1"># Environment variables are not part of the database</span>
-<span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PEPPER&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+# Environment variables are not part of the database
+os.environ[&quot;PEPPER&quot;] = secrets.token_hex(32)
 
-<span class="k">def</span> <span class="nf">password_generator_salt_pepper_secret</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
-    <span class="n">password_bytes</span> <span class="o">=</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="n">salt</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+def password_generator_salt_pepper_secret(password):
+    password_bytes = password.encode(&quot;utf-8&quot;)
+    salt = secrets.token_bytes(32)
     
-    <span class="n">pepper</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PEPPER&quot;</span><span class="p">]</span>
-    <span class="n">pepper_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">pepper</span><span class="p">)</span>
+    pepper = os.environ[&quot;PEPPER&quot;]
+    pepper_bytes = bytes.fromhex(pepper)
 
-    <span class="n">new_salt</span> <span class="o">=</span> <span class="n">salt</span> <span class="o">+</span> <span class="n">pepper_bytes</span>
+    new_salt = salt + pepper_bytes
     
-    <span class="n">hashed_password</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">scrypt</span><span class="p">(</span><span class="n">password_bytes</span><span class="p">,</span> <span class="n">salt</span><span class="o">=</span><span class="n">new_salt</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">salt</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">hashed_password</span><span class="si">}</span><span class="s2">&quot;</span>   
+    hashed_password = hashlib.scrypt(password_bytes, salt=new_salt, n=64, r=8, p=1).hex()
+    return f&quot;{salt.hex()}:{hashed_password}&quot;   
 
-<span class="k">def</span> <span class="nf">check_password_secret</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-    <span class="n">password_bytes</span> <span class="o">=</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+def check_password_secret(user, password):
+    password_bytes = password.encode(&quot;utf-8&quot;)
     
-    <span class="n">salt</span><span class="p">,</span> <span class="n">hashed_password</span> <span class="o">=</span> <span class="n">user_database</span><span class="p">[</span><span class="n">user</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
-    <span class="n">salt_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">salt</span><span class="p">)</span>
+    salt, hashed_password = user_database[user].split(&quot;:&quot;)
+    salt_bytes = bytes.fromhex(salt)
     
-    <span class="n">pepper</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;PEPPER&quot;</span><span class="p">]</span>
-    <span class="n">pepper_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">pepper</span><span class="p">)</span>
+    pepper = os.environ[&quot;PEPPER&quot;]
+    pepper_bytes = bytes.fromhex(pepper)
 
-    <span class="n">new_salt</span> <span class="o">=</span> <span class="n">salt_bytes</span> <span class="o">+</span> <span class="n">pepper_bytes</span>
+    new_salt = salt_bytes + pepper_bytes
     
-    <span class="n">hashed_trial</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">scrypt</span><span class="p">(</span><span class="n">password_bytes</span><span class="p">,</span> <span class="n">salt</span><span class="o">=</span><span class="n">new_salt</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
-    <span class="k">if</span> <span class="n">secrets</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">hashed_password</span><span class="p">,</span> <span class="n">hashed_trial</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;Access Granted&quot;</span>
+    hashed_trial = hashlib.scrypt(password_bytes, salt=new_salt, n=64, r=8, p=1).hex()
+    if secrets.compare_digest(hashed_password, hashed_trial):
+        return &quot;Access Granted&quot;
     
-    <span class="k">return</span> <span class="s2">&quot;Access Denied&quot;</span>
+    return &quot;Access Denied&quot;
 
-<span class="n">user_database</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;John&quot;</span><span class="p">:</span> <span class="n">password_generator_salt_pepper_secret</span><span class="p">(</span><span class="s2">&quot;abc123&quot;</span><span class="p">)</span>
-<span class="p">}</span>
+user_database = {
+    &quot;John&quot;: password_generator_salt_pepper_secret(&quot;abc123&quot;)
+}
 
-<span class="n">user_database</span>
+user_database
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;fef20fee342ee26eafcf77497aab4025d973efcca3403cab42d61abf4634601b:8a2c59c761d02aa2cac32e9918f5bb420c5f3a39ac4fd53ebbdb823a3f4f061a1db5d2a08bf97dddae627b6a9eab8e72ee6d38ec18647f6c64074d38b78d74f4&#39;}
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;f36532aabd092dd7b7f6f3a3047ea4087e5256675ac439b9fdaa4d5ab34f4166:11e6b10c48d1a8f9f5ffe940a0e24d10ba1f08cea8777bcbb8c633dcd3a1e2b36c7ad1942abadb5406103370859dfe0f667ef495dc52c70b6bfe05d7509facbe&#39;}
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">leaked_password</span> <span class="o">=</span> <span class="n">user_database</span><span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">]</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>leaked_password = user_database[&quot;John&quot;]
 
-<span class="nb">print</span><span class="p">(</span><span class="n">cracking_password</span><span class="p">(</span><span class="n">leaked_password</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Password not found in database
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">check_password_secret</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;abc123&quot;</span><span class="p">))</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Access Granted
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>it 
-<span class="n">check_password_secret</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;abc123&quot;</span><span class="p">)</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>221 µs ± 139 ns per loop (mean ± std. dev. of 7 runs, 1000 loops each)
-</pre></div>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="self-discovered-pepper-example">
-<h3>Self-Discovered Pepper Example<a class="headerlink" href="#self-discovered-pepper-example" title="Permalink to this headline">¶</a></h3>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">pepper_bitslength</span> <span class="o">=</span> <span class="mi">8</span>
-<span class="n">pepper_bytelenght</span> <span class="o">=</span> <span class="nb">round</span><span class="p">(</span><span class="n">pepper_bitslength</span><span class="o">/</span><span class="mi">8</span> <span class="o">+</span> <span class="mf">0.5</span><span class="p">)</span>
-
-<span class="k">def</span> <span class="nf">password_generator_salt_pepper_discovered</span><span class="p">(</span><span class="n">password</span><span class="p">):</span>
-    <span class="n">password_bytes</span> <span class="o">=</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="n">salt</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
-
-    <span class="n">pepper</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">randbits</span><span class="p">(</span><span class="n">pepper_bitslength</span><span class="p">)</span>
-    <span class="n">pepper_bytes</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="n">pepper</span><span class="p">,</span> <span class="n">pepper_bytelenght</span><span class="p">,</span> <span class="s2">&quot;big&quot;</span><span class="p">)</span>
-
-    <span class="n">new_salt</span> <span class="o">=</span> <span class="n">salt</span> <span class="o">+</span> <span class="n">pepper_bytes</span>
-    
-    <span class="n">hashed_password</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">scrypt</span><span class="p">(</span><span class="n">password_bytes</span><span class="p">,</span> <span class="n">salt</span><span class="o">=</span><span class="n">new_salt</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">salt</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">hashed_password</span><span class="si">}</span><span class="s2">&quot;</span>   
-
-<span class="k">def</span> <span class="nf">check_password_rediscovered</span><span class="p">(</span><span class="n">user</span><span class="p">,</span> <span class="n">password</span><span class="p">):</span>
-    <span class="n">password_bytes</span> <span class="o">=</span> <span class="n">password</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    
-    <span class="n">salt</span><span class="p">,</span> <span class="n">hashed_password</span> <span class="o">=</span> <span class="n">user_database</span><span class="p">[</span><span class="n">user</span><span class="p">]</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
-    <span class="n">salt_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">salt</span><span class="p">)</span>
-    
-    <span class="k">for</span> <span class="n">guess_pepper</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="mi">2</span><span class="o">**</span><span class="n">pepper_bitslength</span><span class="p">):</span>
-        <span class="n">guess_pepper_bytes</span> <span class="o">=</span> <span class="nb">int</span><span class="o">.</span><span class="n">to_bytes</span><span class="p">(</span><span class="n">guess_pepper</span><span class="p">,</span> <span class="n">pepper_bytelenght</span><span class="p">,</span> <span class="s2">&quot;big&quot;</span><span class="p">)</span>
-
-        <span class="n">new_salt</span> <span class="o">=</span> <span class="n">salt_bytes</span> <span class="o">+</span> <span class="n">guess_pepper_bytes</span>
-
-        <span class="n">hashed_trial</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">scrypt</span><span class="p">(</span><span class="n">password_bytes</span><span class="p">,</span> <span class="n">salt</span><span class="o">=</span><span class="n">new_salt</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span>
-        <span class="k">if</span> <span class="n">secrets</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">hashed_password</span><span class="p">,</span> <span class="n">hashed_trial</span><span class="p">):</span>
-            <span class="k">return</span> <span class="s2">&quot;Access Granted&quot;</span>
-    
-    <span class="k">return</span> <span class="s2">&quot;Access Denied&quot;</span>
-
-<span class="n">user_database</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;John&quot;</span><span class="p">:</span> <span class="n">password_generator_salt_pepper_discovered</span><span class="p">(</span><span class="s2">&quot;abc123&quot;</span><span class="p">)</span>
-<span class="p">}</span>
-
-<span class="n">user_database</span>
-</pre></div>
-</div>
-</div>
-<div class="cell_output docutils container">
-<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;043d9a44cfd3ba1f3bc626275bdb5b45d5243601de3eb8231d7419287ad9673c:0e9e7149282c0f675a37acd4344a80dae40b5eefd639816f6a94829728ba7021eacdebf51b04e57c9d37f269b79f778666f3a88ba1c60ff4ba08673d942e3cf4&#39;}
-</pre></div>
-</div>
-</div>
-</div>
-<div class="cell docutils container">
-<div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">leaked_password</span> <span class="o">=</span> <span class="n">user_database</span><span class="p">[</span><span class="s2">&quot;John&quot;</span><span class="p">]</span>
-
-<span class="nb">print</span><span class="p">(</span><span class="n">cracking_password</span><span class="p">(</span><span class="n">leaked_password</span><span class="p">))</span>
+print(cracking_password(leaked_password))
 </pre></div>
 </div>
 </div>
@@ -635,7 +750,7 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="n">check_password_rediscovered</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;abc123&quot;</span><span class="p">))</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(check_password_secret(&quot;John&quot;, &quot;abc123&quot;))
 </pre></div>
 </div>
 </div>
@@ -647,24 +762,114 @@
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="o">%%time</span>it
-<span class="n">check_password_rediscovered</span><span class="p">(</span><span class="s2">&quot;John&quot;</span><span class="p">,</span> <span class="s2">&quot;abc123&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%timeit 
+check_password_secret(&quot;John&quot;, &quot;abc123&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>42.6 ms ± 150 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>260 µs ± 116 ns per loop (mean ± std. dev. of 7 runs, 1,000 loops each)
 </pre></div>
 </div>
 </div>
 </div>
+</section>
+<section id="self-discovered-pepper-example">
+<h3>Self-Discovered Pepper Example<a class="headerlink" href="#self-discovered-pepper-example" title="Permalink to this headline">#</a></h3>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>pepper_bitslength = 8
+pepper_bytelenght = round(pepper_bitslength/8 + 0.5)
+
+def password_generator_salt_pepper_discovered(password):
+    password_bytes = password.encode(&quot;utf-8&quot;)
+    salt = secrets.token_bytes(32)
+
+    pepper = secrets.randbits(pepper_bitslength)
+    pepper_bytes = int.to_bytes(pepper, pepper_bytelenght, &quot;big&quot;)
+
+    new_salt = salt + pepper_bytes
+    
+    hashed_password = hashlib.scrypt(password_bytes, salt=new_salt, n=64, r=8, p=1).hex()
+    return f&quot;{salt.hex()}:{hashed_password}&quot;   
+
+def check_password_rediscovered(user, password):
+    password_bytes = password.encode(&quot;utf-8&quot;)
+    
+    salt, hashed_password = user_database[user].split(&quot;:&quot;)
+    salt_bytes = bytes.fromhex(salt)
+    
+    for guess_pepper in range(2**pepper_bitslength):
+        guess_pepper_bytes = int.to_bytes(guess_pepper, pepper_bytelenght, &quot;big&quot;)
+
+        new_salt = salt_bytes + guess_pepper_bytes
+
+        hashed_trial = hashlib.scrypt(password_bytes, salt=new_salt, n=64, r=8, p=1).hex()
+        if secrets.compare_digest(hashed_password, hashed_trial):
+            return &quot;Access Granted&quot;
+    
+    return &quot;Access Denied&quot;
+
+user_database = {
+    &quot;John&quot;: password_generator_salt_pepper_discovered(&quot;abc123&quot;)
+}
+
+user_database
+</pre></div>
 </div>
 </div>
-<div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+<div class="cell_output docutils container">
+<div class="output text_plain highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>{&#39;John&#39;: &#39;84f667cda66c0e72a60c0ceed8fc45a5cd334a6d77487b32d92f6b2b224f6d9e:70da7e70265fd709f9221228980d8ac1a02109c8520c609881c5a42de5f973446521f3c84d81ac5a85f4ce421944e679df6d77ab2e1b66d84cf9547a4c0919ae&#39;}
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>leaked_password = user_database[&quot;John&quot;]
+
+print(cracking_password(leaked_password))
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Password not found in database
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(check_password_rediscovered(&quot;John&quot;, &quot;abc123&quot;))
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Access Granted
+</pre></div>
+</div>
+</div>
+</div>
+<div class="cell docutils container">
+<div class="cell_input docutils container">
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>%%timeit
+check_password_rediscovered(&quot;John&quot;, &quot;abc123&quot;)
+</pre></div>
+</div>
+</div>
+<div class="cell_output docutils container">
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>29.2 ms ± 12.8 µs per loop (mean ± std. dev. of 7 runs, 10 loops each)
+</pre></div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">#</a></h2>
 <p>Salts introduced a first layer of security on top of hashes but the hash + salt strategy is still vulnerable to parallelized brute-force attacks. Introducing a new secret sequence of bytes, called <strong>pepper</strong>, solves this issue. Peppers should be stored in a physically separated storage or not stored at all.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -688,9 +893,11 @@
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="02_Salt.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -706,26 +913,28 @@
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Ezequiel Leonardo Castaño<br/>
-        
-            &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ezequiel Leonardo Castaño<br/>
+  
+      &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
+</p>
+        </footer>
     </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

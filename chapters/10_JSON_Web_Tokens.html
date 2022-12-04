@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>JSON Web Tokens (JWT) &#8212; Python Security</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,39 +20,38 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/justify.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
     <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe,.cell"
-        const thebe_selector_input = "pre,.cell_input div.highlight"
-        const thebe_selector_output = ".output,.cell_output"
-    </script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://elc.github.com/python-security/chapters/10_JSON_Web_Tokens.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -64,7 +65,21 @@
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +88,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
       
@@ -88,14 +104,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="00_Fundamentals.html">
-   Introduction to Security
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00_Fundamentals.html">
+                    Introduction to Security
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Hashes
  </span>
@@ -209,114 +226,245 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/chapters/10_JSON_Web_Tokens.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ELC/python-security"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        <a class="edit-button" href="https://github.com/ELC/python-security/edit/source/chapters/10_JSON_Web_Tokens.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/10_JSON_Web_Tokens.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/10_JSON_Web_Tokens.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/10_JSON_Web_Tokens.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/10_JSON_Web_Tokens.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ELC/python-security"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ELC/python-security/edit/source/chapters/10_JSON_Web_Tokens.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapters/10_JSON_Web_Tokens.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#hmac-implementation-using-native-python">
    HMAC Implementation using Native Python
@@ -658,17 +806,374 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>JSON Web Tokens (JWT)</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hmac-implementation-using-native-python">
+   HMAC Implementation using Native Python
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#data">
+     Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#headers">
+     Headers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#payload">
+     Payload
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#signature">
+     Signature
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#token">
+     Token
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#verify">
+     Verify
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#changing-headers">
+     Changing Headers
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#changing-payload">
+     Changing Payload
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#changing-signature">
+     Changing Signature
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#changing-two-parts">
+     Changing Two Parts
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-original-token-parts">
+     Using Original Token Parts
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#hmac-implementation-using-a-library">
+   HMAC Implementation using a Library
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#supported-algorithms">
+     Supported Algorithms
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#generating-token">
+     Generating Token
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#verifing-token">
+     Verifing Token
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#trying-to-tamper-the-token">
+       Trying to tamper the token
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id2">
+       Using Original Token Parts
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#using-rsa">
+   Using RSA
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#common-data">
+     Common Data
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-cryptography-alone">
+     Using Cryptography alone
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id3">
+       Signature
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#encoding-headers-and-payload">
+         Encoding Headers and Payload
+        </a>
+       </li>
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#signing">
+         Signing
+        </a>
+       </li>
+      </ul>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id4">
+       Token
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#verify-token">
+       Verify Token
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#tampering-scenarios">
+         Tampering Scenarios
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-python-jose">
+     Using Python JOSE
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#generating-the-token">
+       Generating the Token
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#verify-the-token">
+       Verify the Token
+      </a>
+      <ul class="nav section-nav flex-column">
+       <li class="toc-h5 nav-item toc-entry">
+        <a class="reference internal nav-link" href="#id5">
+         Tampering Scenarios
+        </a>
+       </li>
+      </ul>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#native-vs-library">
+   Native vs Library
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#cross-compatibility">
+     Cross Compatibility
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#using-hmac">
+     Using HMAC
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encode-with-native-decode-with-library">
+       Encode with Native decode with Library
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encode-with-library-decode-with-native">
+       Encode with Library decode with Native
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id6">
+     Using RSA
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encode-with-cryptography-decode-with-python-jose">
+       Encode with Cryptography decode with Python JOSE
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#encode-with-python-jose-decode-with-cryptography">
+       Encode with Python JOSE decode with Cryptography
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hmac-time-benchmark">
+     HMAC Time Benchmark
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id7">
+       Generating the token
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#verifying-the-token">
+       Verifying the token
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#rsa-time-benchmark">
+     RSA Time Benchmark
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id8">
+       Generating the token
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#id9">
+       Verifying the token
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#caveats-other-jwt-features">
+     Caveats: Other JWT Features
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#not-valid-before-date">
+       Not Valid Before Date
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#expiration-date">
+     Expiration Date
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#comparison-conclusion">
+     Comparison Conclusion
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#example-user-authentication">
+   Example: User Authentication
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#auxiliary-functions">
+     Auxiliary Functions
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#sign-up">
+     Sign Up
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#log-in">
+     Log In
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#not-enough-priviliges">
+       Not Enough Priviliges
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#tampering-priviliges">
+       Tampering Priviliges
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#having-enough-priviliges">
+       Having Enough Priviliges
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#token-expired">
+       Token Expired
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#caveats">
+       Caveats
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#additional-resources">
+   Additional Resources
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="json-web-tokens-jwt">
-<h1>JSON Web Tokens (JWT)<a class="headerlink" href="#json-web-tokens-jwt" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="json-web-tokens-jwt">
+<h1>JSON Web Tokens (JWT)<a class="headerlink" href="#json-web-tokens-jwt" title="Permalink to this headline">#</a></h1>
 <p><strong>ToDo</strong>:</p>
 <ul class="simple">
 <li><p>Add diagram about how JWT is used - Similar to <a class="reference external" href="https://eldevsin.site/content/images/2020/05/JWT_flow.png">this</a></p></li>
@@ -693,52 +1198,52 @@
 <li><p>It allows a user to have all the system related information centralized in one token.</p></li>
 <li><p>It provides a standarized way to authenticate and communicate between applications.</p></li>
 </ul>
-<div class="section" id="hmac-implementation-using-native-python">
-<h2>HMAC Implementation using Native Python<a class="headerlink" href="#hmac-implementation-using-native-python" title="Permalink to this headline">¶</a></h2>
+<section id="hmac-implementation-using-native-python">
+<h2>HMAC Implementation using Native Python<a class="headerlink" href="#hmac-implementation-using-native-python" title="Permalink to this headline">#</a></h2>
 <p>There are libraries to work with JWT, however implementing everything from scratch allows for a better understanding of each component, specially when re-using familiar concepts. Only using the stadndard library is enough to generate HMACs JWTs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">secrets</span>
-<span class="kn">import</span> <span class="nn">base64</span>
-<span class="kn">import</span> <span class="nn">json</span>
-<span class="kn">import</span> <span class="nn">hmac</span>
-<span class="kn">import</span> <span class="nn">hashlib</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import secrets
+import base64
+import json
+import hmac
+import hashlib
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="data">
-<h3>Data<a class="headerlink" href="#data" title="Permalink to this headline">¶</a></h3>
+<section id="data">
+<h3>Data<a class="headerlink" href="#data" title="Permalink to this headline">#</a></h3>
 <p>Each JWT will have a header and a payload, in case of the HMAC based, a secret is also required.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>headers = {
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
 
-<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
-<span class="p">}</span>
+payload = {
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;iat&quot;: 1516239022
+}
 
-<span class="n">secret</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+secret = secrets.token_bytes(16)
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="headers">
-<h3>Headers<a class="headerlink" href="#headers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="headers">
+<h3>Headers<a class="headerlink" href="#headers" title="Permalink to this headline">#</a></h3>
 <p>Each of the parts should be encoded using base64 urlsafe</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">header_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="n">encoded_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">header_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>header_bytes = json.dumps(headers).encode(&quot;utf-8&quot;)
+encoded_header = base64.urlsafe_b64encode(header_bytes).decode(&quot;utf-8&quot;)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original Headers: </span><span class="si">{</span><span class="n">headers</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded Headers: </span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Original Headers: {headers}&quot;)
+print(f&quot; Encoded Headers: {encoded_header}&quot;)
 </pre></div>
 </div>
 </div>
@@ -749,17 +1254,17 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="payload">
-<h3>Payload<a class="headerlink" href="#payload" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="payload">
+<h3>Payload<a class="headerlink" href="#payload" title="Permalink to this headline">#</a></h3>
 <p>Each of the parts should be encoded using base64 urlsafe</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>payload_bytes = json.dumps(payload).encode(&quot;utf-8&quot;)
+encoded_payload = base64.urlsafe_b64encode(payload_bytes).decode(&quot;utf-8&quot;)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original Payload: </span><span class="si">{</span><span class="n">payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded Payload: </span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Original Payload: {payload}&quot;)
+print(f&quot; Encoded Payload: {encoded_payload}&quot;)
 </pre></div>
 </div>
 </div>
@@ -770,88 +1275,88 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="signature">
-<h3>Signature<a class="headerlink" href="#signature" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="signature">
+<h3>Signature<a class="headerlink" href="#signature" title="Permalink to this headline">#</a></h3>
 <p>Instead of passing the header and the payload object, the standard defines that the signature should be done on the encoded version of those parts. That means that the third part is a signature for the first two strings in the JWT.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>message = (encoded_header + &quot;.&quot; +  encoded_payload).encode(&quot;utf-8&quot;)
+signature_bytes = hmac.digest(secret, message, digest=hashlib.sha256)
 
-<span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+encoded_signature = base64.urlsafe_b64encode(signature_bytes).decode(&quot;utf-8&quot;)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original Signature: </span><span class="si">{</span><span class="n">signature_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded Signature: </span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Original Signature: {signature_bytes.hex()}&quot;)
+print(f&quot; Encoded Signature: {encoded_signature}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Signature: 68bd779113f0026326e0bf6463578932a324e9044665e1bff32492053ee43998
- Encoded Signature: aL13kRPwAmMm4L9kY1eJMqMk6QRGZeG_8ySSBT7kOZg=
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>Original Signature: 5ef52c3eb14dac3ea5fb6b0871bcbfc1b47fc5b65ad6ae639eb88557ba7463d7
+ Encoded Signature: XvUsPrFNrD6l-2sIcby_wbR_xbZa1q5jnriFV7p0Y9c=
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="token">
-<h3>Token<a class="headerlink" href="#token" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="token">
+<h3>Token<a class="headerlink" href="#token" title="Permalink to this headline">#</a></h3>
 <p>Once all components are ready, building the token is simply concanetating the parts with <code class="docutils literal notranslate"><span class="pre">.</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JWT: </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>token = f&quot;{encoded_header}.{encoded_payload}.{encoded_signature}&quot; 
+print(f&quot;JWT: {token}&quot;)
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9.aL13kRPwAmMm4L9kY1eJMqMk6QRGZeG_8ySSBT7kOZg=
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>JWT: eyJhbGciOiAiSFMyNTYiLCAidHlwIjogIkpXVCJ9.eyJzdWIiOiAiMTIzNDU2Nzg5MCIsICJuYW1lIjogIkpvaG4gRG9lIiwgImlhdCI6IDE1MTYyMzkwMjJ9.XvUsPrFNrD6l-2sIcby_wbR_xbZa1q5jnriFV7p0Y9c=
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="verify">
-<h3>Verify<a class="headerlink" href="#verify" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="verify">
+<h3>Verify<a class="headerlink" href="#verify" title="Permalink to this headline">#</a></h3>
 <p>Once the token is ready, it is crucial to have a way to verify the signature.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
-    <span class="n">encoded_header</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-    <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span> <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def verify(token, secret):
+    encoded_header, encoded_payload, encoded_signature = token.split(&quot;.&quot;)
+    message = (encoded_header + &quot;.&quot; + encoded_payload).encode(&quot;utf-8&quot;)
     
-    <span class="n">computed_signature</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+    computed_signature = hmac.digest(secret, message, digest=hashlib.sha256)
     
-    <span class="n">padding_correction</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="p">((</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">encoded_signature</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="n">received_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">encoded_signature</span> <span class="o">+</span> <span class="n">padding_correction</span><span class="p">)</span>
+    padding_correction = &quot;=&quot; * ((4 - len(encoded_signature) % 4) % 4)
+    received_signature = base64.urlsafe_b64decode(encoded_signature + padding_correction)
 
-    <span class="k">if</span> <span class="n">hmac</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">computed_signature</span><span class="p">,</span> <span class="n">received_signature</span><span class="p">):</span>
-        <span class="k">return</span> <span class="s2">&quot;The token is Valid&quot;</span>
-    <span class="k">return</span> <span class="s2">&quot;The token is NOT Valid&quot;</span>
+    if hmac.compare_digest(computed_signature, received_signature):
+        return &quot;The token is Valid&quot;
+    return &quot;The token is NOT Valid&quot;
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="changing-headers">
-<h3>Changing Headers<a class="headerlink" href="#changing-headers" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="changing-headers">
+<h3>Changing Headers<a class="headerlink" href="#changing-headers" title="Permalink to this headline">#</a></h3>
 <p>If any of the headers are changed, or a new header is added, the verification will fail.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tampered_headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;extra&quot;</span><span class="p">:</span> <span class="mi">1</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tampered_headers = {
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;,
+  &quot;extra&quot;: 1
+}
 
-<span class="n">tampered_headers_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">tampered_headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="n">encoded_tampered_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">tampered_headers_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+tampered_headers_bytes = json.dumps(tampered_headers).encode(&quot;utf-8&quot;)
+encoded_tampered_header = base64.urlsafe_b64encode(tampered_headers_bytes).decode(&quot;utf-8&quot;)
 
-<span class="n">_</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_tampered_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+_, encoded_payload, encoded_signature = token.split(&quot;.&quot;)
+tampered_token = f&quot;{encoded_tampered_header}.{encoded_payload}.{encoded_signature}&quot; 
 
-<span class="n">verification</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+verification = verify(tampered_token, secret)
+print(verification)
 </pre></div>
 </div>
 </div>
@@ -861,26 +1366,26 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="changing-payload">
-<h3>Changing Payload<a class="headerlink" href="#changing-payload" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="changing-payload">
+<h3>Changing Payload<a class="headerlink" href="#changing-payload" title="Permalink to this headline">#</a></h3>
 <p>The same applies to the payload, this is consistent with what was shown in the <a class="reference internal" href="07_Asymmetric_Encryption.html"><span class="doc std std-doc">Asymmetric Chapter</span></a>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">tampered_payload</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;Alice&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>tampered_payload = {
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;Alice&quot;,
+  &quot;iat&quot;: 1516239022
+}
 
-<span class="n">tampered_payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">tampered_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="n">encoded_tampered_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">tampered_payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+tampered_payload_bytes = json.dumps(tampered_payload).encode(&quot;utf-8&quot;)
+encoded_tampered_payload = base64.urlsafe_b64encode(tampered_payload_bytes).decode(&quot;utf-8&quot;)
 
-<span class="n">encoded_header</span><span class="p">,</span> <span class="n">_</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_tampered_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+encoded_header, _, encoded_signature = token.split(&quot;.&quot;)
+tampered_token = f&quot;{encoded_header}.{encoded_tampered_payload}.{encoded_signature}&quot; 
 
-<span class="n">verification</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+verification = verify(tampered_token, secret)
+print(verification)
 </pre></div>
 </div>
 </div>
@@ -890,24 +1395,24 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="changing-signature">
-<h3>Changing Signature<a class="headerlink" href="#changing-signature" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="changing-signature">
+<h3>Changing Signature<a class="headerlink" href="#changing-signature" title="Permalink to this headline">#</a></h3>
 <p>As seen in the <a class="reference internal" href="05_HMAC.html"><span class="doc std std-doc">HMAC chapter</span></a> the only way to generate a valid signature that will be verifiable by two parties is when both have the same secret. Generating a new signature with a different secret will not work and the token will no be valid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">guess_secret</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;admin&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>guess_secret = b&quot;admin&quot;
 
-<span class="n">encoded_header</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-<span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+encoded_header, encoded_payload, _ = token.split(&quot;.&quot;)
+message = (encoded_header + &quot;.&quot; +  encoded_payload).encode(&quot;utf-8&quot;)
 
-<span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">guess_secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
-<span class="n">encoded_tampered_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+signature_bytes = hmac.digest(guess_secret, message, digest=hashlib.sha256)
+encoded_tampered_signature = base64.urlsafe_b64encode(signature_bytes).decode(&quot;utf-8&quot;)
 
-<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_tampered_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+tampered_token = f&quot;{encoded_header}.{encoded_payload}.{encoded_tampered_signature}&quot; 
 
-<span class="n">verification</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+verification = verify(tampered_token, secret)
+print(verification)
 </pre></div>
 </div>
 </div>
@@ -917,26 +1422,26 @@
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="changing-two-parts">
-<h3>Changing Two Parts<a class="headerlink" href="#changing-two-parts" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="changing-two-parts">
+<h3>Changing Two Parts<a class="headerlink" href="#changing-two-parts" title="Permalink to this headline">#</a></h3>
 <p>Changing a single part is enough for the token to be invalid, having changed two or more would have thrown the same errors.</p>
 <p>The secret the verfier will use to verify the token is extremely likely (yet not impossible) to differ from the one a potential attacker might use. The only possibility to alter the JWT is by having the correct secret beforehand.</p>
-</div>
-<div class="section" id="using-original-token-parts">
-<h3>Using Original Token Parts<a class="headerlink" href="#using-original-token-parts" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="using-original-token-parts">
+<h3>Using Original Token Parts<a class="headerlink" href="#using-original-token-parts" title="Permalink to this headline">#</a></h3>
 <p>When the original header, payload and signature are intact, the signature is verified and the token can be trusted.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verification</span> <span class="o">=</span> <span class="n">verify</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>verification = verify(token, secret)
+print(verification)
 
-<span class="n">_</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">_</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
-<span class="n">decoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">encoded_payload</span><span class="p">)</span>
-<span class="n">decoded_payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">decoded_payload</span><span class="p">)</span>
+_, encoded_payload, _ = token.split(&quot;.&quot;)
+decoded_payload = base64.urlsafe_b64decode(encoded_payload)
+decoded_payload = json.loads(decoded_payload)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decoded Payload: </span><span class="si">{</span><span class="n">decoded_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Payload Type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">decoded_payload</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Decoded Payload: {decoded_payload}&quot;)
+print(f&quot;   Payload Type: {type(decoded_payload)}&quot;)
 </pre></div>
 </div>
 </div>
@@ -948,10 +1453,10 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="hmac-implementation-using-a-library">
-<h2>HMAC Implementation using a Library<a class="headerlink" href="#hmac-implementation-using-a-library" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="hmac-implementation-using-a-library">
+<h2>HMAC Implementation using a Library<a class="headerlink" href="#hmac-implementation-using-a-library" title="Permalink to this headline">#</a></h2>
 <p>The <a class="reference external" href="https://github.com/mpdavis/python-jose">Python JOSE</a> library has support for many JWT algorithms, including HMAC and RSA versions. It also handle many edge cases that would be otherwise complicated to handle with a from scratch implementation.</p>
 <p>It is possible to use it with different backends:</p>
 <ul class="simple">
@@ -966,14 +1471,14 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jose</span> <span class="kn">import</span> <span class="n">jwt</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from jose import jwt
 </pre></div>
 </div>
 </div>
 <div class="cell_output docutils container">
 <div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
 <span class="ne">ModuleNotFoundError</span><span class="g g-Whitespace">                       </span>Traceback (most recent call last)
-<span class="o">/</span><span class="n">tmp</span><span class="o">/</span><span class="n">ipykernel_2254</span><span class="o">/</span><span class="mf">492425300.</span><span class="n">py</span> <span class="ow">in</span> <span class="o">&lt;</span><span class="n">module</span><span class="o">&gt;</span>
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">12</span><span class="p">],</span> <span class="n">line</span> <span class="mi">1</span>
 <span class="ne">----&gt; </span><span class="mi">1</span> <span class="kn">from</span> <span class="nn">jose</span> <span class="kn">import</span> <span class="n">jwt</span>
 
 <span class="ne">ModuleNotFoundError</span>: No module named &#39;jose&#39;
@@ -981,12 +1486,12 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-<div class="section" id="supported-algorithms">
-<h3>Supported Algorithms<a class="headerlink" href="#supported-algorithms" title="Permalink to this headline">¶</a></h3>
+<section id="supported-algorithms">
+<h3>Supported Algorithms<a class="headerlink" href="#supported-algorithms" title="Permalink to this headline">#</a></h3>
 <p>This is the list of all supported algorithms in Python JOSE</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="s2">&quot;, &quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="n">jwt</span><span class="o">.</span><span class="n">ALGORITHMS</span><span class="o">.</span><span class="n">SUPPORTED</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>&quot;, &quot;.join(jwt.ALGORITHMS.SUPPORTED)
 </pre></div>
 </div>
 </div>
@@ -996,18 +1501,18 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id1">
-<h3>Data<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id1">
+<h3>Data<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
 <p>The same data is used as in the native implementation.</p>
-</div>
-<div class="section" id="generating-token">
-<h3>Generating Token<a class="headerlink" href="#generating-token" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="generating-token">
+<h3>Generating Token<a class="headerlink" href="#generating-token" title="Permalink to this headline">#</a></h3>
 <p>Python JOSE exposes a function <code class="docutils literal notranslate"><span class="pre">encode</span></code> that base64 encodes the headers, the payload and generated an appropiate signature with a given secret. This is much more compact than the native approach.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JWT: </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>token = jwt.encode(claims=payload, key=secret, headers=headers, algorithm=&quot;HS256&quot;)
+print(f&quot;JWT: {token}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1017,39 +1522,39 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="verifing-token">
-<h3>Verifing Token<a class="headerlink" href="#verifing-token" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="verifing-token">
+<h3>Verifing Token<a class="headerlink" href="#verifing-token" title="Permalink to this headline">#</a></h3>
 <p>In this case the method <code class="docutils literal notranslate"><span class="pre">decode</span></code> is used, all the verification logic is handle seemlessly.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">jose.exceptions</span> <span class="kn">import</span> <span class="n">JWTError</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from jose.exceptions import JWTError
 
-<span class="k">def</span> <span class="nf">verify_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;HS256&quot;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="s2">&quot;The token is Valid&quot;</span>
-    <span class="k">except</span> <span class="n">JWTError</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;The token is NOT valid&quot;</span>
+def verify_jose(token, secret):
+    try:
+        jwt.decode(token, key=secret, algorithms=[&quot;HS256&quot;])
+        return &quot;The token is Valid&quot;
+    except JWTError:
+        return &quot;The token is NOT valid&quot;
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="trying-to-tamper-the-token">
-<h4>Trying to tamper the token<a class="headerlink" href="#trying-to-tamper-the-token" title="Permalink to this headline">¶</a></h4>
+<section id="trying-to-tamper-the-token">
+<h4>Trying to tamper the token<a class="headerlink" href="#trying-to-tamper-the-token" title="Permalink to this headline">#</a></h4>
 <p>Since only the implementation changed, the same considerations apply as above regarding changing the headers, the payload or the signature.</p>
-</div>
-<div class="section" id="id2">
-<h4>Using Original Token Parts<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id2">
+<h4>Using Original Token Parts<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verification</span> <span class="o">=</span> <span class="n">verify_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>verification = verify_jose(token, secret)
+print(verification)
 
-<span class="n">decoded_payload</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;HS256&quot;</span><span class="p">])</span>
+decoded_payload = jwt.decode(token, key=secret, algorithms=[&quot;HS256&quot;])
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decoded Payload: </span><span class="si">{</span><span class="n">decoded_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;   Payload Type: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">decoded_payload</span><span class="p">)</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Decoded Payload: {decoded_payload}&quot;)
+print(f&quot;   Payload Type: {type(decoded_payload)}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1061,100 +1566,100 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="using-rsa">
-<h2>Using RSA<a class="headerlink" href="#using-rsa" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="using-rsa">
+<h2>Using RSA<a class="headerlink" href="#using-rsa" title="Permalink to this headline">#</a></h2>
 <p>Since Python does not have native support for Asymmetric encryption only library based solutions will be used. One using Cryptography alone and the other using Python JOSE.</p>
-<div class="section" id="common-data">
-<h3>Common Data<a class="headerlink" href="#common-data" title="Permalink to this headline">¶</a></h3>
+<section id="common-data">
+<h3>Common Data<a class="headerlink" href="#common-data" title="Permalink to this headline">#</a></h3>
 <p>Both Cryptography based and Python JOSE Based will use the same headers, payloads and Key Pair to compare the resulting JWTs.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">rsa</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from cryptography.hazmat.primitives.asymmetric import rsa
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">generate_key_pair</span><span class="p">():</span>
-    <span class="n">key_size</span> <span class="o">=</span> <span class="mi">2048</span>  <span class="c1"># Should be at least 2048</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def generate_key_pair():
+    key_size = 2048  # Should be at least 2048
 
-    <span class="n">private_key</span> <span class="o">=</span> <span class="n">rsa</span><span class="o">.</span><span class="n">generate_private_key</span><span class="p">(</span>
-        <span class="n">public_exponent</span><span class="o">=</span><span class="mi">65537</span><span class="p">,</span>  <span class="c1"># Do not change</span>
-        <span class="n">key_size</span><span class="o">=</span><span class="n">key_size</span><span class="p">,</span>
-    <span class="p">)</span>
+    private_key = rsa.generate_private_key(
+        public_exponent=65537,  # Do not change
+        key_size=key_size,
+    )
 
-    <span class="n">public_key</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">public_key</span><span class="p">()</span>
-    <span class="k">return</span> <span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span>
+    public_key = private_key.public_key()
+    return private_key, public_key
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;RS256&quot;</span><span class="p">,</span>  <span class="c1"># Changed to use RSA</span>
-  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>headers = {
+  &quot;alg&quot;: &quot;RS256&quot;,  # Changed to use RSA
+  &quot;typ&quot;: &quot;JWT&quot;
+}
 
-<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
-<span class="p">}</span>
+payload = {
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;iat&quot;: 1516239022
+}
 
-<span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span> <span class="o">=</span> <span class="n">generate_key_pair</span><span class="p">()</span>
+private_key, public_key = generate_key_pair()
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="using-cryptography-alone">
-<h3>Using Cryptography alone<a class="headerlink" href="#using-cryptography-alone" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="using-cryptography-alone">
+<h3>Using Cryptography alone<a class="headerlink" href="#using-cryptography-alone" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives</span> <span class="kn">import</span> <span class="n">serialization</span><span class="p">,</span> <span class="n">hashes</span>
-<span class="kn">from</span> <span class="nn">cryptography.hazmat.primitives.asymmetric</span> <span class="kn">import</span> <span class="n">padding</span>
-<span class="kn">from</span> <span class="nn">cryptography.exceptions</span> <span class="kn">import</span> <span class="n">InvalidSignature</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.hazmat.primitives.asymmetric import padding
+from cryptography.exceptions import InvalidSignature
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id3">
-<h4>Signature<a class="headerlink" href="#id3" title="Permalink to this headline">¶</a></h4>
-<div class="section" id="encoding-headers-and-payload">
-<h5>Encoding Headers and Payload<a class="headerlink" href="#encoding-headers-and-payload" title="Permalink to this headline">¶</a></h5>
+<section id="id3">
+<h4>Signature<a class="headerlink" href="#id3" title="Permalink to this headline">#</a></h4>
+<section id="encoding-headers-and-payload">
+<h5>Encoding Headers and Payload<a class="headerlink" href="#encoding-headers-and-payload" title="Permalink to this headline">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">header_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="n">encoded_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">header_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>header_bytes = json.dumps(headers).encode(&quot;utf-8&quot;)
+encoded_header = base64.urlsafe_b64encode(header_bytes).decode(&quot;utf-8&quot;)
 
-<span class="n">payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+payload_bytes = json.dumps(payload).encode(&quot;utf-8&quot;)
+encoded_payload = base64.urlsafe_b64encode(payload_bytes).decode(&quot;utf-8&quot;)
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="signing">
-<h5>Signing<a class="headerlink" href="#signing" title="Permalink to this headline">¶</a></h5>
+</section>
+<section id="signing">
+<h5>Signing<a class="headerlink" href="#signing" title="Permalink to this headline">#</a></h5>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>message = (encoded_header + &quot;.&quot; +  encoded_payload).encode(&quot;utf-8&quot;)
 
-<span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span>
-                      <span class="n">message</span><span class="p">,</span>
-                      <span class="n">padding</span><span class="o">.</span><span class="n">PKCS1v15</span><span class="p">(),</span>
-                      <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
-                  <span class="p">)</span>
+signature_bytes = private_key.sign(
+                      message,
+                      padding.PKCS1v15(),
+                      hashes.SHA256()
+                  )
 
-<span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+encoded_signature = base64.urlsafe_b64encode(signature_bytes).decode(&quot;utf-8&quot;)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Original Signature: </span><span class="si">{</span><span class="n">signature_bytes</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Encoded Signature: </span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Original Signature: {signature_bytes.hex()}&quot;)
+print(f&quot; Encoded Signature: {encoded_signature}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1165,14 +1670,14 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="id4">
-<h4>Token<a class="headerlink" href="#id4" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="id4">
+<h4>Token<a class="headerlink" href="#id4" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JWT: </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>token = f&quot;{encoded_header}.{encoded_payload}.{encoded_signature}&quot; 
+print(f&quot;JWT: {token}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1182,36 +1687,36 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="verify-token">
-<h4>Verify Token<a class="headerlink" href="#verify-token" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="verify-token">
+<h4>Verify Token<a class="headerlink" href="#verify-token" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify_rsa_cryptography</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key</span><span class="p">):</span>
-    <span class="n">encoded_header</span><span class="p">,</span> <span class="n">encoded_payload</span><span class="p">,</span> <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def verify_rsa_cryptography(token, public_key):
+    encoded_header, encoded_payload, encoded_signature = token.split(&quot;.&quot;)
     
-    <span class="n">padding_correction</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="p">((</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">encoded_signature</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
-    <span class="n">received_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">encoded_signature</span> <span class="o">+</span> <span class="n">padding_correction</span><span class="p">)</span>
+    padding_correction = &quot;=&quot; * ((4 - len(encoded_signature) % 4) % 4)
+    received_signature = base64.urlsafe_b64decode(encoded_signature + padding_correction)
     
-    <span class="n">received_message</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    received_message = f&quot;{encoded_header}.{encoded_payload}&quot;.encode(&quot;utf-8&quot;)
     
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">public_key</span><span class="o">.</span><span class="n">verify</span><span class="p">(</span>
-            <span class="n">received_signature</span><span class="p">,</span>
-            <span class="n">received_message</span><span class="p">,</span>
-            <span class="n">padding</span><span class="o">.</span><span class="n">PKCS1v15</span><span class="p">(),</span>
-            <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">()</span>
-        <span class="p">)</span>
-        <span class="k">return</span> <span class="s2">&quot;The token is Valid&quot;</span>
-    <span class="k">except</span> <span class="n">InvalidSignature</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;The token is NOT Valid&quot;</span>   
+    try:
+        public_key.verify(
+            received_signature,
+            received_message,
+            padding.PKCS1v15(),
+            hashes.SHA256()
+        )
+        return &quot;The token is Valid&quot;
+    except InvalidSignature:
+        return &quot;The token is NOT Valid&quot;   
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verify_rsa_cryptography</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>verify_rsa_cryptography(token, public_key)
 </pre></div>
 </div>
 </div>
@@ -1221,26 +1726,26 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-<div class="section" id="tampering-scenarios">
-<h5>Tampering Scenarios<a class="headerlink" href="#tampering-scenarios" title="Permalink to this headline">¶</a></h5>
+<section id="tampering-scenarios">
+<h5>Tampering Scenarios<a class="headerlink" href="#tampering-scenarios" title="Permalink to this headline">#</a></h5>
 <p>The same tampering experiments as above could be tested: changing the headers, changing the payload or changing the signature. Since the code would be exactly the same, those cases are not shown for the RSA based JWT.</p>
-</div>
-</div>
-</div>
-<div class="section" id="using-python-jose">
-<h3>Using Python JOSE<a class="headerlink" href="#using-python-jose" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="generating-the-token">
-<h4>Generating the Token<a class="headerlink" href="#generating-the-token" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+</section>
+<section id="using-python-jose">
+<h3>Using Python JOSE<a class="headerlink" href="#using-python-jose" title="Permalink to this headline">#</a></h3>
+<section id="generating-the-token">
+<h4>Generating the Token<a class="headerlink" href="#generating-the-token" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">private_pem_bytes</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">private_bytes</span><span class="p">(</span>
-   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
-   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PrivateFormat</span><span class="o">.</span><span class="n">PKCS8</span><span class="p">,</span>
-   <span class="n">encryption_algorithm</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">NoEncryption</span><span class="p">()</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>private_pem_bytes = private_key.private_bytes(
+   encoding=serialization.Encoding.PEM,
+   format=serialization.PrivateFormat.PKCS8,
+   encryption_algorithm=serialization.NoEncryption()
+)
 
-<span class="n">token</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">private_pem_bytes</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;RS256&#39;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;JWT: </span><span class="si">{</span><span class="n">token</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+token = jwt.encode(claims=payload, key=private_pem_bytes, headers=headers, algorithm=&#39;RS256&#39;)
+print(f&quot;JWT: {token}&quot;)
 </pre></div>
 </div>
 </div>
@@ -1250,30 +1755,30 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="verify-the-token">
-<h4>Verify the Token<a class="headerlink" href="#verify-the-token" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="verify-the-token">
+<h4>Verify the Token<a class="headerlink" href="#verify-the-token" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify_rsa_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key_bytes</span><span class="p">):</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">public_key_bytes</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s1">&#39;RS256&#39;</span><span class="p">])</span>
-        <span class="k">return</span> <span class="s2">&quot;The token is Valid&quot;</span>
-    <span class="k">except</span> <span class="n">JWTError</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;The token is NOT Valid&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def verify_rsa_jose(token, public_key_bytes):
+    try:
+        jwt.decode(token, key=public_key_bytes, algorithms=[&#39;RS256&#39;])
+        return &quot;The token is Valid&quot;
+    except JWTError:
+        return &quot;The token is NOT Valid&quot;
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">public_key</span><span class="o">.</span><span class="n">public_bytes</span><span class="p">(</span>
-   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
-   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PublicFormat</span><span class="o">.</span><span class="n">SubjectPublicKeyInfo</span><span class="p">,</span>
-<span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>public_pem_bytes = public_key.public_bytes(
+   encoding=serialization.Encoding.PEM,
+   format=serialization.PublicFormat.SubjectPublicKeyInfo,
+)
 
-<span class="n">verification</span> <span class="o">=</span> <span class="n">verify_rsa_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_pem_bytes</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="n">verification</span><span class="p">)</span>
+verification = verify_rsa_jose(token, public_pem_bytes)
+print(verification)
 </pre></div>
 </div>
 </div>
@@ -1283,71 +1788,71 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-<div class="section" id="id5">
-<h5>Tampering Scenarios<a class="headerlink" href="#id5" title="Permalink to this headline">¶</a></h5>
+<section id="id5">
+<h5>Tampering Scenarios<a class="headerlink" href="#id5" title="Permalink to this headline">#</a></h5>
 <p>The same tampering experiments as above could be tested: changing the headers, changing the payload or changing the signature. Since the code would be exactly the same, those cases are not shown for the RSA based JWT.</p>
-</div>
-</div>
-</div>
-</div>
-<div class="section" id="native-vs-library">
-<h2>Native vs Library<a class="headerlink" href="#native-vs-library" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+</section>
+<section id="native-vs-library">
+<h2>Native vs Library<a class="headerlink" href="#native-vs-library" title="Permalink to this headline">#</a></h2>
 <p>It is <strong>NOT</strong> recommended to use any native implementation for anything security related. Instead, always used time proved, well tested libraries.</p>
 <p>This is because there might be new vulnerabilities discovered and the library will likely get a patch or an update quick enough, whereas in the case of the native implementation, it is hard to update already-running-in-production solutions.</p>
 <p>That being said and just for completeness, a time benchmark is shown below.</p>
-<div class="section" id="cross-compatibility">
-<h3>Cross Compatibility<a class="headerlink" href="#cross-compatibility" title="Permalink to this headline">¶</a></h3>
-</div>
-<div class="section" id="using-hmac">
-<h3>Using HMAC<a class="headerlink" href="#using-hmac" title="Permalink to this headline">¶</a></h3>
+<section id="cross-compatibility">
+<h3>Cross Compatibility<a class="headerlink" href="#cross-compatibility" title="Permalink to this headline">#</a></h3>
+</section>
+<section id="using-hmac">
+<h3>Using HMAC<a class="headerlink" href="#using-hmac" title="Permalink to this headline">#</a></h3>
 <p>It is possible to encode with the native implementation and decode with the library and the other way around, that is because the JWT is a standard.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_token_native</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
-    <span class="n">header_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="n">encoded_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">header_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def create_token_native(headers, payload, secret):
+    header_bytes = json.dumps(headers).encode(&quot;utf-8&quot;)
+    encoded_header = base64.urlsafe_b64encode(header_bytes).decode(&quot;utf-8&quot;)
     
-    <span class="n">payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    payload_bytes = json.dumps(payload).encode(&quot;utf-8&quot;)
+    encoded_payload = base64.urlsafe_b64encode(payload_bytes).decode(&quot;utf-8&quot;)
     
-    <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">hmac</span><span class="o">.</span><span class="n">digest</span><span class="p">(</span><span class="n">secret</span><span class="p">,</span> <span class="n">message</span><span class="p">,</span> <span class="n">digest</span><span class="o">=</span><span class="n">hashlib</span><span class="o">.</span><span class="n">sha256</span><span class="p">)</span>
+    message = (encoded_header + &quot;.&quot; +  encoded_payload).encode(&quot;utf-8&quot;)
+    signature_bytes = hmac.digest(secret, message, digest=hashlib.sha256)
 
-    <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    encoded_signature = base64.urlsafe_b64encode(signature_bytes).decode(&quot;utf-8&quot;)
     
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span>
+    return f&quot;{encoded_header}.{encoded_payload}.{encoded_signature}&quot;
 
 
-<span class="k">def</span> <span class="nf">create_token_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
+def create_token_jose(headers, payload, secret):
+    return jwt.encode(claims=payload, key=secret, headers=headers, algorithm=&quot;HS256&quot;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>headers = {
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
 
-<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
-<span class="p">}</span>
+payload = {
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;iat&quot;: 1516239022
+}
 
-<span class="n">secret</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+secret = secrets.token_bytes(16)
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="encode-with-native-decode-with-library">
-<h4>Encode with Native decode with Library<a class="headerlink" href="#encode-with-native-decode-with-library" title="Permalink to this headline">¶</a></h4>
+<section id="encode-with-native-decode-with-library">
+<h4>Encode with Native decode with Library<a class="headerlink" href="#encode-with-native-decode-with-library" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_native</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
-<span class="n">verify_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>token = create_token_native(headers, payload, secret)
+verify_jose(token, secret)
 </pre></div>
 </div>
 </div>
@@ -1357,13 +1862,13 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="encode-with-library-decode-with-native">
-<h4>Encode with Library decode with Native<a class="headerlink" href="#encode-with-library-decode-with-native" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="encode-with-library-decode-with-native">
+<h4>Encode with Library decode with Native<a class="headerlink" href="#encode-with-library-decode-with-native" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
-<span class="n">verify</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>token = create_token_jose(headers, payload, secret)
+verify(token, secret)
 </pre></div>
 </div>
 </div>
@@ -1373,70 +1878,70 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="id6">
-<h3>Using RSA<a class="headerlink" href="#id6" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="id6">
+<h3>Using RSA<a class="headerlink" href="#id6" title="Permalink to this headline">#</a></h3>
 <p>When dealing with RSA, there is also cross compatibility between Cryptography and Python JOSE. This is non-trivial since Python JOSE does not use Cryptography as backend for RSA.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">create_token_rsa_cryptography</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_key</span><span class="p">):</span>
-    <span class="n">header_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">headers</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="n">encoded_header</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">header_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def create_token_rsa_cryptography(headers, payload, private_key):
+    header_bytes = json.dumps(headers).encode(&quot;utf-8&quot;)
+    encoded_header = base64.urlsafe_b64encode(header_bytes).decode(&quot;utf-8&quot;)
 
-    <span class="n">payload_bytes</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="n">encoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">payload_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    payload_bytes = json.dumps(payload).encode(&quot;utf-8&quot;)
+    encoded_payload = base64.urlsafe_b64encode(payload_bytes).decode(&quot;utf-8&quot;)
 
-    <span class="n">message</span> <span class="o">=</span> <span class="p">(</span><span class="n">encoded_header</span> <span class="o">+</span> <span class="s2">&quot;.&quot;</span> <span class="o">+</span>  <span class="n">encoded_payload</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    message = (encoded_header + &quot;.&quot; +  encoded_payload).encode(&quot;utf-8&quot;)
 
-    <span class="n">signature_bytes</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">sign</span><span class="p">(</span><span class="n">message</span><span class="p">,</span> <span class="n">padding</span><span class="o">.</span><span class="n">PKCS1v15</span><span class="p">(),</span> <span class="n">hashes</span><span class="o">.</span><span class="n">SHA256</span><span class="p">())</span>
+    signature_bytes = private_key.sign(message, padding.PKCS1v15(), hashes.SHA256())
 
-    <span class="n">encoded_signature</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">signature_bytes</span><span class="p">)</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
+    encoded_signature = base64.urlsafe_b64encode(signature_bytes).decode(&quot;utf-8&quot;)
 
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">encoded_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_payload</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">encoded_signature</span><span class="si">}</span><span class="s2">&quot;</span> 
+    return f&quot;{encoded_header}.{encoded_payload}.{encoded_signature}&quot; 
 
 
-<span class="k">def</span> <span class="nf">create_token_rsa_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_pem_bytes</span><span class="p">):</span>
-    <span class="k">return</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">private_pem_bytes</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s1">&#39;RS256&#39;</span><span class="p">)</span>
+def create_token_rsa_jose(headers, payload, private_pem_bytes):
+    return jwt.encode(claims=payload, key=private_pem_bytes, headers=headers, algorithm=&#39;RS256&#39;)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;RS256&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>headers = {
+  &quot;alg&quot;: &quot;RS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
 
-<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;sub&quot;</span><span class="p">:</span> <span class="s2">&quot;1234567890&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="mi">1516239022</span>
-<span class="p">}</span>
+payload = {
+  &quot;sub&quot;: &quot;1234567890&quot;,
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;iat&quot;: 1516239022
+}
 
-<span class="n">private_key</span><span class="p">,</span> <span class="n">public_key</span> <span class="o">=</span> <span class="n">generate_key_pair</span><span class="p">()</span>
+private_key, public_key = generate_key_pair()
 
-<span class="n">private_pem_bytes</span> <span class="o">=</span> <span class="n">private_key</span><span class="o">.</span><span class="n">private_bytes</span><span class="p">(</span>
-   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
-   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PrivateFormat</span><span class="o">.</span><span class="n">PKCS8</span><span class="p">,</span>
-   <span class="n">encryption_algorithm</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">NoEncryption</span><span class="p">()</span>
-<span class="p">)</span>
+private_pem_bytes = private_key.private_bytes(
+   encoding=serialization.Encoding.PEM,
+   format=serialization.PrivateFormat.PKCS8,
+   encryption_algorithm=serialization.NoEncryption()
+)
 
-<span class="n">public_pem_bytes</span> <span class="o">=</span> <span class="n">public_key</span><span class="o">.</span><span class="n">public_bytes</span><span class="p">(</span>
-   <span class="n">encoding</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">Encoding</span><span class="o">.</span><span class="n">PEM</span><span class="p">,</span>
-   <span class="nb">format</span><span class="o">=</span><span class="n">serialization</span><span class="o">.</span><span class="n">PublicFormat</span><span class="o">.</span><span class="n">SubjectPublicKeyInfo</span><span class="p">,</span>
-<span class="p">)</span>
+public_pem_bytes = public_key.public_bytes(
+   encoding=serialization.Encoding.PEM,
+   format=serialization.PublicFormat.SubjectPublicKeyInfo,
+)
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="encode-with-cryptography-decode-with-python-jose">
-<h4>Encode with Cryptography decode with Python JOSE<a class="headerlink" href="#encode-with-cryptography-decode-with-python-jose" title="Permalink to this headline">¶</a></h4>
+<section id="encode-with-cryptography-decode-with-python-jose">
+<h4>Encode with Cryptography decode with Python JOSE<a class="headerlink" href="#encode-with-cryptography-decode-with-python-jose" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_rsa_cryptography</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_key</span><span class="p">)</span>
-<span class="n">verify_rsa_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_pem_bytes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>token = create_token_rsa_cryptography(headers, payload, private_key)
+verify_rsa_jose(token, public_pem_bytes)
 </pre></div>
 </div>
 </div>
@@ -1446,13 +1951,13 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="encode-with-python-jose-decode-with-cryptography">
-<h4>Encode with Python JOSE decode with Cryptography<a class="headerlink" href="#encode-with-python-jose-decode-with-cryptography" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="encode-with-python-jose-decode-with-cryptography">
+<h4>Encode with Python JOSE decode with Cryptography<a class="headerlink" href="#encode-with-python-jose-decode-with-cryptography" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_rsa_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_pem_bytes</span><span class="p">)</span>
-<span class="n">verify_rsa_cryptography</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">public_key</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>token = create_token_rsa_jose(headers, payload, private_pem_bytes)
+verify_rsa_cryptography(token, public_key)
 </pre></div>
 </div>
 </div>
@@ -1462,16 +1967,16 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="hmac-time-benchmark">
-<h3>HMAC Time Benchmark<a class="headerlink" href="#hmac-time-benchmark" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id7">
-<h4>Generating the token<a class="headerlink" href="#id7" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="hmac-time-benchmark">
+<h3>HMAC Time Benchmark<a class="headerlink" href="#hmac-time-benchmark" title="Permalink to this headline">#</a></h3>
+<section id="id7">
+<h4>Generating the token<a class="headerlink" href="#id7" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Native:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> create_token_native(headers, payload, secret)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Native:&quot;, end=&quot; &quot;)
+%timeit create_token_native(headers, payload, secret)
 </pre></div>
 </div>
 </div>
@@ -1483,8 +1988,8 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> create_token_jose(headers, payload, secret)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;  Jose:&quot;, end=&quot; &quot;)
+%timeit create_token_jose(headers, payload, secret)
 </pre></div>
 </div>
 </div>
@@ -1494,20 +1999,20 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="verifying-the-token">
-<h4>Verifying the token<a class="headerlink" href="#verifying-the-token" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="verifying-the-token">
+<h4>Verifying the token<a class="headerlink" href="#verifying-the-token" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>token = create_token_jose(headers, payload, secret)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Native:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> verify(token, secret)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Native:&quot;, end=&quot; &quot;)
+%timeit verify(token, secret)
 </pre></div>
 </div>
 </div>
@@ -1519,8 +2024,8 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> verify_jose(token, secret)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;  Jose:&quot;, end=&quot; &quot;)
+%timeit verify_jose(token, secret)
 </pre></div>
 </div>
 </div>
@@ -1530,16 +2035,16 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="rsa-time-benchmark">
-<h3>RSA Time Benchmark<a class="headerlink" href="#rsa-time-benchmark" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="id8">
-<h4>Generating the token<a class="headerlink" href="#id8" title="Permalink to this headline">¶</a></h4>
+</section>
+</section>
+<section id="rsa-time-benchmark">
+<h3>RSA Time Benchmark<a class="headerlink" href="#rsa-time-benchmark" title="Permalink to this headline">#</a></h3>
+<section id="id8">
+<h4>Generating the token<a class="headerlink" href="#id8" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cryptography:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> create_token_rsa_cryptography(headers, payload, private_key)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Cryptography:&quot;, end=&quot; &quot;)
+%timeit create_token_rsa_cryptography(headers, payload, private_key)
 </pre></div>
 </div>
 </div>
@@ -1551,8 +2056,8 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Python Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> create_token_rsa_jose(headers, payload, private_pem_bytes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot; Python Jose:&quot;, end=&quot; &quot;)
+%timeit create_token_rsa_jose(headers, payload, private_pem_bytes)
 </pre></div>
 </div>
 </div>
@@ -1562,20 +2067,20 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id9">
-<h4>Verifying the token<a class="headerlink" href="#id9" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="id9">
+<h4>Verifying the token<a class="headerlink" href="#id9" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">token</span> <span class="o">=</span> <span class="n">create_token_rsa_jose</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">private_pem_bytes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>token = create_token_rsa_jose(headers, payload, private_pem_bytes)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Cryptography:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> verify_rsa_cryptography(token, public_key)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;Cryptography:&quot;, end=&quot; &quot;)
+%timeit verify_rsa_cryptography(token, public_key)
 </pre></div>
 </div>
 </div>
@@ -1587,8 +2092,8 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot; Python Jose:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> verify_rsa_jose(token, public_pem_bytes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot; Python Jose:&quot;, end=&quot; &quot;)
+%timeit verify_rsa_jose(token, public_pem_bytes)
 </pre></div>
 </div>
 </div>
@@ -1598,47 +2103,47 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="caveats-other-jwt-features">
-<h3>Caveats: Other JWT Features<a class="headerlink" href="#caveats-other-jwt-features" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="caveats-other-jwt-features">
+<h3>Caveats: Other JWT Features<a class="headerlink" href="#caveats-other-jwt-features" title="Permalink to this headline">#</a></h3>
 <p>One important remark of JWT is that the validity of the signature is not the only check that should be passed to make the JWT valid. As an example it is possible to define an experitation date or a not-valid-before date. Those checks are automatically checked by Python JOSE but are missing in the Native and the Cryptography implementations since the only part implemented was the signature verification.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">datetime</span> <span class="kn">import</span> <span class="n">datetime</span><span class="p">,</span> <span class="n">timedelta</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from datetime import datetime, timedelta
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>headers = {
+  &quot;alg&quot;: &quot;HS256&quot;,
+  &quot;typ&quot;: &quot;JWT&quot;
+}
 
-<span class="n">secret</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">16</span><span class="p">)</span>
+secret = secrets.token_bytes(16)
 
-<span class="n">this_moment</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
-<span class="n">issue_date</span> <span class="o">=</span> <span class="p">(</span><span class="n">this_moment</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">24</span><span class="p">))</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
+this_moment = datetime.now()
+issue_date = (this_moment - timedelta(hours=24)).timestamp()
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="not-valid-before-date">
-<h4>Not Valid Before Date<a class="headerlink" href="#not-valid-before-date" title="Permalink to this headline">¶</a></h4>
+<section id="not-valid-before-date">
+<h4>Not Valid Before Date<a class="headerlink" href="#not-valid-before-date" title="Permalink to this headline">#</a></h4>
 <p>If the <code class="docutils literal notranslate"><span class="pre">nbf</span></code> field is set to some time in the future (e.g. in 2hs) the token will not be valid until then.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">start_since</span> <span class="o">=</span> <span class="p">(</span><span class="n">this_moment</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>start_since = (this_moment + timedelta(hours=2)).timestamp()
 
-<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="n">issue_date</span><span class="p">,</span>
-  <span class="s2">&quot;nbf&quot;</span><span class="p">:</span> <span class="n">start_since</span>
-<span class="p">}</span>
+payload = {
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;iat&quot;: issue_date,
+  &quot;nbf&quot;: start_since
+}
 
-<span class="n">token</span> <span class="o">=</span> <span class="n">create_token_native</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+token = create_token_native(headers, payload, secret)
 </pre></div>
 </div>
 </div>
@@ -1646,7 +2151,7 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 <p>Since the <code class="docutils literal notranslate"><span class="pre">verify</span></code> function only checks the signature, the token will be valid</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>verify(token, secret)
 </pre></div>
 </div>
 </div>
@@ -1659,7 +2164,7 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 <p>However, Python JOSE has this as a native feature already and thus it will identify the JWT as invalid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verify_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>verify_jose(token, secret)
 </pre></div>
 </div>
 </div>
@@ -1669,22 +2174,22 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="expiration-date">
-<h3>Expiration Date<a class="headerlink" href="#expiration-date" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="expiration-date">
+<h3>Expiration Date<a class="headerlink" href="#expiration-date" title="Permalink to this headline">#</a></h3>
 <p>If instead a hard expiration date for the token is provided by the <code class="docutils literal notranslate"><span class="pre">exp</span></code> claim, the token will not be valid after that. It is always recommended to have this field, users can always re-generate JWTs if needed.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">expiration</span> <span class="o">=</span> <span class="p">(</span><span class="n">this_moment</span> <span class="o">-</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">hours</span><span class="o">=</span><span class="mi">2</span><span class="p">))</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>expiration = (this_moment - timedelta(hours=2)).timestamp()
 
-<span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-  <span class="s2">&quot;name&quot;</span><span class="p">:</span> <span class="s2">&quot;John Doe&quot;</span><span class="p">,</span>
-  <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="n">issue_date</span><span class="p">,</span>
-  <span class="s2">&quot;exp&quot;</span><span class="p">:</span> <span class="n">expiration</span>
-<span class="p">}</span>
+payload = {
+  &quot;name&quot;: &quot;John Doe&quot;,
+  &quot;iat&quot;: issue_date,
+  &quot;exp&quot;: expiration
+}
 
-<span class="n">token</span> <span class="o">=</span> <span class="n">create_token_native</span><span class="p">(</span><span class="n">headers</span><span class="p">,</span> <span class="n">payload</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+token = create_token_native(headers, payload, secret)
 </pre></div>
 </div>
 </div>
@@ -1692,7 +2197,7 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 <p>Since the <code class="docutils literal notranslate"><span class="pre">verify</span></code> function only checks the signature, the token will be valid</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verify</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>verify(token, secret)
 </pre></div>
 </div>
 </div>
@@ -1705,7 +2210,7 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 <p>However, Python JOSE has this as a native feature already and thus it will identify the JWT as invalid.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">verify_jose</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>verify_jose(token, secret)
 </pre></div>
 </div>
 </div>
@@ -1715,120 +2220,120 @@ Decoded Payload: {&#39;sub&#39;: &#39;1234567890&#39;, &#39;name&#39;: &#39;John
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="comparison-conclusion">
-<h3>Comparison Conclusion<a class="headerlink" href="#comparison-conclusion" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="comparison-conclusion">
+<h3>Comparison Conclusion<a class="headerlink" href="#comparison-conclusion" title="Permalink to this headline">#</a></h3>
 <p>Regardless of the particular implementation, RSA based JWT was much slower than HMAC based. This corresponds to symmetric encryption being much faster than asymmetric.</p>
 <p>Even though the Native implementation was faster than the Python JOSE one, it is <strong>NOT</strong> recommended to use any custom solution for security related problems. The sames applies to the comparison between Cryptography and Python JOSE. This can be seen by Python JOSE implementing other checks that were not present in the Native and Cryptography implementations.</p>
 <p>Python JOSE is a library specifically developed for JWT manipulation and therefore should be the go to approach. However, other JWT libraries could also be used if they are time proved and well tested.</p>
-</div>
-</div>
-<div class="section" id="example-user-authentication">
-<h2>Example: User Authentication<a class="headerlink" href="#example-user-authentication" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="example-user-authentication">
+<h2>Example: User Authentication<a class="headerlink" href="#example-user-authentication" title="Permalink to this headline">#</a></h2>
 <p>The following example showcases how JWTs can be used to securely login users. <strong>This example is based on the <a class="reference internal" href="02_Salt.html"><span class="doc std std-doc">Salt Chapter’s</span></a></strong>.</p>
 <p>The scenario is having two tables: <code class="docutils literal notranslate"><span class="pre">users</span></code> and <code class="docutils literal notranslate"><span class="pre">roles</span></code>. Each user will have its password hashed with salt and then on other unencrypted table, each user will have a role. There is a site to which only users with the <code class="docutils literal notranslate"><span class="pre">admin</span></code> role can access. In this example the authorization to that site is handled by JWTs. The main advantage is that once the JWT was generated, all relevant (non-secret) information of the user is saved there, meaning that JWT is specially useful for stateless APIs).</p>
 <p>This example uses HMAC but the same could be achieved using RSA.</p>
 <p><strong>Note: Remember that this code is not suitable for any production use-case.</strong></p>
-<div class="section" id="auxiliary-functions">
-<h3>Auxiliary Functions<a class="headerlink" href="#auxiliary-functions" title="Permalink to this headline">¶</a></h3>
+<section id="auxiliary-functions">
+<h3>Auxiliary Functions<a class="headerlink" href="#auxiliary-functions" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">os</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import os
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="p">[</span><span class="s2">&quot;SECRET_JWT&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_hex</span><span class="p">(</span><span class="mi">32</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>os.environ[&quot;SECRET_JWT&quot;] = secrets.token_hex(32)
 
-<span class="k">def</span> <span class="nf">generate_hash</span><span class="p">(</span><span class="n">data</span><span class="p">:</span><span class="nb">str</span><span class="p">,</span> <span class="n">salt</span><span class="p">:</span> <span class="nb">bytes</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-    <span class="n">data_bytes</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-    <span class="n">data_hashed</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">scrypt</span><span class="p">(</span><span class="n">data_bytes</span><span class="p">,</span> <span class="n">salt</span><span class="o">=</span><span class="n">salt</span><span class="p">,</span> <span class="n">n</span><span class="o">=</span><span class="mi">64</span><span class="p">,</span> <span class="n">r</span><span class="o">=</span><span class="mi">8</span><span class="p">,</span> <span class="n">p</span><span class="o">=</span><span class="mi">1</span><span class="p">)</span>
-    <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">salt</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">:</span><span class="si">{</span><span class="n">data_hashed</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span>
-
-
-<span class="k">def</span> <span class="nf">sign_up</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">database_</span><span class="p">):</span>
-    <span class="n">database</span> <span class="o">=</span> <span class="n">database_</span><span class="o">.</span><span class="n">copy</span><span class="p">()</span>
-    <span class="n">random_bytes</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">token_bytes</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
-    <span class="n">database</span><span class="p">[</span><span class="n">email</span><span class="p">]</span> <span class="o">=</span> <span class="n">generate_hash</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">random_bytes</span><span class="p">)</span>
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully Singed Up: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">database</span>
+def generate_hash(data:str, salt: bytes) -&gt; str:
+    data_bytes = data.encode(&quot;utf-8&quot;)
+    data_hashed = hashlib.scrypt(data_bytes, salt=salt, n=64, r=8, p=1)
+    return f&quot;{salt.hex()}:{data_hashed.hex()}&quot;
 
 
-<span class="k">def</span> <span class="nf">login</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">database</span><span class="p">,</span> <span class="n">roles</span><span class="p">):</span>
-    <span class="k">if</span> <span class="n">email</span> <span class="ow">not</span> <span class="ow">in</span> <span class="n">database</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: User </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2"> not in Database&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
+def sign_up(email, password, database_):
+    database = database_.copy()
+    random_bytes = secrets.token_bytes(10)
+    database[email] = generate_hash(password, random_bytes)
+    print(f&quot;Successfully Singed Up: {email}&quot;)
+    return database
 
-    <span class="n">expected_password</span> <span class="o">=</span> <span class="n">database</span><span class="p">[</span><span class="n">email</span><span class="p">]</span>
-    <span class="n">salt</span><span class="p">,</span> <span class="n">hashed</span> <span class="o">=</span> <span class="n">expected_password</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;:&quot;</span><span class="p">)</span>
-    <span class="n">salt_bytes</span> <span class="o">=</span> <span class="nb">bytes</span><span class="o">.</span><span class="n">fromhex</span><span class="p">(</span><span class="n">salt</span><span class="p">)</span>
-    <span class="n">calculated_hash</span> <span class="o">=</span> <span class="n">generate_hash</span><span class="p">(</span><span class="n">password</span><span class="p">,</span> <span class="n">salt_bytes</span><span class="p">)</span>
-    <span class="n">passwords_matched</span> <span class="o">=</span> <span class="n">secrets</span><span class="o">.</span><span class="n">compare_digest</span><span class="p">(</span><span class="n">expected_password</span><span class="p">,</span> <span class="n">calculated_hash</span><span class="p">)</span> 
+
+def login(email, password, database, roles):
+    if email not in database:
+        print(f&quot;ERROR: User {email} not in Database&quot;)
+        return
+
+    expected_password = database[email]
+    salt, hashed = expected_password.split(&quot;:&quot;)
+    salt_bytes = bytes.fromhex(salt)
+    calculated_hash = generate_hash(password, salt_bytes)
+    passwords_matched = secrets.compare_digest(expected_password, calculated_hash) 
     
-    <span class="k">if</span> <span class="ow">not</span> <span class="n">passwords_matched</span><span class="p">:</span>
-        <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;ERROR: Incorrect Password for: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-        <span class="k">return</span>
+    if not passwords_matched:
+        print(f&quot;ERROR: Incorrect Password for: {email}&quot;)
+        return
         
-    <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="s2">&quot;alg&quot;</span><span class="p">:</span> <span class="s2">&quot;HS256&quot;</span><span class="p">,</span>
-      <span class="s2">&quot;typ&quot;</span><span class="p">:</span> <span class="s2">&quot;JWT&quot;</span>
-    <span class="p">}</span>
+    headers = {
+      &quot;alg&quot;: &quot;HS256&quot;,
+      &quot;typ&quot;: &quot;JWT&quot;
+    }
     
-    <span class="n">this_moment</span> <span class="o">=</span> <span class="n">datetime</span><span class="o">.</span><span class="n">now</span><span class="p">()</span>
+    this_moment = datetime.now()
 
-    <span class="n">payload</span> <span class="o">=</span> <span class="p">{</span>
-      <span class="s2">&quot;email&quot;</span><span class="p">:</span> <span class="n">email</span><span class="p">,</span>
-      <span class="s2">&quot;role&quot;</span><span class="p">:</span> <span class="n">roles</span><span class="p">[</span><span class="n">email</span><span class="p">],</span>
-      <span class="s2">&quot;iat&quot;</span><span class="p">:</span> <span class="n">this_moment</span><span class="o">.</span><span class="n">timestamp</span><span class="p">(),</span>
-      <span class="s2">&quot;exp&quot;</span><span class="p">:</span> <span class="p">(</span><span class="n">this_moment</span> <span class="o">+</span> <span class="n">timedelta</span><span class="p">(</span><span class="n">seconds</span><span class="o">=</span><span class="mi">10</span><span class="p">))</span><span class="o">.</span><span class="n">timestamp</span><span class="p">()</span>
-    <span class="p">}</span>
+    payload = {
+      &quot;email&quot;: email,
+      &quot;role&quot;: roles[email],
+      &quot;iat&quot;: this_moment.timestamp(),
+      &quot;exp&quot;: (this_moment + timedelta(seconds=10)).timestamp()
+    }
 
-    <span class="n">secret</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SECRET_JWT&quot;</span><span class="p">)</span>
+    secret = os.environ.get(&quot;SECRET_JWT&quot;)
 
-    <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Successfully Logged in: </span><span class="si">{</span><span class="n">email</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-    <span class="k">return</span> <span class="n">jwt</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="n">claims</span><span class="o">=</span><span class="n">payload</span><span class="p">,</span> <span class="n">key</span><span class="o">=</span><span class="n">secret</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">,</span> <span class="n">algorithm</span><span class="o">=</span><span class="s2">&quot;HS256&quot;</span><span class="p">)</span>
+    print(f&quot;Successfully Logged in: {email}&quot;)
+    return jwt.encode(claims=payload, key=secret, headers=headers, algorithm=&quot;HS256&quot;)
     
     
-<span class="k">def</span> <span class="nf">access_restricted_site</span><span class="p">(</span><span class="n">token</span><span class="p">):</span>
-    <span class="n">secret</span> <span class="o">=</span> <span class="n">os</span><span class="o">.</span><span class="n">environ</span><span class="o">.</span><span class="n">get</span><span class="p">(</span><span class="s2">&quot;SECRET_JWT&quot;</span><span class="p">)</span>
-    <span class="k">try</span><span class="p">:</span>
-        <span class="n">payload</span> <span class="o">=</span> <span class="n">jwt</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="n">token</span><span class="p">,</span> <span class="n">secret</span><span class="p">,</span> <span class="n">algorithms</span><span class="o">=</span><span class="p">[</span><span class="s2">&quot;HS256&quot;</span><span class="p">])</span>
-        <span class="n">role</span> <span class="o">=</span> <span class="n">payload</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]</span>
-        <span class="k">if</span> <span class="n">role</span> <span class="o">==</span> <span class="s2">&quot;admin&quot;</span><span class="p">:</span>
-            <span class="k">return</span> <span class="s2">&quot;Access Granted&quot;</span>
-        <span class="k">return</span> <span class="s2">&quot;You are logged in but you do not have access to this site&quot;</span>
-    <span class="k">except</span> <span class="n">JWTError</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;Your token is invalid, log in first&quot;</span>
+def access_restricted_site(token):
+    secret = os.environ.get(&quot;SECRET_JWT&quot;)
+    try:
+        payload = jwt.decode(token, secret, algorithms=[&quot;HS256&quot;])
+        role = payload[&quot;role&quot;]
+        if role == &quot;admin&quot;:
+            return &quot;Access Granted&quot;
+        return &quot;You are logged in but you do not have access to this site&quot;
+    except JWTError:
+        return &quot;Your token is invalid, log in first&quot;
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="sign-up">
-<h3>Sign Up<a class="headerlink" href="#sign-up" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="sign-up">
+<h3>Sign Up<a class="headerlink" href="#sign-up" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">roles</span> <span class="o">=</span> <span class="p">{</span>
-    <span class="s2">&quot;johndoe@example.com&quot;</span><span class="p">:</span> <span class="s2">&quot;user&quot;</span><span class="p">,</span>
-    <span class="s2">&quot;alicedoe@example.com&quot;</span><span class="p">:</span> <span class="s2">&quot;admin&quot;</span><span class="p">,</span>
-<span class="p">}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>roles = {
+    &quot;johndoe@example.com&quot;: &quot;user&quot;,
+    &quot;alicedoe@example.com&quot;: &quot;admin&quot;,
+}
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;johndoe@example.com&quot;</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;password123&quot;</span>
-<span class="n">user_database</span> <span class="o">=</span> <span class="p">{}</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>email = &quot;johndoe@example.com&quot;
+password = &quot;password123&quot;
+user_database = {}
 
-<span class="n">user_database</span> <span class="o">=</span> <span class="n">sign_up</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_database</span><span class="p">)</span>
+user_database = sign_up(email, password, user_database)
 
-<span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;alicedoe@example.com&quot;</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;adminadmin&quot;</span>
-<span class="n">user_database</span> <span class="o">=</span> <span class="n">sign_up</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_database</span><span class="p">)</span>
+email = &quot;alicedoe@example.com&quot;
+password = &quot;adminadmin&quot;
+user_database = sign_up(email, password, user_database)
 </pre></div>
 </div>
 </div>
@@ -1839,22 +2344,22 @@ Successfully Singed Up: alicedoe@example.com
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="log-in">
-<h3>Log In<a class="headerlink" href="#log-in" title="Permalink to this headline">¶</a></h3>
-<div class="section" id="not-enough-priviliges">
-<h4>Not Enough Priviliges<a class="headerlink" href="#not-enough-priviliges" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="log-in">
+<h3>Log In<a class="headerlink" href="#log-in" title="Permalink to this headline">#</a></h3>
+<section id="not-enough-priviliges">
+<h4>Not Enough Priviliges<a class="headerlink" href="#not-enough-priviliges" title="Permalink to this headline">#</a></h4>
 <p>John logs in and tries to access the restricted site.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;johndoe@example.com&quot;</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;password123&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>email = &quot;johndoe@example.com&quot;
+password = &quot;password123&quot;
 
-<span class="n">john_jwt_token</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_database</span><span class="p">,</span> <span class="n">roles</span><span class="p">)</span>
+john_jwt_token = login(email, password, user_database, roles)
 
-<span class="n">authentication_message</span> <span class="o">=</span> <span class="n">access_restricted_site</span><span class="p">(</span><span class="n">john_jwt_token</span><span class="p">)</span>
+authentication_message = access_restricted_site(john_jwt_token)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">authentication_message</span><span class="p">)</span>
+print(authentication_message)
 </pre></div>
 </div>
 </div>
@@ -1865,27 +2370,27 @@ You are logged in but you do not have access to this site
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="tampering-priviliges">
-<h4>Tampering Priviliges<a class="headerlink" href="#tampering-priviliges" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="tampering-priviliges">
+<h4>Tampering Priviliges<a class="headerlink" href="#tampering-priviliges" title="Permalink to this headline">#</a></h4>
 <p>John can decode his token and see that the <code class="docutils literal notranslate"><span class="pre">role</span></code> he was assigned is <code class="docutils literal notranslate"><span class="pre">user</span></code> and not admin, he could try to change that and generate a new token. However as shown above, changing only the payload will invalidate the token and since John does not have the secret, it cannot update the <code class="docutils literal notranslate"><span class="pre">signature</span></code>.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">original_header</span><span class="p">,</span> <span class="n">original_payload</span><span class="p">,</span> <span class="n">original_signature</span> <span class="o">=</span> <span class="n">john_jwt_token</span><span class="o">.</span><span class="n">split</span><span class="p">(</span><span class="s2">&quot;.&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>original_header, original_payload, original_signature = john_jwt_token.split(&quot;.&quot;)
 
-<span class="n">padding_correction</span> <span class="o">=</span> <span class="s2">&quot;=&quot;</span> <span class="o">*</span> <span class="p">((</span><span class="mi">4</span> <span class="o">-</span> <span class="nb">len</span><span class="p">(</span><span class="n">original_payload</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span> <span class="o">%</span> <span class="mi">4</span><span class="p">)</span>
+padding_correction = &quot;=&quot; * ((4 - len(original_payload) % 4) % 4)
 
-<span class="n">decoded_payload</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">original_payload</span> <span class="o">+</span> <span class="n">padding_correction</span><span class="p">)</span>
-<span class="n">decoded_payload_dict</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">loads</span><span class="p">(</span><span class="n">decoded_payload</span><span class="p">)</span>
-<span class="n">decoded_payload_dict</span><span class="p">[</span><span class="s2">&quot;role&quot;</span><span class="p">]</span> <span class="o">=</span> <span class="s2">&quot;admin&quot;</span>
-<span class="n">tampered_payload</span> <span class="o">=</span> <span class="n">json</span><span class="o">.</span><span class="n">dumps</span><span class="p">(</span><span class="n">decoded_payload_dict</span><span class="p">)</span><span class="o">.</span><span class="n">encode</span><span class="p">(</span><span class="s2">&quot;utf-8&quot;</span><span class="p">)</span>
-<span class="n">tampered_payload_encoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">tampered_payload</span><span class="p">)</span>
+decoded_payload = base64.urlsafe_b64decode(original_payload + padding_correction)
+decoded_payload_dict = json.loads(decoded_payload)
+decoded_payload_dict[&quot;role&quot;] = &quot;admin&quot;
+tampered_payload = json.dumps(decoded_payload_dict).encode(&quot;utf-8&quot;)
+tampered_payload_encoded = base64.urlsafe_b64encode(tampered_payload)
 
-<span class="n">tampered_token</span> <span class="o">=</span> <span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="n">original_header</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">tampered_payload_encoded</span><span class="si">}</span><span class="s2">.</span><span class="si">{</span><span class="n">original_signature</span><span class="si">}</span><span class="s2">&quot;</span>
+tampered_token = f&quot;{original_header}.{tampered_payload_encoded}.{original_signature}&quot;
 
-<span class="n">authentication_message</span> <span class="o">=</span> <span class="n">access_restricted_site</span><span class="p">(</span><span class="n">tampered_token</span><span class="p">)</span>
+authentication_message = access_restricted_site(tampered_token)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">authentication_message</span><span class="p">)</span>
+print(authentication_message)
 </pre></div>
 </div>
 </div>
@@ -1895,20 +2400,20 @@ You are logged in but you do not have access to this site
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="having-enough-priviliges">
-<h4>Having Enough Priviliges<a class="headerlink" href="#having-enough-priviliges" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="having-enough-priviliges">
+<h4>Having Enough Priviliges<a class="headerlink" href="#having-enough-priviliges" title="Permalink to this headline">#</a></h4>
 <p>For Alice the process is seemless and she can access without any problems</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">email</span> <span class="o">=</span> <span class="s2">&quot;alicedoe@example.com&quot;</span>
-<span class="n">password</span> <span class="o">=</span> <span class="s2">&quot;adminadmin&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>email = &quot;alicedoe@example.com&quot;
+password = &quot;adminadmin&quot;
 
-<span class="n">alice_jwt_token</span> <span class="o">=</span> <span class="n">login</span><span class="p">(</span><span class="n">email</span><span class="p">,</span> <span class="n">password</span><span class="p">,</span> <span class="n">user_database</span><span class="p">,</span> <span class="n">roles</span><span class="p">)</span>
+alice_jwt_token = login(email, password, user_database, roles)
 
-<span class="n">authentication_message</span> <span class="o">=</span> <span class="n">access_restricted_site</span><span class="p">(</span><span class="n">alice_jwt_token</span><span class="p">)</span>
+authentication_message = access_restricted_site(alice_jwt_token)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">authentication_message</span><span class="p">)</span>
+print(authentication_message)
 </pre></div>
 </div>
 </div>
@@ -1919,24 +2424,24 @@ Access Granted
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="token-expired">
-<h4>Token Expired<a class="headerlink" href="#token-expired" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="token-expired">
+<h4>Token Expired<a class="headerlink" href="#token-expired" title="Permalink to this headline">#</a></h4>
 <p>The token was configured to expire in 10s, this is an artificially small amount of time just for demonstration purposes. Alice was able to access the restricted site but now, 10 seconds after, the token is not valid any more.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">time</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import time
 
-<span class="n">time</span><span class="o">.</span><span class="n">sleep</span><span class="p">(</span><span class="mi">10</span><span class="p">)</span>
+time.sleep(10)
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">authentication_message</span> <span class="o">=</span> <span class="n">access_restricted_site</span><span class="p">(</span><span class="n">alice_jwt_token</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>authentication_message = access_restricted_site(alice_jwt_token)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">authentication_message</span><span class="p">)</span>
+print(authentication_message)
 </pre></div>
 </div>
 </div>
@@ -1946,29 +2451,29 @@ Access Granted
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="caveats">
-<h4>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="caveats">
+<h4>Caveats<a class="headerlink" href="#caveats" title="Permalink to this headline">#</a></h4>
 <p>If John get Alice’s JWT by any means, he could have access to the restricted site. This risk can be mitigated by using certificate based authentication or strong security measures of the JWT.</p>
 <p>The JWT is ultimately an access card, anyone who has it, can acts as if it were the user to whom it was originally given. That is why other measure such as certificates can be add to avoid misuse of JWTs.</p>
-</div>
-</div>
-</div>
-<div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">#</a></h2>
 <p>JSON Web Tokens (JWT) combines several cryptography concepts in a practical way, it allows to generate tokens, that are easy to share via HTTP and that serves for authentication of users. They also allow for custom fields, giving extra flexibility.</p>
 <p>JWTs are compatible with both symmetric and asymmetric digital signatures by using HMAC and RSA respectively. When one the party generating the token should verify it, HMAC is the most convenient solution, if everone should be able to verify the signature RSA is most convenient. There are many other algorithms supported by the JWT standard but those two are the most popular ones.</p>
 <p>In this chapter a Native and a Library based implementation were shown, the native one should not be used by any means and it is only for illustration purposes.</p>
 <p>Using JWTs is becoming more and more common nowadays with the rise of Stateless API architectures and microservices. And is widely use in the <a class="reference external" href="https://en.wikipedia.org/wiki/OAuth">Open Authorization (OAuth)</a></p>
-</div>
-<div class="section" id="additional-resources">
-<h2>Additional Resources<a class="headerlink" href="#additional-resources" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="additional-resources">
+<h2>Additional Resources<a class="headerlink" href="#additional-resources" title="Permalink to this headline">#</a></h2>
 <ul class="simple">
 <li><p><a class="reference external" href="https://jwt.io/">JWT.io</a>: a free online service that lets you decode, verify and generate JWT</p></li>
 <li><p>Other JWT Libraries for Python: <a class="reference external" href="https://github.com/jpadilla/pyjwt/">pyjwt</a>, <a class="reference external" href="https://github.com/latchset/jwcrypto/">jwcrypto</a> and <a class="reference external" href="https://github.com/lepture/authlib">authlib</a></p></li>
 </ul>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -1992,9 +2497,11 @@ Access Granted
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="09_Common_Threats.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -2010,26 +2517,28 @@ Access Granted
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Ezequiel Leonardo Castaño<br/>
-        
-            &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ezequiel Leonardo Castaño<br/>
+  
+      &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
+</p>
+        </footer>
     </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Base64 Encoding &#8212; Python Security</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,42 +20,41 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/justify.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
     <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
-    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe,.cell"
-        const thebe_selector_input = "pre,.cell_input div.highlight"
-        const thebe_selector_output = ".output,.cell_output"
-    </script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
+    <script>window.MathJax = {"options": {"processHtmlClass": "tex2jax_process|mathjax_process|math|output_area"}}</script>
+    <script defer="defer" src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <link rel="canonical" href="https://elc.github.com/python-security/chapters/92_Base64.html" />
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
@@ -65,7 +66,21 @@
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -74,9 +89,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
       
@@ -89,14 +105,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="00_Fundamentals.html">
-   Introduction to Security
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00_Fundamentals.html">
+                    Introduction to Security
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Hashes
  </span>
@@ -210,114 +227,245 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/chapters/92_Base64.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ELC/python-security"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        <a class="edit-button" href="https://github.com/ELC/python-security/edit/source/chapters/92_Base64.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/92_Base64.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/92_Base64.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/92_Base64.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/92_Base64.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ELC/python-security"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ELC/python-security/edit/source/chapters/92_Base64.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapters/92_Base64.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#encoding-compression">
    Encoding != Compression
@@ -376,17 +524,91 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Base64 Encoding</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoding-compression">
+   Encoding != Compression
+  </a>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoding-decoding-example">
+   Encoding/Decoding Example
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#encoding">
+     Encoding
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#representation-comparison">
+       Representation Comparison
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#length-comparison">
+       Length Comparison
+      </a>
+     </li>
+    </ul>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#decoding">
+     Decoding
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#encoding-decoding-compressed-file">
+   Encoding/Decoding Compressed File
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id1">
+     Encoding
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#id2">
+     Decoding
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="base64-encoding">
-<h1>Base64 Encoding<a class="headerlink" href="#base64-encoding" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="base64-encoding">
+<h1>Base64 Encoding<a class="headerlink" href="#base64-encoding" title="Permalink to this headline">#</a></h1>
 <p><strong>ToDo</strong>:</p>
 <ul class="simple">
 <li><p>Add Example with temporary zip files using the <code class="docutils literal notranslate"><span class="pre">tempfile</span></code> module</p></li>
@@ -400,35 +622,35 @@
 <p>There are <a class="reference external" href="https://en.wikipedia.org/wiki/Base64#Implementations_and_history">several implementations</a> of the base64 encoding. Python’s standard library exposes two: Standard Base64 (RFC 4868 §4) and URL and File Safe Base64 (RFC 4868 §5).</p>
 <p>The only difference between the Standard and the URL safe version are the characters they use, the standard version uses the the character <code class="docutils literal notranslate"><span class="pre">+</span></code> and <code class="docutils literal notranslate"><span class="pre">/</span></code> whereas the urlsafe version replaces those two characters with <code class="docutils literal notranslate"><span class="pre">_</span></code> and <code class="docutils literal notranslate"><span class="pre">-</span></code>.</p>
 <p>As well as the functions from <code class="docutils literal notranslate"><span class="pre">hashlib</span></code>, <code class="docutils literal notranslate"><span class="pre">base64</span></code> functions uses bytes objects.</p>
-<div class="section" id="encoding-compression">
-<h2>Encoding != Compression<a class="headerlink" href="#encoding-compression" title="Permalink to this headline">¶</a></h2>
+<section id="encoding-compression">
+<h2>Encoding != Compression<a class="headerlink" href="#encoding-compression" title="Permalink to this headline">#</a></h2>
 <p>Even though Base64 will <em>compress</em> the original size by using a larger vocabulary (more unique characters), it is not a compression algorithm. The easiest way to prove this is to have a long repeated sequence of bytes like <code class="docutils literal notranslate"><span class="pre">AAAAAAA</span></code>, a good compression algorithm will avoid the redundancy and reduce the size. That is not what base64 does.</p>
 <p>That being said, a common pattern is to first zip the content of a file and then using base64 on the zipped file. That way it should be compact and compressed. The standard library has the <code class="docutils literal notranslate"><span class="pre">zipfile</span></code> module which can compress the file and then the bytes can be encoded in base64.</p>
-</div>
-<div class="section" id="encoding-decoding-example">
-<h2>Encoding/Decoding Example<a class="headerlink" href="#encoding-decoding-example" title="Permalink to this headline">¶</a></h2>
+</section>
+<section id="encoding-decoding-example">
+<h2>Encoding/Decoding Example<a class="headerlink" href="#encoding-decoding-example" title="Permalink to this headline">#</a></h2>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">base64</span>
-<span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import base64
+from pathlib import Path
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="encoding">
-<h3>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">¶</a></h3>
+<section id="encoding">
+<h3>Encoding<a class="headerlink" href="#encoding" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">data</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../_static/images/certificate_details_dns.png&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
-<span class="n">data</span> <span class="o">=</span> <span class="n">data</span><span class="p">[</span><span class="mi">111</span><span class="p">:</span><span class="mi">122</span><span class="p">]</span>  <span class="c1"># To improve display</span>
-<span class="n">size</span> <span class="o">=</span> <span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>data = Path(&quot;../_static/images/certificate_details_dns.png&quot;).read_bytes()
+data = data[111:122]  # To improve display
+size = len(data)
 
-<span class="n">data_base64</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">standard_b64encode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">data_base64_string</span> <span class="o">=</span> <span class="n">data_base64</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
+data_base64 = base64.standard_b64encode(data)
+data_base64_string = data_base64.decode(&quot;UTF-8&quot;)
 
-<span class="n">data_base64_urlsafe</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">data</span><span class="p">)</span>
-<span class="n">data_base64_urlsafe_string</span> <span class="o">=</span> <span class="n">data_base64_urlsafe</span><span class="o">.</span><span class="n">decode</span><span class="p">(</span><span class="s2">&quot;UTF-8&quot;</span><span class="p">)</span>
-<span class="n">data_base64_urlsafe_string</span>
+data_base64_urlsafe = base64.urlsafe_b64encode(data)
+data_base64_urlsafe_string = data_base64_urlsafe.decode(&quot;UTF-8&quot;)
+data_base64_urlsafe_string
 </pre></div>
 </div>
 </div>
@@ -438,16 +660,16 @@
 </div>
 </div>
 </div>
-<div class="section" id="representation-comparison">
-<h4>Representation Comparison<a class="headerlink" href="#representation-comparison" title="Permalink to this headline">¶</a></h4>
+<section id="representation-comparison">
+<h4>Representation Comparison<a class="headerlink" href="#representation-comparison" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Comparing Representation&#39;</span><span class="si">:</span><span class="s2">&gt;40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;              Data size in bytes: </span><span class="si">{</span><span class="n">data</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Representation in bits (base 2): </span><span class="si">{</span><span class="nb">bin</span><span class="p">(</span><span class="nb">int</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">hex</span><span class="p">(),</span> <span class="n">base</span><span class="o">=</span><span class="mi">16</span><span class="p">))[</span><span class="mi">2</span><span class="p">:]</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Representation in hex (base 16): </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;        Representation in base64: </span><span class="si">{</span><span class="n">data_base64_string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Representation in base64 URLSafe: </span><span class="si">{</span><span class="n">data_base64_urlsafe_string</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;{&#39;Comparing Representation&#39;:&gt;40}&quot;)
+print(f&quot;              Data size in bytes: {data}&quot;)
+print(f&quot; Representation in bits (base 2): {bin(int(data.hex(), base=16))[2:]}&quot;)
+print(f&quot; Representation in hex (base 16): {data.hex()}&quot;)
+print(f&quot;        Representation in base64: {data_base64_string}&quot;)
+print(f&quot;Representation in base64 URLSafe: {data_base64_urlsafe_string}&quot;)
 </pre></div>
 </div>
 </div>
@@ -462,17 +684,17 @@ Representation in base64 URLSafe: wH-9SRDAgJ3xH_I=
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="length-comparison">
-<h4>Length Comparison<a class="headerlink" href="#length-comparison" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="length-comparison">
+<h4>Length Comparison<a class="headerlink" href="#length-comparison" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;</span><span class="si">{</span><span class="s1">&#39;Comparing Lenghts&#39;</span><span class="si">:</span><span class="s2">&gt;40</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;              Data size in bytes: </span><span class="si">{</span><span class="n">size</span><span class="si">}</span><span class="s2"> bytes&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Representation in bits (base 2): </span><span class="si">{</span><span class="n">size</span> <span class="o">*</span> <span class="mi">8</span><span class="si">}</span><span class="s2"> characters&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Representation in hex (base 16): </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data</span><span class="o">.</span><span class="n">hex</span><span class="p">())</span><span class="si">}</span><span class="s2"> characters&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;        Representation in base64: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_base64</span><span class="p">)</span><span class="si">}</span><span class="s2"> characters&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Representation in base64 URLSafe: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">data_base64_urlsafe</span><span class="p">)</span><span class="si">}</span><span class="s2"> characters&quot;</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(f&quot;{&#39;Comparing Lenghts&#39;:&gt;40}&quot;)
+print(f&quot;              Data size in bytes: {size} bytes&quot;)
+print(f&quot; Representation in bits (base 2): {size * 8} characters&quot;)
+print(f&quot; Representation in hex (base 16): {len(data.hex())} characters&quot;)
+print(f&quot;        Representation in base64: {len(data_base64)} characters&quot;)
+print(f&quot;Representation in base64 URLSafe: {len(data_base64_urlsafe)} characters&quot;)
 </pre></div>
 </div>
 </div>
@@ -487,18 +709,18 @@ Representation in base64 URLSafe: 16 characters
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="decoding">
-<h3>Decoding<a class="headerlink" href="#decoding" title="Permalink to this headline">¶</a></h3>
+</section>
+</section>
+<section id="decoding">
+<h3>Decoding<a class="headerlink" href="#decoding" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">decoded_data_standard</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">standard_b64decode</span><span class="p">(</span><span class="n">data_base64_string</span><span class="p">)</span>
-<span class="n">decoded_data_urlsafe</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">standard_b64decode</span><span class="p">(</span><span class="n">data_base64_string</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>decoded_data_standard = base64.standard_b64decode(data_base64_string)
+decoded_data_urlsafe = base64.standard_b64decode(data_base64_string)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;        Original Data: </span><span class="si">{</span><span class="n">data</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Decoded from Standard: </span><span class="si">{</span><span class="n">decoded_data_standard</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Decoded from URLSafe: </span><span class="si">{</span><span class="n">decoded_data_urlsafe</span><span class="o">.</span><span class="n">hex</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;        Original Data: {data.hex()}&quot;)
+print(f&quot;Decoded from Standard: {decoded_data_standard.hex()}&quot;)
+print(f&quot; Decoded from URLSafe: {decoded_data_urlsafe.hex()}&quot;)
 </pre></div>
 </div>
 </div>
@@ -510,10 +732,10 @@ Decoded from Standard: c07fbd4910c0809df11ff2
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="encoding-decoding-compressed-file">
-<h2>Encoding/Decoding Compressed File<a class="headerlink" href="#encoding-decoding-compressed-file" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="encoding-decoding-compressed-file">
+<h2>Encoding/Decoding Compressed File<a class="headerlink" href="#encoding-decoding-compressed-file" title="Permalink to this headline">#</a></h2>
 <p>A common use case is to combine base64 with zip compression to get the advantages of both technologies. The official docs illustrates how to works with files in a filesystem. In this example everything will be handled in memory, i.e. no temporary files or zip files will be generated.</p>
 <p>This all-in-memory approach is specially useful in circunstances where:</p>
 <ul class="simple">
@@ -524,35 +746,35 @@ Decoded from Standard: c07fbd4910c0809df11ff2
 <p>To work with in-memory, instead of using filenames a <code class="docutils literal notranslate"><span class="pre">BytesIO</span></code> object is used. This objects mimics the API of the file object and avoid any read/write operations in the disk.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zipfile</span>
-<span class="kn">import</span> <span class="nn">io</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import zipfile
+import io
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="id1">
-<h3>Encoding<a class="headerlink" href="#id1" title="Permalink to this headline">¶</a></h3>
+<section id="id1">
+<h3>Encoding<a class="headerlink" href="#id1" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">file_path</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;00_Fundamentals.ipynb&quot;</span><span class="p">)</span>
-<span class="n">file_bytes</span> <span class="o">=</span> <span class="n">file_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
-<span class="n">file_base64_urlsafe</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">file_bytes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>file_path = Path(&quot;00_Fundamentals.ipynb&quot;)
+file_bytes = file_path.read_bytes()
+file_base64_urlsafe = base64.urlsafe_b64encode(file_bytes)
 
-<span class="n">memory_file</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">()</span>  <span class="c1"># Mimics the zip file in the filesystem</span>
+memory_file = io.BytesIO()  # Mimics the zip file in the filesystem
 
-<span class="n">zip_handler</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">memory_file</span><span class="p">,</span> <span class="s2">&quot;w&quot;</span><span class="p">,</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZIP_DEFLATED</span><span class="p">)</span>
+zip_handler = zipfile.ZipFile(memory_file, &quot;w&quot;, zipfile.ZIP_DEFLATED)
 
-<span class="k">with</span> <span class="n">zip_handler</span><span class="p">:</span>  <span class="c1"># Context manager for automatic close</span>
-    <span class="n">zip_handler</span><span class="o">.</span><span class="n">writestr</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">name</span><span class="p">,</span> <span class="n">file_bytes</span><span class="p">)</span>
+with zip_handler:  # Context manager for automatic close
+    zip_handler.writestr(file_path.name, file_bytes)
 
     
-<span class="n">memory_file</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>  <span class="c1"># Resets the pointer to the beginning of the file</span>
-<span class="n">zip_bytes</span> <span class="o">=</span> <span class="n">memory_file</span><span class="o">.</span><span class="n">read</span><span class="p">()</span>
-<span class="n">zip_base64_urlsafe</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64encode</span><span class="p">(</span><span class="n">zip_bytes</span><span class="p">)</span>
+memory_file.seek(0)  # Resets the pointer to the beginning of the file
+zip_bytes = memory_file.read()
+zip_base64_urlsafe = base64.urlsafe_b64encode(zip_bytes)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Size before compression: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">file_base64_urlsafe</span><span class="p">)</span><span class="si">}</span><span class="s2"> characters&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Size after compression: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">zip_base64_urlsafe</span><span class="p">)</span><span class="si">}</span><span class="s2"> characters&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;           Compresion %: </span><span class="si">{</span><span class="nb">len</span><span class="p">(</span><span class="n">zip_base64_urlsafe</span><span class="p">)</span> <span class="o">/</span> <span class="nb">len</span><span class="p">(</span><span class="n">file_base64_urlsafe</span><span class="p">)</span> <span class="o">*</span> <span class="mi">100</span><span class="si">:</span><span class="s2">.2f</span><span class="si">}</span><span class="s2">%&quot;</span><span class="p">)</span>
+print(f&quot;Size before compression: {len(file_base64_urlsafe)} characters&quot;)
+print(f&quot; Size after compression: {len(zip_base64_urlsafe)} characters&quot;)
+print(f&quot;           Compresion %: {len(zip_base64_urlsafe) / len(file_base64_urlsafe) * 100:.2f}%&quot;)
 </pre></div>
 </div>
 </div>
@@ -564,23 +786,23 @@ Decoded from Standard: c07fbd4910c0809df11ff2
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="id2">
-<h3>Decoding<a class="headerlink" href="#id2" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="id2">
+<h3>Decoding<a class="headerlink" href="#id2" title="Permalink to this headline">#</a></h3>
 <p>The process for decoding is straightforward, instead of using a zip file from the filesystem, a bytes object is cast to <code class="docutils literal notranslate"><span class="pre">BytesIO</span></code> which allows the <code class="docutils literal notranslate"><span class="pre">zipfile</span></code> module to work with the bytes object as if it were a file.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">zip_decoded</span> <span class="o">=</span> <span class="n">base64</span><span class="o">.</span><span class="n">urlsafe_b64decode</span><span class="p">(</span><span class="n">zip_base64_urlsafe</span><span class="p">)</span>
-<span class="n">zip_decoded_io</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">BytesIO</span><span class="p">(</span><span class="n">zip_decoded</span><span class="p">)</span>
-<span class="n">zip_decoded_io</span><span class="o">.</span><span class="n">seek</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>zip_decoded = base64.urlsafe_b64decode(zip_base64_urlsafe)
+zip_decoded_io = io.BytesIO(zip_decoded)
+zip_decoded_io.seek(0)
 
-<span class="n">zip_handler</span> <span class="o">=</span> <span class="n">zipfile</span><span class="o">.</span><span class="n">ZipFile</span><span class="p">(</span><span class="n">zip_decoded_io</span><span class="p">,</span> <span class="s2">&quot;r&quot;</span><span class="p">)</span>
-<span class="n">decoded_unzipped_bytes</span> <span class="o">=</span> <span class="n">zip_handler</span><span class="o">.</span><span class="n">read</span><span class="p">(</span><span class="n">file_path</span><span class="o">.</span><span class="n">name</span><span class="p">)</span>
+zip_handler = zipfile.ZipFile(zip_decoded_io, &quot;r&quot;)
+decoded_unzipped_bytes = zip_handler.read(file_path.name)
 
-<span class="k">if</span> <span class="n">decoded_unzipped_bytes</span> <span class="o">==</span> <span class="n">file_path</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">():</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The extracted file is the same&quot;</span><span class="p">)</span>
-<span class="k">else</span><span class="p">:</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;The extracted file is NOT the same&quot;</span><span class="p">)</span>
+if decoded_unzipped_bytes == file_path.read_bytes():
+    print(&quot;The extracted file is the same&quot;)
+else:
+    print(&quot;The extracted file is NOT the same&quot;)
 </pre></div>
 </div>
 </div>
@@ -590,15 +812,15 @@ Decoded from Standard: c07fbd4910c0809df11ff2
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">#</a></h2>
 <p>Base64 is an encoding mechanism that allows to convert to string long sequences of bytes, it has two supported implementations in Python, standart and urlsafe.</p>
 <p>Base64 is <strong>not</strong> a compresion algorithm but it can be combined with the <code class="docutils literal notranslate"><span class="pre">zipfile</span></code> module to compress bytes or files and then encode them to base64. The resulting bytes will be both compressed and encoded.</p>
 <p>If working with compression, it is possible to work with temporary zip files or everything in-memory.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -622,9 +844,11 @@ Decoded from Standard: c07fbd4910c0809df11ff2
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="91_Bytes.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -633,26 +857,28 @@ Decoded from Standard: c07fbd4910c0809df11ff2
         </div>
     </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Ezequiel Leonardo Castaño<br/>
-        
-            &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ezequiel Leonardo Castaño<br/>
+  
+      &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
+</p>
+        </footer>
     </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>

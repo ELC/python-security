@@ -4,11 +4,13 @@
 <html>
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" /><meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+
     <title>Checksum &#8212; Python Security</title>
     
-  <link href="../_static/css/theme.css" rel="stylesheet">
-  <link href="../_static/css/index.ff1ffe594081f20da1ef19478df9384b.css" rel="stylesheet">
+  <!-- Loaded before other Sphinx assets -->
+  <link href="../_static/styles/theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
+<link href="../_static/styles/pydata-sphinx-theme.css?digest=1999514e3f237ded88cf" rel="stylesheet">
 
     
   <link rel="stylesheet"
@@ -18,39 +20,38 @@
   <link rel="preload" as="font" type="font/woff2" crossorigin
     href="../_static/vendor/fontawesome/5.13.0/webfonts/fa-brands-400.woff2">
 
-    
-      
-
-    
     <link rel="stylesheet" type="text/css" href="../_static/pygments.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/sphinx-book-theme.css?digest=c3fdc42140077d1ad13ad2f1588a4309" />
+    <link rel="stylesheet" href="../_static/styles/sphinx-book-theme.css?digest=5115cc725059bd94278eecd172e13a965bf8f5a9" type="text/css" />
     <link rel="stylesheet" type="text/css" href="../_static/togglebutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/copybutton.css" />
     <link rel="stylesheet" type="text/css" href="../_static/mystnb.css" />
     <link rel="stylesheet" type="text/css" href="../_static/sphinx-thebe.css" />
     <link rel="stylesheet" type="text/css" href="../_static/justify.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-main.c949a650a448cc0ae9fd3441c0e17fb0.css" />
-    <link rel="stylesheet" type="text/css" href="../_static/panels-variables.06eb56fa6e07937060861dad626602ad.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/design-style.b7bb847fb20b106c3d81b95245e65545.min.css" />
     
-  <link rel="preload" as="script" href="../_static/js/index.be7d3bbb2ef33a8344ce.js">
+  <!-- Pre-loaded scripts that we'll load fully later -->
+  <link rel="preload" as="script" href="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf">
 
     <script data-url_root="../" id="documentation_options" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/clipboard.min.js"></script>
     <script src="../_static/copybutton.js"></script>
+    <script src="../_static/scripts/sphinx-book-theme.js?digest=9c920249402e914e316237a7dbc6769907cce411"></script>
+    <script>let toggleHintShow = 'Click to show';</script>
+    <script>let toggleHintHide = 'Click to hide';</script>
+    <script>let toggleOpenOnPrint = 'true';</script>
+    <script src="../_static/togglebutton.js"></script>
     <script src="../_static/analytics_gtag.js"></script>
     <script src="../_static/analytics.js"></script>
     <script>var togglebuttonSelector = '.toggle, .admonition.dropdown, .tag_hide_input div.cell_input, .tag_hide-input div.cell_input, .tag_hide_output div.cell_output, .tag_hide-output div.cell_output, .tag_hide_cell.cell, .tag_hide-cell.cell';</script>
-    <script src="../_static/sphinx-book-theme.12a9622fbb08dcb3a2a40b2c02b83a57.js"></script>
-    <script async="async" src="https://unpkg.com/thebe@0.5.1/lib/index.js"></script>
-    <script>
-        const thebe_selector = ".thebe,.cell"
-        const thebe_selector_input = "pre,.cell_input div.highlight"
-        const thebe_selector_output = ".output,.cell_output"
-    </script>
+    <script src="../_static/design-tabs.js"></script>
+    <script>const THEBE_JS_URL = "https://unpkg.com/thebe@0.8.2/lib/index.js"
+const thebe_selector = ".thebe,.cell"
+const thebe_selector_input = "pre"
+const thebe_selector_output = ".output, .cell_output"
+</script>
     <script async="async" src="../_static/sphinx-thebe.js"></script>
     <link rel="canonical" href="https://elc.github.com/python-security/chapters/04_Checksum.html" />
     <link rel="index" title="Index" href="../genindex.html" />
@@ -64,7 +65,21 @@
     <!-- Google Analytics -->
     
   </head>
-  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="80">
+  <body data-spy="scroll" data-target="#bd-toc-nav" data-offset="60">
+<!-- Checkboxes to toggle the left sidebar -->
+<input type="checkbox" class="sidebar-toggle" name="__navigation" id="__navigation" aria-label="Toggle navigation sidebar">
+<label class="overlay overlay-navbar" for="__navigation">
+    <div class="visually-hidden">Toggle navigation sidebar</div>
+</label>
+<!-- Checkboxes to toggle the in-page toc -->
+<input type="checkbox" class="sidebar-toggle" name="__page-toc" id="__page-toc" aria-label="Toggle in-page Table of Contents">
+<label class="overlay overlay-pagetoc" for="__page-toc">
+    <div class="visually-hidden">Toggle in-page Table of Contents</div>
+</label>
+<!-- Headers at the top -->
+<div class="announcement header-item noprint"></div>
+<div class="header header-item noprint"></div>
+
     
     <div class="container-fluid" id="banner"></div>
 
@@ -73,9 +88,10 @@
     <div class="container-xl">
       <div class="row">
           
-<div class="col-12 col-md-3 bd-sidebar site-navigation show" id="site-navigation">
-    
-        <div class="navbar-brand-box">
+<!-- Sidebar -->
+<div class="bd-sidebar noprint" id="site-navigation">
+    <div class="bd-sidebar__content">
+        <div class="bd-sidebar__top"><div class="navbar-brand-box">
     <a class="navbar-brand text-wrap" href="../index.html">
       
       
@@ -88,14 +104,15 @@
   <input type="search" class="form-control" name="q" id="search-input" placeholder="Search this book..." aria-label="Search this book..." autocomplete="off" >
 </form><nav class="bd-links" id="bd-docs-nav" aria-label="Main">
     <div class="bd-toc-item active">
-        <ul class="nav bd-sidenav">
- <li class="toctree-l1">
-  <a class="reference internal" href="00_Fundamentals.html">
-   Introduction to Security
-  </a>
- </li>
-</ul>
-<p aria-level="2" class="caption" role="heading">
+        
+        <ul class="nav bd-sidenav bd-sidenav__home-link">
+            <li class="toctree-l1">
+                <a class="reference internal" href="00_Fundamentals.html">
+                    Introduction to Security
+                </a>
+            </li>
+        </ul>
+        <p aria-level="2" class="caption" role="heading">
  <span class="caption-text">
   Hashes
  </span>
@@ -209,114 +226,245 @@
 </ul>
 
     </div>
-</nav> <!-- To handle the deprecated key -->
-
-<div class="navbar_extra_footer">
-  Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
-</div>
-
-</div>
-
-
-          
-
-
-          
-<main class="col py-md-3 pl-md-4 bd-content overflow-auto" role="main">
-    
-    <div class="topbar container-xl fixed-top">
-    <div class="topbar-contents row">
-        <div class="col-12 col-md-3 bd-topbar-whitespace site-navigation show"></div>
-        <div class="col pl-md-4 topbar-main">
+</nav></div>
+        <div class="bd-sidebar__bottom">
+             <!-- To handle the deprecated key -->
             
-            <button id="navbar-toggler" class="navbar-toggler ml-0" type="button" data-toggle="collapse"
-                data-toggle="tooltip" data-placement="bottom" data-target=".site-navigation" aria-controls="navbar-menu"
-                aria-expanded="true" aria-label="Toggle navigation" aria-controls="site-navigation"
-                title="Toggle navigation" data-toggle="tooltip" data-placement="left">
-                <i class="fas fa-bars"></i>
-                <i class="fas fa-arrow-left"></i>
-                <i class="fas fa-arrow-up"></i>
-            </button>
-            
-            
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn" aria-label="Download this page"><i
-            class="fas fa-download"></i></button>
-
-    <div class="dropdown-buttons">
-        <!-- ipynb file if we had a myst markdown file -->
-        
-        <!-- Download raw file -->
-        <a class="dropdown-buttons" href="../_sources/chapters/04_Checksum.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Download source file" data-toggle="tooltip"
-                data-placement="left">.ipynb</button></a>
-        <!-- Download PDF via print -->
-        <button type="button" id="download-print" class="btn btn-secondary topbarbtn" title="Print to PDF"
-            onClick="window.print()" data-toggle="tooltip" data-placement="left">.pdf</button>
-    </div>
-</div>
-
-            <!-- Source interaction buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Connect with source repository"><i class="fab fa-github"></i></button>
-    <div class="dropdown-buttons sourcebuttons">
-        <a class="repository-button"
-            href="https://github.com/ELC/python-security"><button type="button" class="btn btn-secondary topbarbtn"
-                data-toggle="tooltip" data-placement="left" title="Source repository"><i
-                    class="fab fa-github"></i>repository</button></a>
-        
-        <a class="edit-button" href="https://github.com/ELC/python-security/edit/source/chapters/04_Checksum.ipynb"><button
-                type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip" data-placement="left"
-                title="Edit this page"><i class="fas fa-pencil-alt"></i>suggest edit</button></a>
-    </div>
-</div>
-
-            <!-- Full screen (wrap in <a> to have style consistency -->
-
-<a class="full-screen-button"><button type="button" class="btn btn-secondary topbarbtn" data-toggle="tooltip"
-        data-placement="bottom" onclick="toggleFullScreen()" aria-label="Fullscreen mode"
-        title="Fullscreen mode"><i
-            class="fas fa-expand"></i></button></a>
-
-            <!-- Launch buttons -->
-
-<div class="dropdown-buttons-trigger">
-    <button id="dropdown-buttons-trigger" class="btn btn-secondary topbarbtn"
-        aria-label="Launch interactive content"><i class="fas fa-rocket"></i></button>
-    <div class="dropdown-buttons">
-        
-        <a class="binder-button" href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/04_Checksum.ipynb"><button type="button"
-                class="btn btn-secondary topbarbtn" title="Launch Binder" data-toggle="tooltip"
-                data-placement="left"><img class="binder-button-logo"
-                    src="../_static/images/logo_binder.svg"
-                    alt="Interact on binder">Binder</button></a>
-        
-        
-        
-        <a class="colab-button" href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/04_Checksum.ipynb"><button type="button" class="btn btn-secondary topbarbtn"
-                title="Launch Colab" data-toggle="tooltip" data-placement="left"><img class="colab-button-logo"
-                    src="../_static/images/logo_colab.png"
-                    alt="Interact on Colab">Colab</button></a>
-        
-        <button type="button" class="btn btn-secondary topbarbtn"
-            onclick="initThebeSBT()" title="Launch Thebe" data-toggle="tooltip" data-placement="left"><i
-                class="fas fa-play"></i><span style="margin-left: .4em;">Live Code</span></button>
-        
-    </div>
-</div>
-
-        </div>
-
-        <!-- Table of contents -->
-        <div class="d-none d-md-block col-md-2 bd-toc show">
-            
-            <div class="tocsection onthispage pt-5 pb-3">
-                <i class="fas fa-list"></i> Contents
+            <div class="navbar_extra_footer">
+            Powered by <a href="https://jupyterbook.org">Jupyter Book</a>
             </div>
-            <nav id="bd-toc-nav" aria-label="Page">
-                <ul class="visible nav section-nav flex-column">
+            
+        </div>
+    </div>
+    <div id="rtd-footer-container"></div>
+</div>
+
+
+          
+
+
+          
+<!-- A tiny helper pixel to detect if we've scrolled -->
+<div class="sbt-scroll-pixel-helper"></div>
+<!-- Main content -->
+<div class="col py-0 content-container">
+    
+    <div class="header-article row sticky-top noprint">
+        
+
+
+
+<div class="col py-1 d-flex header-article-main">
+    <div class="header-article__left">
+        
+        <label for="__navigation"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="right"
+title="Toggle navigation"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-bars"></i>
+  </span>
+
+</label>
+
+        
+    </div>
+    <div class="header-article__right">
+<div class="menu-dropdown menu-dropdown-launch-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Launch interactive content">
+      <i class="fas fa-rocket"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://mybinder.org/v2/gh/ELC/python-security/source?urlpath=tree/chapters/04_Checksum.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Binder"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_binder.svg">
+  </span>
+<span class="headerbtn__text-container">Binder</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://colab.research.google.com/github/ELC/python-security/blob/source/chapters/04_Checksum.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Launch on Colab"
+>
+  
+
+<span class="headerbtn__icon-container">
+  
+    <img src="../_static/images/logo_colab.png">
+  </span>
+<span class="headerbtn__text-container">Colab</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="initThebeSBT()"
+  class="headerbtn headerbtn-launch-thebe"
+  data-toggle="tooltip"
+data-placement="left"
+title="Launch Thebe"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-play"></i>
+  </span>
+<span class="headerbtn__text-container">Live Code</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<button onclick="toggleFullScreen()"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="bottom"
+title="Fullscreen mode"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-expand"></i>
+  </span>
+
+</button>
+
+<div class="menu-dropdown menu-dropdown-repository-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Source repositories">
+      <i class="fab fa-github"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="https://github.com/ELC/python-security"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Source repository"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fab fa-github"></i>
+  </span>
+<span class="headerbtn__text-container">repository</span>
+</a>
+
+      </li>
+      
+      <li>
+        <a href="https://github.com/ELC/python-security/edit/source/chapters/04_Checksum.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Edit this page"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-pencil-alt"></i>
+  </span>
+<span class="headerbtn__text-container">suggest edit</span>
+</a>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+
+<div class="menu-dropdown menu-dropdown-download-buttons">
+  <button class="headerbtn menu-dropdown__trigger"
+      aria-label="Download this page">
+      <i class="fas fa-download"></i>
+  </button>
+  <div class="menu-dropdown__content">
+    <ul>
+      <li>
+        <a href="../_sources/chapters/04_Checksum.ipynb"
+   class="headerbtn"
+   data-toggle="tooltip"
+data-placement="left"
+title="Download source file"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file"></i>
+  </span>
+<span class="headerbtn__text-container">.ipynb</span>
+</a>
+
+      </li>
+      
+      <li>
+        
+<button onclick="printPdf(this)"
+  class="headerbtn"
+  data-toggle="tooltip"
+data-placement="left"
+title="Print to PDF"
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-file-pdf"></i>
+  </span>
+<span class="headerbtn__text-container">.pdf</span>
+</button>
+
+      </li>
+      
+    </ul>
+  </div>
+</div>
+<label for="__page-toc"
+  class="headerbtn headerbtn-page-toc"
+  
+>
+  
+
+<span class="headerbtn__icon-container">
+  <i class="fas fa-list"></i>
+  </span>
+
+</label>
+
+    </div>
+</div>
+
+<!-- Table of contents -->
+<div class="col-md-3 bd-toc show noprint">
+    <div class="tocsection onthispage pt-5 pb-3">
+        <i class="fas fa-list"></i> Contents
+    </div>
+    <nav id="bd-toc-nav" aria-label="Page">
+        <ul class="visible nav section-nav flex-column">
  <li class="toc-h2 nav-item toc-entry">
   <a class="reference internal nav-link" href="#working-with-python-data">
    Working with Python Data
@@ -402,17 +550,118 @@
  </li>
 </ul>
 
-            </nav>
-        </div>
-    </div>
+    </nav>
 </div>
-    <div id="main-content" class="row">
-        <div class="col-12 col-md-9 pl-md-3 pr-md-0">
-        
+    </div>
+    <div class="article row">
+        <div class="col pl-md-3 pl-lg-5 content-container">
+            <!-- Table of contents that is only displayed when printing the page -->
+            <div id="jb-print-docs-body" class="onlyprint">
+                <h1>Checksum</h1>
+                <!-- Table of contents -->
+                <div id="print-main-content">
+                    <div id="jb-print-toc">
+                        
+                        <div>
+                            <h2> Contents </h2>
+                        </div>
+                        <nav aria-label="Page">
+                            <ul class="visible nav section-nav flex-column">
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#working-with-python-data">
+   Working with Python Data
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#crc32">
+     CRC32
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#adler32">
+     Adler32
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#verification">
+     Verification
+    </a>
+    <ul class="nav section-nav flex-column">
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#altered-message">
+       Altered message
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#altered-checksum">
+       Altered Checksum
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#correct-message-and-checksum">
+       Correct Message and Checksum
+      </a>
+     </li>
+     <li class="toc-h4 nav-item toc-entry">
+      <a class="reference internal nav-link" href="#simulated-man-in-the-middle">
+       Simulated Man in the Middle
+      </a>
+     </li>
+    </ul>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#working-with-files">
+   Working with Files
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#checksum-calculation">
+     Checksum Calculation
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#hash-as-checksums">
+     Hash as Checksums
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#speed-benchmarks">
+   Speed Benchmarks
+  </a>
+  <ul class="nav section-nav flex-column">
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#preparing-the-file">
+     Preparing the File
+    </a>
+   </li>
+   <li class="toc-h3 nav-item toc-entry">
+    <a class="reference internal nav-link" href="#runs">
+     Runs
+    </a>
+   </li>
+  </ul>
+ </li>
+ <li class="toc-h2 nav-item toc-entry">
+  <a class="reference internal nav-link" href="#conclusion">
+   Conclusion
+  </a>
+ </li>
+</ul>
+
+                        </nav>
+                    </div>
+                </div>
+            </div>
+            <main id="main-content" role="main">
+                
               <div>
                 
-  <div class="tex2jax_ignore mathjax_ignore section" id="checksum">
-<h1>Checksum<a class="headerlink" href="#checksum" title="Permalink to this headline">¶</a></h1>
+  <section class="tex2jax_ignore mathjax_ignore" id="checksum">
+<h1>Checksum<a class="headerlink" href="#checksum" title="Permalink to this headline">#</a></h1>
 <p><strong>ToDo</strong>:</p>
 <ul class="simple">
 <li><p>Add illustration for computing checksums - Similar to <a class="reference external" href="https://media.geeksforgeeks.org/wp-content/uploads/detect13.jpg">this</a>.</p></li>
@@ -427,24 +676,24 @@
 <p>One of the main difference is that with hashes, the data is usually small, whereas checksums are used for whole files, which can be many gigabytes in size. The following examples illustrate how to work with Python objects as well as files.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">zlib</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import zlib
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="working-with-python-data">
-<h2>Working with Python Data<a class="headerlink" href="#working-with-python-data" title="Permalink to this headline">¶</a></h2>
+<section id="working-with-python-data">
+<h2>Working with Python Data<a class="headerlink" href="#working-with-python-data" title="Permalink to this headline">#</a></h2>
 <p>Python data is what has been shown in the previous chapters, dictionaries, strings and the like. As hashes, checksum functions expect a <code class="docutils literal notranslate"><span class="pre">bytes</span></code> object so prior to send any data, it should be converted to bytes.</p>
-<div class="section" id="crc32">
-<h3>CRC32<a class="headerlink" href="#crc32" title="Permalink to this headline">¶</a></h3>
+<section id="crc32">
+<h3>CRC32<a class="headerlink" href="#crc32" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>message = b&quot;Hello World!&quot;
 
-<span class="n">message_crc</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">crc32</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+message_crc = zlib.crc32(message)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Message: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum: </span><span class="si">{</span><span class="n">message_crc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot; Message: {message}&quot;)
+print(f&quot;Checksum: {message_crc}&quot;)
 </pre></div>
 </div>
 </div>
@@ -455,17 +704,17 @@ Checksum: 472456355
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="adler32">
-<h3>Adler32<a class="headerlink" href="#adler32" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="adler32">
+<h3>Adler32<a class="headerlink" href="#adler32" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>message = b&quot;Hello World!&quot;
 
-<span class="n">message_crc</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">message</span><span class="p">)</span>
+message_crc = zlib.adler32(message)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot; Message: </span><span class="si">{</span><span class="n">message</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum: </span><span class="si">{</span><span class="n">message_crc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot; Message: {message}&quot;)
+print(f&quot;Checksum: {message_crc}&quot;)
 </pre></div>
 </div>
 </div>
@@ -476,30 +725,30 @@ Checksum: 474547262
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="verification">
-<h3>Verification<a class="headerlink" href="#verification" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="verification">
+<h3>Verification<a class="headerlink" href="#verification" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="k">def</span> <span class="nf">verify</span><span class="p">(</span><span class="n">received_message</span><span class="p">,</span> <span class="n">received_crc</span><span class="p">):</span>
-    <span class="n">received_message_crc</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">received_message</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>def verify(received_message, received_crc):
+    received_message_crc = zlib.adler32(received_message)
 
-    <span class="k">if</span> <span class="n">received_message_crc</span> <span class="o">!=</span> <span class="n">received_crc</span><span class="p">:</span>
-        <span class="k">return</span> <span class="s2">&quot;Mismatch, either message or checksum is incorrect&quot;</span>
+    if received_message_crc != received_crc:
+        return &quot;Mismatch, either message or checksum is incorrect&quot;
     
-    <span class="k">return</span> <span class="s2">&quot;Match, message and checksum are consistent&quot;</span>
+    return &quot;Match, message and checksum are consistent&quot;
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="altered-message">
-<h4>Altered message<a class="headerlink" href="#altered-message" title="Permalink to this headline">¶</a></h4>
+<section id="altered-message">
+<h4>Altered message<a class="headerlink" href="#altered-message" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">received_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello Wrold!&quot;</span>
-<span class="n">received_crc</span> <span class="o">=</span> <span class="mi">474547262</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>received_message = b&quot;Hello Wrold!&quot;
+received_crc = 474547262
 
-<span class="nb">print</span><span class="p">(</span><span class="n">verify</span><span class="p">(</span><span class="n">received_message</span><span class="p">,</span> <span class="n">received_crc</span><span class="p">))</span>
+print(verify(received_message, received_crc))
 </pre></div>
 </div>
 </div>
@@ -509,15 +758,15 @@ Checksum: 474547262
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="altered-checksum">
-<h4>Altered Checksum<a class="headerlink" href="#altered-checksum" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="altered-checksum">
+<h4>Altered Checksum<a class="headerlink" href="#altered-checksum" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">received_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello Wrold!&quot;</span>
-<span class="n">received_crc</span> <span class="o">=</span> <span class="mi">474547263</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>received_message = b&quot;Hello Wrold!&quot;
+received_crc = 474547263
 
-<span class="nb">print</span><span class="p">(</span><span class="n">verify</span><span class="p">(</span><span class="n">received_message</span><span class="p">,</span> <span class="n">received_crc</span><span class="p">))</span>
+print(verify(received_message, received_crc))
 </pre></div>
 </div>
 </div>
@@ -527,15 +776,15 @@ Checksum: 474547262
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="correct-message-and-checksum">
-<h4>Correct Message and Checksum<a class="headerlink" href="#correct-message-and-checksum" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="correct-message-and-checksum">
+<h4>Correct Message and Checksum<a class="headerlink" href="#correct-message-and-checksum" title="Permalink to this headline">#</a></h4>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">received_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
-<span class="n">received_crc</span> <span class="o">=</span> <span class="mi">474547262</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>received_message = b&quot;Hello World!&quot;
+received_crc = 474547262
 
-<span class="nb">print</span><span class="p">(</span><span class="n">verify</span><span class="p">(</span><span class="n">received_message</span><span class="p">,</span> <span class="n">received_crc</span><span class="p">))</span>
+print(verify(received_message, received_crc))
 </pre></div>
 </div>
 </div>
@@ -545,20 +794,20 @@ Checksum: 474547262
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="simulated-man-in-the-middle">
-<h4>Simulated Man in the Middle<a class="headerlink" href="#simulated-man-in-the-middle" title="Permalink to this headline">¶</a></h4>
+</section>
+<section id="simulated-man-in-the-middle">
+<h4>Simulated Man in the Middle<a class="headerlink" href="#simulated-man-in-the-middle" title="Permalink to this headline">#</a></h4>
 <p>If the data is intercepted and malliciously tampered with, there is no way to tell the difference. The checksum does not provide any mechanism against modification, that is, it is <strong>not an authenticated</strong> mechanism.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">original_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span>
-<span class="n">original_crc</span> <span class="o">=</span> <span class="mi">474547262</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>original_message = b&quot;Hello World!&quot;
+original_crc = 474547262
 
-<span class="c1"># Man in the middle Attack</span>
-<span class="n">altered_message</span> <span class="o">=</span> <span class="sa">b</span><span class="s2">&quot;Hello World!&quot;</span> <span class="o">+</span> <span class="sa">b</span><span class="s2">&quot; Or that is what you think&quot;</span>
-<span class="n">altered_crc</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">altered_message</span><span class="p">)</span>
+# Man in the middle Attack
+altered_message = b&quot;Hello World!&quot; + b&quot; Or that is what you think&quot;
+altered_crc = zlib.adler32(altered_message)
 
-<span class="nb">print</span><span class="p">(</span><span class="n">verify</span><span class="p">(</span><span class="n">altered_message</span><span class="p">,</span> <span class="n">altered_crc</span><span class="p">))</span>
+print(verify(altered_message, altered_crc))
 </pre></div>
 </div>
 </div>
@@ -568,29 +817,29 @@ Checksum: 474547262
 </div>
 </div>
 </div>
-</div>
-</div>
-</div>
-<div class="section" id="working-with-files">
-<h2>Working with Files<a class="headerlink" href="#working-with-files" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+</section>
+<section id="working-with-files">
+<h2>Working with Files<a class="headerlink" href="#working-with-files" title="Permalink to this headline">#</a></h2>
 <p>It is also desireable to work with files and check their integrity, this code snipped could also be applied to hashes although it may not be as popular.</p>
 <p>To work with files, the best way is to use the <a class="reference external" href="https://docs.python.org/3/library/pathlib.html">pathlib module</a> from the standard library.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">pathlib</span> <span class="kn">import</span> <span class="n">Path</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>from pathlib import Path
 </pre></div>
 </div>
 </div>
 </div>
-<div class="section" id="checksum-calculation">
-<h3>Checksum Calculation<a class="headerlink" href="#checksum-calculation" title="Permalink to this headline">¶</a></h3>
+<section id="checksum-calculation">
+<h3>Checksum Calculation<a class="headerlink" href="#checksum-calculation" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>readme_file_bytes = Path(&quot;../README.md&quot;).read_bytes()
 
-<span class="n">message_crc</span> <span class="o">=</span> <span class="n">zlib</span><span class="o">.</span><span class="n">adler32</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
+message_crc = zlib.adler32(readme_file_bytes)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum (Adler32): </span><span class="si">{</span><span class="n">message_crc</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Checksum (Adler32): {message_crc}&quot;)
 </pre></div>
 </div>
 </div>
@@ -600,25 +849,25 @@ Checksum: 474547262
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="hash-as-checksums">
-<h3>Hash as Checksums<a class="headerlink" href="#hash-as-checksums" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="hash-as-checksums">
+<h3>Hash as Checksums<a class="headerlink" href="#hash-as-checksums" title="Permalink to this headline">#</a></h3>
 <p>Some systems may use MD5, a legacy and vulnerable hash algorithm, or SHA1 to checksum files. Even though MD5 and SHA1 are cryptographic functions, <strong>they are stil subjected to the same Man in the middle attack</strong>, the advantage of using them lies in the <strong>collision avoidance</strong> and <strong>big changes in output due to small changes in input</strong>.</p>
 <p>When using hashes, the output will be a hexadecimal, instead of an integer. It can be converted to integer although it might produce overflow in legacy systems that cannot handle arbitrary long integers depending on the precise hash function used.</p>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">hashlib</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import hashlib
 
-<span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+readme_file_bytes = Path(&quot;../README.md&quot;).read_bytes()
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message_crc</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">md5</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>message_crc = hashlib.md5(readme_file_bytes)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum (MD5): </span><span class="si">{</span><span class="n">message_crc</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Checksum (MD5): {message_crc.hexdigest()}&quot;)
 </pre></div>
 </div>
 </div>
@@ -630,9 +879,9 @@ Checksum: 474547262
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">message_crc</span> <span class="o">=</span> <span class="n">hashlib</span><span class="o">.</span><span class="n">sha1</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>message_crc = hashlib.sha1(readme_file_bytes)
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum (SHA1): </span><span class="si">{</span><span class="n">message_crc</span><span class="o">.</span><span class="n">hexdigest</span><span class="p">()</span><span class="si">}</span><span class="s2">&quot;</span><span class="p">)</span>
+print(f&quot;Checksum (SHA1): {message_crc.hexdigest()}&quot;)
 </pre></div>
 </div>
 </div>
@@ -642,30 +891,30 @@ Checksum: 474547262
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="speed-benchmarks">
-<h2>Speed Benchmarks<a class="headerlink" href="#speed-benchmarks" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="speed-benchmarks">
+<h2>Speed Benchmarks<a class="headerlink" href="#speed-benchmarks" title="Permalink to this headline">#</a></h2>
 <p>This section will compare computing the checksum using the different methods showed above. The README file will be use as an example and it will be artificially enlarged to showcase efficiency of the methods when dealing with large files. The <a class="reference external" href="https://docs.python.org/3/library/sys.html"><code class="docutils literal notranslate"><span class="pre">sys</span></code> module</a> will be use to calculate the file size.</p>
 <p>The exact results may vary depending on the hardware, this is not a rigorous benchmark but it serves to give a general impresion of the relative speed of the different methods.</p>
-<div class="section" id="preparing-the-file">
-<h3>Preparing the File<a class="headerlink" href="#preparing-the-file" title="Permalink to this headline">¶</a></h3>
+<section id="preparing-the-file">
+<h3>Preparing the File<a class="headerlink" href="#preparing-the-file" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">sys</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>import sys
 </pre></div>
 </div>
 </div>
 </div>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">Path</span><span class="p">(</span><span class="s2">&quot;../README.md&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">read_bytes</span><span class="p">()</span>
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>readme_file_bytes = Path(&quot;../README.md&quot;).read_bytes()
 
-<span class="c1"># Make it artificially bigger</span>
-<span class="k">while</span> <span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span> <span class="o">&lt;</span> <span class="mi">500</span> <span class="o">*</span> <span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="p">:</span>
-    <span class="n">readme_file_bytes</span> <span class="o">=</span> <span class="n">readme_file_bytes</span> <span class="o">*</span> <span class="mi">2</span>
+# Make it artificially bigger
+while sys.getsizeof(readme_file_bytes) &lt; 500 * 2**20:
+    readme_file_bytes = readme_file_bytes * 2
 
-<span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;Checksum for a file of </span><span class="si">{</span><span class="n">sys</span><span class="o">.</span><span class="n">getsizeof</span><span class="p">(</span><span class="n">readme_file_bytes</span><span class="p">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">**</span><span class="mi">20</span><span class="si">:</span><span class="s2">.4g</span><span class="si">}</span><span class="s2"> MB&quot;</span><span class="p">)</span>
+print(f&quot;Checksum for a file of {sys.getsizeof(readme_file_bytes) / 2**20:.4g} MB&quot;)
 </pre></div>
 </div>
 </div>
@@ -675,22 +924,22 @@ Checksum: 474547262
 </div>
 </div>
 </div>
-</div>
-<div class="section" id="runs">
-<h3>Runs<a class="headerlink" href="#runs" title="Permalink to this headline">¶</a></h3>
+</section>
+<section id="runs">
+<h3>Runs<a class="headerlink" href="#runs" title="Permalink to this headline">#</a></h3>
 <div class="cell docutils container">
 <div class="cell_input docutils container">
-<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span><span class="nb">print</span><span class="p">(</span><span class="s2">&quot;  Checksum CRC32:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> zlib.crc32(readme_file_bytes)
+<div class="highlight-ipython3 notranslate"><div class="highlight"><pre><span></span>print(&quot;  Checksum CRC32:&quot;, end=&quot; &quot;)
+%timeit zlib.crc32(readme_file_bytes)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;Checksum Adler32:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> zlib.adler32(readme_file_bytes)
+print(&quot;Checksum Adler32:&quot;, end=&quot; &quot;)
+%timeit zlib.adler32(readme_file_bytes)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;    Checksum MD5:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> hashlib.md5(readme_file_bytes)
+print(&quot;    Checksum MD5:&quot;, end=&quot; &quot;)
+%timeit hashlib.md5(readme_file_bytes)
 
-<span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Checksum SHA1:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
-<span class="o">%</span><span class="k">timeit</span> hashlib.sha1(readme_file_bytes)
+print(&quot;   Checksum SHA1:&quot;, end=&quot; &quot;)
+%timeit hashlib.sha1(readme_file_bytes)
 </pre></div>
 </div>
 </div>
@@ -698,30 +947,66 @@ Checksum: 474547262
 <div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>  Checksum CRC32: 
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>787 ms ± 171 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>998 ms ± 147 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)
 Checksum Adler32: 
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>351 ms ± 47.4 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>425 ms ± 61 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)
     Checksum MD5: 
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.52 s ± 140 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.75 s ± 102 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)
    Checksum SHA1: 
 </pre></div>
 </div>
-<div class="output stream highlight-myst-ansi notranslate"><div class="highlight"><pre><span></span>1.07 s ± 296 µs per loop (mean ± std. dev. of 7 runs, 1 loop each)
+<div class="output traceback highlight-ipythontb notranslate"><div class="highlight"><pre><span></span><span class="gt">---------------------------------------------------------------------------</span>
+<span class="ne">KeyboardInterrupt</span><span class="g g-Whitespace">                         </span>Traceback (most recent call last)
+<span class="n">Cell</span> <span class="n">In</span><span class="p">[</span><span class="mi">16</span><span class="p">],</span> <span class="n">line</span> <span class="mi">11</span>
+<span class="g g-Whitespace">      </span><span class="mi">8</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;timeit&#39;</span><span class="p">,</span> <span class="s1">&#39;hashlib.md5(readme_file_bytes)&#39;</span><span class="p">)</span>
+<span class="g g-Whitespace">     </span><span class="mi">10</span> <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;   Checksum SHA1:&quot;</span><span class="p">,</span> <span class="n">end</span><span class="o">=</span><span class="s2">&quot; &quot;</span><span class="p">)</span>
+<span class="ne">---&gt; </span><span class="mi">11</span> <span class="n">get_ipython</span><span class="p">()</span><span class="o">.</span><span class="n">run_line_magic</span><span class="p">(</span><span class="s1">&#39;timeit&#39;</span><span class="p">,</span> <span class="s1">&#39;hashlib.sha1(readme_file_bytes)&#39;</span><span class="p">)</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.14/x64/lib/python3.8/site-packages/IPython/core/interactiveshell.py:2364,</span> in <span class="ni">InteractiveShell.run_line_magic</span><span class="nt">(self, magic_name, line, _stack_depth)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2362</span>     <span class="n">kwargs</span><span class="p">[</span><span class="s1">&#39;local_ns&#39;</span><span class="p">]</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">get_local_scope</span><span class="p">(</span><span class="n">stack_depth</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2363</span> <span class="k">with</span> <span class="bp">self</span><span class="o">.</span><span class="n">builtin_trap</span><span class="p">:</span>
+<span class="ne">-&gt; </span><span class="mi">2364</span>     <span class="n">result</span> <span class="o">=</span> <span class="n">fn</span><span class="p">(</span><span class="o">*</span><span class="n">args</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">2365</span> <span class="k">return</span> <span class="n">result</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.14/x64/lib/python3.8/site-packages/IPython/core/magics/execution.py:1166,</span> in <span class="ni">ExecutionMagics.timeit</span><span class="nt">(self, line, cell, local_ns)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1163</span>         <span class="k">if</span> <span class="n">time_number</span> <span class="o">&gt;=</span> <span class="mf">0.2</span><span class="p">:</span>
+<span class="g g-Whitespace">   </span><span class="mi">1164</span>             <span class="k">break</span>
+<span class="ne">-&gt; </span><span class="mi">1166</span> <span class="n">all_runs</span> <span class="o">=</span> <span class="n">timer</span><span class="o">.</span><span class="n">repeat</span><span class="p">(</span><span class="n">repeat</span><span class="p">,</span> <span class="n">number</span><span class="p">)</span>
+<span class="g g-Whitespace">   </span><span class="mi">1167</span> <span class="n">best</span> <span class="o">=</span> <span class="nb">min</span><span class="p">(</span><span class="n">all_runs</span><span class="p">)</span> <span class="o">/</span> <span class="n">number</span>
+<span class="g g-Whitespace">   </span><span class="mi">1168</span> <span class="n">worst</span> <span class="o">=</span> <span class="nb">max</span><span class="p">(</span><span class="n">all_runs</span><span class="p">)</span> <span class="o">/</span> <span class="n">number</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.14/x64/lib/python3.8/timeit.py:205,</span> in <span class="ni">Timer.repeat</span><span class="nt">(self, repeat, number)</span>
+<span class="g g-Whitespace">    </span><span class="mi">203</span> <span class="n">r</span> <span class="o">=</span> <span class="p">[]</span>
+<span class="g g-Whitespace">    </span><span class="mi">204</span> <span class="k">for</span> <span class="n">i</span> <span class="ow">in</span> <span class="nb">range</span><span class="p">(</span><span class="n">repeat</span><span class="p">):</span>
+<span class="ne">--&gt; </span><span class="mi">205</span>     <span class="n">t</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">timeit</span><span class="p">(</span><span class="n">number</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">206</span>     <span class="n">r</span><span class="o">.</span><span class="n">append</span><span class="p">(</span><span class="n">t</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">207</span> <span class="k">return</span> <span class="n">r</span>
+
+<span class="nn">File /opt/hostedtoolcache/Python/3.8.14/x64/lib/python3.8/site-packages/IPython/core/magics/execution.py:156,</span> in <span class="ni">Timer.timeit</span><span class="nt">(self, number)</span>
+<span class="g g-Whitespace">    </span><span class="mi">154</span> <span class="n">gc</span><span class="o">.</span><span class="n">disable</span><span class="p">()</span>
+<span class="g g-Whitespace">    </span><span class="mi">155</span> <span class="k">try</span><span class="p">:</span>
+<span class="ne">--&gt; </span><span class="mi">156</span>     <span class="n">timing</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">inner</span><span class="p">(</span><span class="n">it</span><span class="p">,</span> <span class="bp">self</span><span class="o">.</span><span class="n">timer</span><span class="p">)</span>
+<span class="g g-Whitespace">    </span><span class="mi">157</span> <span class="k">finally</span><span class="p">:</span>
+<span class="g g-Whitespace">    </span><span class="mi">158</span>     <span class="k">if</span> <span class="n">gcold</span><span class="p">:</span>
+
+<span class="nn">File &lt;magic-timeit&gt;:1,</span> in <span class="ni">inner</span><span class="nt">(_it, _timer)</span>
+
+<span class="ne">KeyboardInterrupt</span>: 
 </pre></div>
 </div>
 </div>
 </div>
-</div>
-</div>
-<div class="section" id="conclusion">
-<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">¶</a></h2>
+</section>
+</section>
+<section id="conclusion">
+<h2>Conclusion<a class="headerlink" href="#conclusion" title="Permalink to this headline">#</a></h2>
 <p>Checksum functions provide less guarantees than hashes but they are useful to provide integrity. In particular Adler32 is around three times faster than CRC32, and if cryptographic features are not needed, and speed is paramount, using checksum functions over hashes seems to be a good option. Many systems use hashes as checksums for compatibility reasons. In order to give true integrity, the checksum should be public or delivered by a secure channel to avoid man in the middle attacks.</p>
-</div>
-</div>
+</section>
+</section>
 
     <script type="text/x-thebe-config">
     {
@@ -745,9 +1030,11 @@ Checksum Adler32:
 
               </div>
               
-        
-            <!-- Previous / next buttons -->
-<div class='prev-next-area'> 
+            </main>
+            <footer class="footer-article noprint">
+                
+    <!-- Previous / next buttons -->
+<div class='prev-next-area'>
     <a class='left-prev' id="prev-link" href="03_Pepper.html" title="previous page">
         <i class="fas fa-angle-left"></i>
         <div class="prev-next-info">
@@ -763,26 +1050,28 @@ Checksum Adler32:
     <i class="fas fa-angle-right"></i>
     </a>
 </div>
-        
+            </footer>
         </div>
     </div>
-    <footer class="footer">
-    <div class="container">
-      <p>
-        
-          By Ezequiel Leonardo Castaño<br/>
-        
-            &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
-      </p>
+    <div class="footer-content row">
+        <footer class="col footer"><p>
+  
+    By Ezequiel Leonardo Castaño<br/>
+  
+      &copy; Copyright 2021, Ezequiel Leonardo Castaño.<br/>
+</p>
+        </footer>
     </div>
-  </footer>
-</main>
+    
+</div>
 
 
       </div>
     </div>
   
-  <script src="../_static/js/index.be7d3bbb2ef33a8344ce.js"></script>
+  <!-- Scripts loaded after <body> so the DOM is not blocked -->
+  <script src="../_static/scripts/pydata-sphinx-theme.js?digest=1999514e3f237ded88cf"></script>
+
 
   </body>
 </html>
